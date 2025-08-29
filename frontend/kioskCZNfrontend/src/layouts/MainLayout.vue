@@ -1,13 +1,13 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header class="bg-white" elevated>
       <q-toolbar>
         <q-toolbar-title>
-
-          <q-icon name="warning" color="warning" size="4rem" />
-
+          <div class="row items-center">
+            <main-logo />
+            <personnel-center-title />
+          </div>
         </q-toolbar-title>
-        <main-logo color="red" />
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
@@ -20,5 +20,6 @@
 
 <script setup>
 import MainLogo from 'src/components/MainLogo.vue';
+import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
 
 </script>
