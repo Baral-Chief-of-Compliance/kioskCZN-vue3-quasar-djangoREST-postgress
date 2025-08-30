@@ -53,7 +53,7 @@ function getHourMinuteSeconds(secondsUnix){
     .date-time{
         letter-spacing: 2px;
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 600;
         line-height: 25px;
     }
 </style>

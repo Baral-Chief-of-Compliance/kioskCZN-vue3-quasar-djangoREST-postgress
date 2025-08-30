@@ -9,7 +9,7 @@
         <current-date-time class="col-2" />
       </q-toolbar>
     </q-header>
-    <q-page-container>
+    <q-page-container class="main-page-container">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -21,3 +21,10 @@ import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
 import CurrentDateTime from 'src/components/CurrentDateTime.vue';
 
 </script>
+
+
+<style scoped>
+  .main-page-container{
+    background-color: #F5F5F5 !important;
+  }
+</style>

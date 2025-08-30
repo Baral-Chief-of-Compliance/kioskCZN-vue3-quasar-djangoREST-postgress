@@ -15,7 +15,7 @@
 defineProps({
     width: {
         type: Number,
-        default: 150
+        default: 200
     },
 
     height: {
