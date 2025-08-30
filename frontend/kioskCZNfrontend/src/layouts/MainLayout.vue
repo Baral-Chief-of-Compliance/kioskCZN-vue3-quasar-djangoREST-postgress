@@ -1,17 +1,14 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header class="bg-white" elevated>
-      <q-toolbar>
-        <q-toolbar-title>
-          <div class="row items-center">
+      <q-toolbar class="row justify-between">
+        <q-toolbar-title class="col-2">
             <main-logo />
-            <personnel-center-title />
-          </div>
         </q-toolbar-title>
-        <div>Quasar v{{ $q.version }}</div>
+        <personnel-center-title class="col-8 text-center" />
+        <current-date-time class="col-2" />
       </q-toolbar>
     </q-header>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -21,5 +18,6 @@
 <script setup>
 import MainLogo from 'src/components/MainLogo.vue';
 import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
+import CurrentDateTime from 'src/components/CurrentDateTime.vue';
 
 </script>
