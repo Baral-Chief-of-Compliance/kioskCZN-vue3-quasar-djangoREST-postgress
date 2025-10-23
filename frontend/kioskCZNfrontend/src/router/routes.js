@@ -6,7 +6,9 @@ import {
   GAMES,
   INFO,
   EMPLOYEES,
-  MAP
+  MAP,
+  INDEX,
+  CHOOSE_PC
 } from './pathName.js';
 
 
@@ -15,7 +17,8 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/IndexPage.vue'), name: 'index'},
+      { path: '', component: () => import('pages/ChoosePersonalCenter.vue'), name: CHOOSE_PC},
+      { path: ':pc', component: () => import('pages/IndexPage.vue'), name: INDEX },
       { path: SUPPORT_NAVIGATOR, component: () => import('pages/NavigatorPage.vue'), name: SUPPORT_NAVIGATOR},
       { path: VACANCIES, component: () => import('pages/VacaniesPage.vue'), name: VACANCIES},
       { path: EVENTS, component: () => import('pages/EventsPage.vue'), name: EVENTS},

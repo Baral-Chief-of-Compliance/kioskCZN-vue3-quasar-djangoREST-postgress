@@ -9,7 +9,7 @@
         <current-date-time class="col-2" />
       </q-toolbar>
     </q-header>
-    <q-page-container class="main-page-container">
+    <q-page-container class="main-page-container" style="height: calc(100vh); overflow: hidden;">
       <router-view />
     </q-page-container>
   </q-layout>

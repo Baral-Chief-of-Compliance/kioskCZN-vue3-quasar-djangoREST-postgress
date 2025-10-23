@@ -13,6 +13,10 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
+import { getPersonalCenterData } from 'src/axios/personalCenter';
 import CardMenu from 'src/components/CardMenu.vue';
 import {
   SUPPORT_NAVIGATOR, 
@@ -22,8 +26,26 @@ import {
   GAMES,
   INFO,
   EMPLOYEES,
-  MAP
+  MAP,
+  CHOOSE_PC
 } from 'src/router/pathName.js';
+import { usePCStore } from 'src/stores/personalCenter';
+import { useDepartments } from 'src/stores/departments';
+import { useDocuments } from 'src/stores/documents';
+import { useEventStore } from 'src/stores/events';
+import { useFloorsStore } from 'src/stores/floors';
+import { useServicesStore } from 'src/stores/services';
+
+
+const route = useRoute()
+const router = useRouter()
+
+const pcStore = usePCStore()
+const departmentsStore = useDepartments()
+const documentsStore = useDocuments()
+const eventsStore = useEventStore()
+const floorStore = useFloorsStore()
+const servicesStore = useServicesStore()
 
 const menuPoints = [
   {
@@ -67,4 +89,19 @@ const menuPoints = [
     link: MAP
   },
 ]
+
+onMounted(async() => {
+  try{
+    const res = await getPersonalCenterData(route.params.pc)
+    pcStore.setStore(res)
+    departmentsStore.setStore(res)
+    documentsStore.setStore(res)
+    eventsStore.setStore(res)
+    floorStore.setStore(res)
+    servicesStore.setStore(res)
+  } catch(err){
+    console.error(err)
+    router.push({name: CHOOSE_PC})
+  }
+})
 </script>

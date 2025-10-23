@@ -1,10 +1,20 @@
 <template>
     <div class="pc-titel text-indigo">
-        {{ title }}
+        {{ pcTitle }}
     </div>
 </template>
 
 <script setup>
+import { computed } from 'vue';
+
+import { usePCStore } from 'src/stores/personalCenter';
+
+const psStore = usePCStore()
+
+const pcTitle = computed(() => {
+    return psStore.getPCName === null ? "Наименование Кадрового Центра" : `${psStore.getPCName} кадровый центр`
+})
+
 
 defineProps({
     title: {
