@@ -20,12 +20,12 @@
                 <service-name :label="servicesStore.activeService.services_name" class="q-mb-sm" />
                 <scroll-area height="400px">
                 <!-- {{ servicesStore.activeService }} -->
-                <service-description :raw-html="servicesStore.activeService.services_description" class="q-mr-xl" />                
+                <service-description :raw-html="servicesStore.activeService.services_description" class="q-mr-xl q-ml-md" />                
                 </scroll-area>
 
                 <scroll-area class="q-mt-xl" height="380px">
                     <service-emploeyr
-                        class="q-mr-xl"
+                        class="q-mr-xl q-ml-md"
                         v-for="(emp, index) in servicesStore.activeService?.employees"
                         v-bind:key="index"
                         :name="emp.full_name"
