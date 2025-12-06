@@ -11,7 +11,10 @@ export const usePCStore = defineStore('personalCenter', {
     getters: {
         getUrlParam: (state) => state.urlParam,
         getPCId: (state) => state.pcId,
-        getPCName: (state) => state.pcName
+        getPCName: (state) => state.pcName,
+        getEmptyStatus: (state) => {
+            return state.pcId === null
+        }
     },
 
     actions: {

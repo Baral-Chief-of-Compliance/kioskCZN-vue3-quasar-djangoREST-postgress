@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import BackBtn from './BackBtn.vue';
+import BackBtn from './btns/BackBtn.vue';
 
 const props = defineProps({
     titel: {

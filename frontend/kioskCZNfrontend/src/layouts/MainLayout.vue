@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header class="bg-white" elevated>
+    <q-header ref="headerEl" class="bg-white" elevated>
       <q-toolbar class="row justify-between">
         <q-toolbar-title class="col-2">
             <main-logo />
@@ -16,9 +16,35 @@
 </template>
 
 <script setup>
+import { onMounted, provide, useTemplateRef } from 'vue';
+
+import { useElementSize } from '@vueuse/core';
+import { useRoute, useRouter } from 'vue-router';
+
 import MainLogo from 'src/components/MainLogo.vue';
 import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
 import CurrentDateTime from 'src/components/CurrentDateTime.vue';
+import { usePCStore } from 'src/stores/personalCenter';
+import { CHOOSE_PC } from 'src/router/pathName';
+
+const headerEl = useTemplateRef('headerEl')
+const { height: headerHeight } = useElementSize(headerEl)
+
+provide('headerHeight', headerHeight)
+
+
+const route = useRoute()
+const router = useRouter()
+
+const pcStore = usePCStore()
+
+onMounted(() => {
+  if (route.name != CHOOSE_PC){
+    if (pcStore.getEmptyStatus){
+      router.push({name: CHOOSE_PC})
+    }
+  }
+})
 
 </script>
 

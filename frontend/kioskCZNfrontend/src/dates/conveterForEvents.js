@@ -1,3 +1,8 @@
+/**
+ * @param {Date} date 
+ * @returns {String}
+ * Метод конвертации даты в строку формата 03 декабря 2024
+ */
 export function formatDateToRussian(date) {
   // Преобразуем входные данные в объект Date
   const dateObj = date instanceof Date ? date : new Date(date);

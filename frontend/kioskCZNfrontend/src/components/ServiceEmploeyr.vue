@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import CabBtn from './CabBtn.vue';
+import CabBtn from './btns/CabBtn.vue';
 
 const props = defineProps({
     name: {

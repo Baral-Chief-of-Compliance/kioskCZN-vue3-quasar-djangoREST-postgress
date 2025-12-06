@@ -1,9 +1,9 @@
 <template>
     <div class="col">
-        <div class="text-orange-9">
+        <div :class="timeEventClass">
             {{ timeEvent }}
         </div>
-        <div class="text-indigo-8">
+        <div :class="eventNameClass">
             {{ props.eventName }}
         </div>
     </div>
@@ -16,6 +16,16 @@ import { computed } from 'vue'
 const timeEvent = computed(() => {
     return `${props.eventDateStart}-${props.eventDateEnd}`
 })
+
+const timeEventClass = computed(() => ({
+    'text-orange-9': !props.pastDayStatus,
+    'text-grey-4': props.pastDayStatus
+}))
+
+const eventNameClass = computed(() => ({
+    'text-indigo-8': !props.pastDayStatus,
+    'text-grey-4': props.pastDayStatus
+}))
 
 const props = defineProps({
     eventName : {
@@ -42,6 +52,11 @@ const props = defineProps({
             const minutes = now.getMinutes().toString().padStart(2, '0')
             return `${hours}:${minutes}`
         }
+    },
+
+    pastDayStatus: {
+        type: Boolean,
+        default: false
     }
 })
 </script>
