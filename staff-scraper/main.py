@@ -1,5 +1,14 @@
+from parser import WorkeParser
+
+
 def main():
-    print("Hello from staff-scraper!")
+    print("Hello from czn-worker-parser!")
+
+    wp = WorkeParser()
+    wp.get_test_data()
+    wp.get_departments_name()
+
+
 
 
 if __name__ == "__main__":
