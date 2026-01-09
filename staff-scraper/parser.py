@@ -19,6 +19,7 @@ class WorkeParser(object):
     __PHONE_WORKER_CLASS_NAME : str = 'spInnerNum'
     __FIO_WORKER_CLASS_NAME : str = 'spFIOtxt'
     __POST_WORKER_CLASS_NAME : str = 'spPost'
+    __EMAIL_WORKER_CLASS_NAME : str = 'spEmail'
 
     __BASE_URL_PHONE_BOOK : str = 'http://172.25.31.33/phones2/' #основа url для парсинга работников со справочника
     __PERSONAL_CENTERS : list = [
@@ -119,7 +120,7 @@ class WorkeParser(object):
     
 
     def get_departments_name(self) -> dict:
-        """Получить все отделы КЦ со страницы"""
+        """Получить все отделы КЦ со страницы c сотрудниками"""
         res = self.bs4_data.find_all('div')
 
         personnel_center_deps_info : dict = {}
@@ -140,6 +141,7 @@ class WorkeParser(object):
                         'post' : None,
                         'phone': None,
                         'room': None,
+                        'email': None,
                         'date_of_get_info': date.today()
                     }
                     if self.__MAIN_WORKER_CLASS_NAME in r.attrs['class']:
@@ -171,6 +173,9 @@ class WorkeParser(object):
                                 else:
                                     new_fio += l
                             worker_info['fio'] = new_fio
+
+                        elif self.__EMAIL_WORKER_CLASS_NAME in rd.attrs['class']:
+                            worker_info['email'] = rd.text
 
                     personnel_center_deps_info[curent_department].append(worker_info)
 

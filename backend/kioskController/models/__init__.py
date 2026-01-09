@@ -5,3 +5,5 @@ from .info_materials import InfoMaterials
 from .service import Service
 from .games import Game, GameUrl, GameVisibleStatus
 from .post import Post
+from .department import Department
+from .worker import Worker, WorkerInDepartment

@@ -4,9 +4,9 @@ from parser import WorkeParser
 def main():
     print("Hello from czn-worker-parser!")
 
-    wp = WorkeParser()
+    wp = WorkeParser('','','')
     wp.get_test_data()
-    wp.get_departments_name()
+    print(wp.get_departments_name())
 
 
 
