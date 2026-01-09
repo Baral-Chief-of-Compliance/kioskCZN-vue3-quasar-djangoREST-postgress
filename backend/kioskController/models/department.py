@@ -1,18 +1,19 @@
 from django.db import models
 
+from .glossary import PC_NAME, DISPLAY_ORDER_NAME, DISPLAY_STATUS_NAME, TITEL_NAME
 from kioskController.models.personal_center import PC
 
 
 class Department(models.Model):
     """Отдел кадрового центра"""
 
-    dep_pc = models.ForeignKey(verbose_name='Кадровый центр', to=PC, on_delete=models.CASCADE)
-    dep_name = models.CharField(verbose_name='Наименование кадрового центра', max_length=256)
-    dep_priority = models.PositiveIntegerField(verbose_name='Порядок отображения', default=999)
-    dep_visible = models.BooleanField(verbose_name='Статус отображения', default=False)
+    pc = models.ForeignKey(verbose_name=PC_NAME, to=PC, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name=TITEL_NAME, max_length=256)
+    priority = models.PositiveIntegerField(verbose_name=DISPLAY_ORDER_NAME, default=999)
+    visible = models.BooleanField(verbose_name=DISPLAY_STATUS_NAME, default=False)
 
     def __str__(self) -> str:
-        return self.dep_name
+        return self.name
     
     class Meta:
         verbose_name = 'Отдел кадрового центра'

@@ -1,0 +1,5 @@
+PC_NAME = 'Кадровый центр'
+DISPLAY_ORDER_NAME = 'Порядок отображения'
+DISPLAY_STATUS_NAME = 'Статус отображения'
+PC_HEAD_INFO_NAME = 'Информация о руководителе КЦ'
+TITEL_NAME = 'Наименование'

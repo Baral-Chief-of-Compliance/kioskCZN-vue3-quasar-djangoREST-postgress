@@ -1,4 +1,5 @@
-from .personal_center import PC
+from .personal_center import PC, PCSocialNetworks, PCAddress, PCEmail, PCTimeTable, PCSites,\
+PCHeadInfo, PCHeadInfoPhone, PCPhone, PCHeadInfoTimeTable
 from .room import Room
 from .floor import Floor
 from .info_materials import InfoMaterials
