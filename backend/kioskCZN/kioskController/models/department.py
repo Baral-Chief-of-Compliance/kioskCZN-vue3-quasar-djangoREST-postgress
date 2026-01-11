@@ -1,7 +1,7 @@
 from django.db import models
 
 from .glossary import PC_NAME, DISPLAY_ORDER_NAME, DISPLAY_STATUS_NAME, TITEL_NAME
-from kioskController.models.personal_center import PC
+from kioskController.models import PC
 
 
 class Department(models.Model):
@@ -18,3 +18,4 @@ class Department(models.Model):
     class Meta:
         verbose_name = 'Отдел кадрового центра'
         verbose_name_plural = 'Отделы кадровых центров'
+        db_table = 'department'

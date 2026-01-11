@@ -1,9 +1,6 @@
 from django.db import models
 
-from kioskController.models.post import Post
-from kioskController.models.room import Room
-from kioskController.models.department import Department
-from kioskController.models.service import Service
+from kioskController.models import Post, Room, Department, Service
 
 
 class Worker(models.Model):
@@ -25,6 +22,7 @@ class Worker(models.Model):
     class Meta:
         verbose_name = 'Сотрудник КЦ'
         verbose_name_plural = 'Сотрудники КЦ'
+        db_table = 'worker'
 
 
 class WorkerInDepartment(models.Model):
@@ -33,7 +31,7 @@ class WorkerInDepartment(models.Model):
     dep = models.ForeignKey(verbose_name='Отдел', to=Department, on_delete=models.CASCADE)
     post = models.ForeignKey(verbose_name='Должность в отделе', to=Post, on_delete=models.SET_NULL, null=True, blank=True)
     head_of_dep = models.BooleanField(verbose_name='Глава отдела', default=False)
-    services = models.ManyToManyField(verbose_name='Услуги сотрудника', to=Service, null=True, blank=True)
+    services = models.ManyToManyField(verbose_name='Услуги сотрудника', to=Service, blank=True)
 
     def __str__(self):
         return f'{self.worker} отдела {self.dep}'
@@ -41,5 +39,6 @@ class WorkerInDepartment(models.Model):
     class Meta:
         verbose_name = 'Сотрудник отдела КЦ'
         verbose_name_plural = 'Сотрудники отделов КЦ'
+        db_table = 'worker_in_department'
 
     

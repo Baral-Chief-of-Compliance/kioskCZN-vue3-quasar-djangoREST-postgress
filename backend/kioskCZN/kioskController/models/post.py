@@ -13,3 +13,4 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Должность КЦ'
         verbose_name_plural = 'Должности КЦ'
+        db_table = 'post'

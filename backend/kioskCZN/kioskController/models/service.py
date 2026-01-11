@@ -7,6 +7,7 @@ class Service(models.Model):
 
     name = models.TextField(verbose_name=TITEL_NAME)
     priority = models.PositiveIntegerField(verbose_name=DISPLAY_ORDER_NAME, default=999)
+    description = models.TextField(verbose_name='Описание')
 
 
     def __str__(self) -> str:
@@ -15,3 +16,4 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Услуга КЦ'
         verbose_name_plural = 'Услуги КЦ'
+        db_table = 'service'

@@ -1,7 +1,7 @@
 from django.db import models
 
 from .glossary import PC_NAME
-from kioskController.models.personal_center import PC
+from kioskController.models import PC
 
 
 class Floor(models.Model):
@@ -17,3 +17,4 @@ class Floor(models.Model):
     class Meta:
         verbose_name = 'Этаж КЦ'
         verbose_name_plural = 'Этажи КЦ'
+        db_table = 'floor'

@@ -180,8 +180,3 @@ class WorkeParser(object):
                     personnel_center_deps_info[curent_department].append(worker_info)
 
         return personnel_center_deps_info
-
-        
-
-
-

@@ -24,3 +24,4 @@ class APIkey(models.Model):
     class Meta:
         verbose_name = 'API ключ'
         verbose_name_plural = 'API ключи'
+        db_table = 'api_key'

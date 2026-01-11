@@ -1,7 +1,7 @@
 from django.db import models
 
 from .glossary import PC_NAME, DISPLAY_ORDER_NAME, DISPLAY_STATUS_NAME, TITEL_NAME
-from kioskController.models.personal_center import PC
+from kioskController.models import PC
 
 
 class Game(models.Model):
@@ -28,6 +28,7 @@ class GameUrl(models.Model):
     class Meta:
         verbose_name = 'Ссылка на игру для КЦ'
         verbose_name_plural = 'Ссылки на игру для КЦ'
+        db_table = 'game'
 
 
 class GameVisibleStatus(models.Model):
@@ -42,3 +43,4 @@ class GameVisibleStatus(models.Model):
     class Meta:
         verbose_name = 'Статус отображения игры в КЦ'
         verbose_name_plural = 'Статусы отображения игр в КЦ'
+        db_table = 'game_visible_status'

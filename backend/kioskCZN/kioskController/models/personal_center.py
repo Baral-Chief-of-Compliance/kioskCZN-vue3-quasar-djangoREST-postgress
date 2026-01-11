@@ -1,13 +1,16 @@
 from datetime import datetime
 
 from django.db import models
-from kioskController.models.worker import Worker
-from .glossary import PC_NAME, DISPLAY_ORDER_NAME, PC_HEAD_INFO_NAME, TITEL_NAME
+
+from kioskController.models import  PCParentOrganization
+from .glossary import PC_NAME, DISPLAY_ORDER_NAME,\
+TITEL_NAME, PC_PARENT_OGR, DAY_OF_WEEK
 
 
 class PC(models.Model):
     """Кадровый центр"""
     name = models.CharField(verbose_name=TITEL_NAME, max_length=256)
+    parent_org = models.ForeignKey(verbose_name=PC_PARENT_OGR, to=PCParentOrganization, on_delete=models.CASCADE, blank=True, null=True)
     url_path= models.CharField(verbose_name="Наименование url пути")
     id_parsing = models.IntegerField(verbose_name="Id идентификации КЦ в телефонном справочнике")
 
@@ -17,6 +20,7 @@ class PC(models.Model):
     class Meta:
         verbose_name = 'Кадровый центр'
         verbose_name_plural = 'Кадровые центры'
+        db_table = 'pc'
 
 
 class PCSocialNetworks(models.Model):
@@ -34,6 +38,7 @@ class PCSocialNetworks(models.Model):
     class Meta:
         verbose_name = 'Информация о социальной сети КЦ'
         verbose_name_plural = 'Информация о социальных сетях КЦ'
+        db_table = 'pc_social_networks'
 
 
 class PCAddress(models.Model):
@@ -49,6 +54,7 @@ class PCAddress(models.Model):
     class Meta:
         verbose_name = 'Адрес КЦ'
         verbose_name_plural = 'Адреса КЦ'
+        db_table = 'pc_address'
 
 
 class PCPhone(models.Model):
@@ -65,6 +71,7 @@ class PCPhone(models.Model):
     class Meta:
         verbose_name = 'Номер телефона'
         verbose_name_plural = 'Номера телефонов'
+        db_table = 'pc_phone'
 
 
 class PCEmail(models.Model):
@@ -81,6 +88,7 @@ class PCEmail(models.Model):
     class Meta:
         verbose_name = 'Электронная почта КЦ'
         verbose_name_plural = 'Электронные почты КЦ'
+        db_table = 'pc_email'
 
 
 class PCSites(models.Model):
@@ -97,19 +105,10 @@ class PCSites(models.Model):
     class Meta:
         verbose_name = 'Сайт КЦ'
         verbose_name_plural = 'Сайты КЦ'
+        db_table = 'pc_sites'
 
 
-DAY_OF_WEEK = (
-    (
-        (0, 'Понедельник'),
-        (1, 'Вторник'),
-        (2, 'Среда'),
-        (3, 'Четверг'),
-        (4, 'Пятница'),
-        (5, 'Суббота'),
-        (6, 'Воскресенье')
-    )
-)
+
 
 class PCTimeTable(models.Model):
     """Расписание КЦ"""
@@ -125,50 +124,4 @@ class PCTimeTable(models.Model):
     class Meta:
         verbose_name = 'Расписание КЦ'
         verbose_name_plural = 'Расписания КЦ'
-
-
-class PCHeadInfo(models.Model):
-    """Рукводитель КЦ"""
-
-    pc = models.ForeignKey(verbose_name=PC_NAME, to=PC, on_delete=models.CASCADE)
-    worker = models.ForeignKey(verbose_name='Сотрудник КЦ', to=Worker, on_delete=models.CASCADE)
-    name = models.CharField(verbose_name=TITEL_NAME, max_length=512)
-    priority = models.PositiveIntegerField(verbose_name=DISPLAY_ORDER_NAME, default=999)
-    photo = models.ImageField(verbose_name='Фото руководителя КЦ', upload_to='pc_head_info/', blank=True, null=True)
-
-    def __str__(self) -> str:
-        return f'Руководитель {self.pc} {self.worker.fio}'
-    
-    class Meta:
-        verbose_name = 'Руководитель КЦ'
-        verbose_name_plural = 'Руководители КЦ'
-
-
-class PCHeadInfoPhone(models.Model):
-    """Номер телефона руководителя КЦ"""
-    pc_head_info = models.ForeignKey(verbose_name=PC_HEAD_INFO_NAME, to=PCHeadInfo, on_delete=models.CASCADE)
-    phone = models.CharField(verbose_name='Номер телфона', max_length=64)
-    priority = models.PositiveIntegerField(verbose_name=DISPLAY_ORDER_NAME, default=999)
-
-    def __str__(self) -> str:
-        return f'Телефон {self.pc_head_info}'
-    
-    class Meta:
-        verbose_name = 'Номер телефона руководителя КЦ'
-        verbose_name_plural = 'Номера телефонов руководителей КЦ'
-
-
-class PCHeadInfoTimeTable(models.Model):
-    """Часы приема руководителя КЦ"""
-
-    pc_head_info = models.ForeignKey(verbose_name=PC_HEAD_INFO_NAME, to=PCHeadInfo, on_delete=models.CASCADE)
-    day_of_week = models.IntegerField(verbose_name='День недели', choices=DAY_OF_WEEK)
-    start_time = models.TimeField(verbose_name='Время начала приема', default=datetime.now)
-    end_time = models.TimeField(verbose_name='Время окончания приема', default=datetime.now)
-
-    def __str__(self) -> str:
-        return f'Часы приема в {DAY_OF_WEEK[self.day_of_week][1]} у {self.pc_head_info}'
-    
-    class Meta:
-        verbose_name = 'Часы приема руководителя КЦ'
-        verbose_name_plural = 'Часы приемов руководителей КЦ'
+        db_table = 'pc_time_table'

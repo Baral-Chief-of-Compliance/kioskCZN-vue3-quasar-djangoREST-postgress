@@ -20,6 +20,7 @@ class InfoMaterials(models.Model):
     class Meta:
         verbose_name = 'Информационный материал КЦ'
         verbose_name_plural = 'Информационные материалы КЦ'
+        db_table = 'info_material'
 
 
 @receiver(post_delete, sender=InfoMaterials)
