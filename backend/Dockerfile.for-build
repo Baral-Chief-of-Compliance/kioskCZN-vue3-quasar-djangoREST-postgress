@@ -1,0 +1,9 @@
+FROM python:3.13-slim
+
+RUN mkdir -p /home/django-app
+
+WORKDIR /home/django-app
+
+COPY ./requirements.txt .
+
+RUN pip install --no-cache-dir -r ./requirements.txt
