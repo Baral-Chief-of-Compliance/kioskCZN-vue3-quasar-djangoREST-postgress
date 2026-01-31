@@ -9,10 +9,10 @@ TITEL_NAME, PC_PARENT_OGR, DAY_OF_WEEK
 
 class PC(models.Model):
     """Кадровый центр"""
-    name = models.CharField(verbose_name=TITEL_NAME, max_length=256)
+    name = models.CharField(verbose_name=TITEL_NAME, max_length=256, unique=True)
     parent_org = models.ForeignKey(verbose_name=PC_PARENT_OGR, to=PCParentOrganization, on_delete=models.CASCADE, blank=True, null=True)
-    url_path= models.CharField(verbose_name="Наименование url пути")
-    id_parsing = models.IntegerField(verbose_name="Id идентификации КЦ в телефонном справочнике")
+    url_path= models.CharField(verbose_name="Наименование url пути", unique=True)
+    id_parsing = models.IntegerField(verbose_name="Id идентификации КЦ в телефонном справочнике", unique=True)
 
     def __str__(self) -> str:
         return self.name

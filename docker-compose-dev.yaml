@@ -16,7 +16,7 @@ services:
     env_file:
       - ./dev-env/database.env
 
-    image: postgres:17.6-alpine
+    image: postgres:17.6-trixie
 
     volumes:
       - ./db_init:/docker-entrypoint-initdb.d
@@ -33,7 +33,7 @@ services:
     env_file: ./dev-env/backend.env
 
     ports:
-      - 8000:8000
+      - 4444:8000
     depends_on:
       - database
 

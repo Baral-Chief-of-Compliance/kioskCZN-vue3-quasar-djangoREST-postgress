@@ -28,11 +28,12 @@ else
 
 fi
 
-  
+
+echo "Создание кадровых центров в базе"
+python3 ./kioskCZN/manage.py settings_personal_centers
+
 
 echo "Запуск серверной части киосков ЦЗН МО..."
-
-
 python3 ./kioskCZN/manage.py runserver 0.0.0.0:8000
 
 if [ $? -ne 0 ]; then

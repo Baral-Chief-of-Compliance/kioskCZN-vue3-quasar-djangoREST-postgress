@@ -14,7 +14,7 @@ class APIkey(models.Model):
     """API ключи для взаимодействия"""
 
     name = models.CharField(verbose_name=TITEL_NAME, max_length=128)
-    api_key = models.CharField(verbose_name='API ключ', default=generate_api_key, max_length=32)
+    api_key = models.CharField(verbose_name='API ключ', default=generate_api_key, max_length=128)
     date_create = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     active = models.BooleanField(verbose_name='Активен', default=True)
 
