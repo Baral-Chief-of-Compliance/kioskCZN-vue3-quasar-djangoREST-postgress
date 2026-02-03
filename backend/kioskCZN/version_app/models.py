@@ -13,4 +13,21 @@ class Version(models.Model):
 
 
     def __str__(self) -> str:
-        version = ''
+        version = '{}.{}.{}'.format(
+            self.major,
+            self.minor,
+            self.patch
+        )
+
+        if self.dev:
+            version += '-dev'
+        elif self.alpha:
+            version += '-alpha'
+        elif self.beta:
+            version += '-beta'
+
+        return version
+    
+    class Meta:
+        verbose_name = 'Версия проекта'
+        verbose_name_plural = 'Версия проекта'
