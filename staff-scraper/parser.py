@@ -1,7 +1,13 @@
 import json
 from datetime import date
+import logging
+import os
+from typing import Tuple, Optional
 
 from bs4 import BeautifulSoup
+import requests
+
+import logger
 
 
 class WorkeParser(object):
@@ -92,26 +98,85 @@ class WorkeParser(object):
                  ):
         """Конструктор класс парсера"""
 
+        # url для rest взаимодействия с пользователями в бд
         self.url_rest_users = url_rest_users
+
+        # url для rest взаимодейсвия с должностями в бд
         self.url_rest_posts = url_rest_posts
+
+        # url для rest взаимодействия с отделами в бд
         self.url_rest_deps = url_rest_deps
 
+    def get_data_about_all_personal_center(self):
+        """Получить данные с каждого персонального центра"""
+        for pc in self.__PERSONAL_CENTERS:
+            error, html_from_page = self.get_data_from_url(
+                '{}{}.html'.format(
+                    os.getenv('URL_PHONE_BOOK', ''),
+                    pc['page_id']
+                )
+            )
+            # todo
+            # обработать данные 
+            # и отправлТь их не бекенд
+            # предварительно сделать методы добавляние, отделов, постов, сотрудников
+            # с учето
 
-    def get_data(self):
+            if error:
+                logging.error(
+                    'error while getting html page' \
+                    'from {} with id={}'.format(
+                        os.getenv('URL_PHONE_BOOK', ''),
+                        pc['page_id']
+                    )
+                )
+
+
+
+    def get_data_from_url(self, url: str) -> Tuple[bool, Optional[str]]:
         """Получить данные с страницы"""
-        pass
-    # http://main.z51.local/phones2/1.html
+        # http://main.z51.local/phones2/1.html
+        proxies = {}
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        if bool(int(os.getenv('PROXY_USE'))):
+            proxies['http'] = os.getenv('PROXY_PATH')
+            proxies['https'] = os.getenv('PROXY_PATH')
 
-    def get_test_data(self, html_page_path : str = 'test.html'):
+        response = requests.get(
+            headers=headers,
+            proxies=proxies,
+            url=url
+        )
+        if response.status_code == 200:
+            return False, response.text
+        
+        else:
+            logging.error(
+                'error while get data from phone book \
+                {} code: {} error: {}'.format(
+                    url,
+                    response.status_code,
+                    response.text
+                )
+            )
+            return True, None
+
+
+    def get_from_html_data(self, html_page_path : str = 'test.html', test=False):
         """Получить данные страницы с html страницы, которая уже скачена"""
-        try:
-            with open(html_page_path, 'r', encoding='utf-8') as file:
-                content = file.read()
-                self.bs4_data = BeautifulSoup(content, features='html.parser')
-        except FileNotFoundError:
-            print("{} is not found".format(html_page_path))
-        except PermissionError:
-            print("You do not have permission to read this file {}".format(html_page_path))
+        if not test:
+            self.bs4_data = BeautifulSoup(html_page_path, features='html.parser')
+        else:
+            try:
+                with open(html_page_path, 'r', encoding='utf-8') as file:
+                    content = file.read()
+                    self.bs4_data = BeautifulSoup(content, features='html.parser')
+            except FileNotFoundError:
+                logging.error("{} is not found".format(html_page_path))
+            except PermissionError:
+                logging.error("You do not have permission to read this file {}".format(html_page_path))
 
 
     def show_bs4_data(self):

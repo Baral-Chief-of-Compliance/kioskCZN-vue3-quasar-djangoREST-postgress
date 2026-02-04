@@ -1,14 +1,32 @@
+import os
+import time
+import logging
+
 from parser import WorkeParser
+import logger
+
 
 
 def main():
-    print("Hello from czn-worker-parser!")
+    wp = WorkeParser(
+        os.getenv('URL_REST_USERS', ''),
+        os.getenv('URL_REST_POSTS', ''),
+        os.getenv('URL_REST_DEPS', '')
+    )
 
-    wp = WorkeParser('','','')
-    wp.get_test_data()
-    print(wp.get_departments_name())
+    logging.info('start work staff-scraper')
 
+    while True:
+        try:
+            logging.info('start scraping data from phone book')
+            wp.get_from_html_data(test=True)
+            print(wp.get_departments_name())
 
+            logging.info('finish scraping data from phone book')
+        except Exception as ex:
+            logging.error(ex)
+        
+        time.sleep(3600)
 
 
 if __name__ == "__main__":
