@@ -2,3 +2,5 @@
 database
 .vscode
 test.html
+
+__pycache__
