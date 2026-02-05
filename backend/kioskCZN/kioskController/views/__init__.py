@@ -4,8 +4,6 @@ from .event import *
 from .floor import *
 from .games import *
 from .info_materials import *
-from .parent_organization import *
-from .personal_center_head import *
 from .personal_center import *
 from .post import *
 from .room import *

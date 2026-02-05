@@ -1,6 +1,7 @@
 from django.db import models
 
 from kioskController.models import Post, Room, Department, Service
+from .glossary import DISPLAY_STATUS_NAME
 
 
 class Worker(models.Model):
@@ -32,6 +33,8 @@ class WorkerInDepartment(models.Model):
     post = models.ForeignKey(verbose_name='Должность в отделе', to=Post, on_delete=models.SET_NULL, null=True, blank=True)
     head_of_dep = models.BooleanField(verbose_name='Глава отдела', default=False)
     services = models.ManyToManyField(verbose_name='Услуги сотрудника', to=Service, blank=True)
+    visible = models.BooleanField(verbose_name=DISPLAY_STATUS_NAME, default=False)
+
 
     def __str__(self):
         return f'{self.worker} отдела {self.dep}'
