@@ -19,8 +19,6 @@ def get_datetime_next():
 class Event(models.Model):
     """Мероприятие в КЦ"""
 
-
-
     pc = models.ForeignKey(verbose_name=PC_NAME, to=PC, on_delete=models.CASCADE)
     name = models.CharField(verbose_name=TITEL_NAME, max_length=512)
     discription = models.TextField(verbose_name='Описание', blank=True, null=True)
