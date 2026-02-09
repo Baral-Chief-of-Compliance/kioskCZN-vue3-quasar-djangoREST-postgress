@@ -116,11 +116,6 @@ class WorkeParser(object):
                     pc['page_id']
                 )
             )
-            # todo
-            # обработать данные 
-            # и отправлТь их не бекенд
-            # предварительно сделать методы добавляние, отделов, постов, сотрудников
-            # с учето
 
             if error:
                 logging.error(
@@ -130,6 +125,18 @@ class WorkeParser(object):
                         pc['page_id']
                     )
                 )
+
+            else:
+                # todo
+                # обработать данные 
+                # и отправлТь их не бекенд
+                # предварительно сделать методы добавляние, отделов, постов, сотрудников
+                # с учето
+                self.get_from_html_data(
+                    html_page_path=html_from_page
+                )
+                data_from_page = self.get_departments_name()
+                print(data_from_page)
 
 
 

@@ -19,8 +19,7 @@ def main():
     while True:
         try:
             logging.info('start scraping data from phone book')
-            wp.get_from_html_data(test=True)
-            print(wp.get_departments_name())
+            wp.get_data_about_all_personal_center()
 
             logging.info('finish scraping data from phone book')
         except Exception as ex:

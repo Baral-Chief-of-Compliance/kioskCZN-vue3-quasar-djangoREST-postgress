@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+  database:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U psadmin -d kiosk"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+    container_name: kiosk-v2-database
+    restart: always
+    ports:
+      - "5432:5432"
+
+    env_file:
+      - ./dev-env/database.env
+
+    image: postgres:17.6-trixie
+
+    volumes:
+      - ./db_init:/docker-entrypoint-initdb.d
+      - ./database/data:/var/lib/postgresql/data
+
+    networks:
+     - kiosk-network
+
+  backend:
+    container_name: kiosk-v2-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.for-build
+    env_file: ./dev-env/backend.env
+
+    ports:
+      - 4444:8000
+    depends_on:
+      - database
+
+    networks:
+      - kiosk-network
+
+  staff-scraper:
+    container_name: kiosk-v2-staff-scraper
+    build:
+      context: ./staff-scraper
+      dockerfile: prod.dockerfile
+    env_file: ./dev-env/staff-scraper.env
+
+    volumes:
+      - ./db_init:/docker-entrypoint-initdb.d
+      - ./database/data:/var/lib/postgresql/data
+
+    networks:
+      - kiosk-network
+
+
+networks:
+  kiosk-network:
+    driver: bridge
