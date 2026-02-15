@@ -8,8 +8,12 @@ import logger
 
 
 def main():
+    time.sleep(30)
+
     wp = WorkeParser(
-        os.getenv('URL_REST_USERS', ''),
+        os.getenv('ULR_REST_ROOMS', ''),
+        os.getenv('URL_REST_WORKERS_IN_DEPS', ''),
+        os.getenv('URL_REST_WORKERS', ''),
         os.getenv('URL_REST_POSTS', ''),
         os.getenv('URL_REST_DEPS', '')
     )

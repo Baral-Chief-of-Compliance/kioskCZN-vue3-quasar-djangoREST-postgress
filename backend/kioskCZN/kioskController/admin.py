@@ -33,12 +33,31 @@ class DepartmentAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
     ]
+    list_display = [
+       "name",
+       "priority" ,
+       "visible",
+       "pc"
+    ]
+    search_fields = [
+        "name",
+    ]
 
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
+    ]
+
+    list_display = [
+        "name",
+        "pc",
+        "date_start"
+    ]
+
+    search_fields = [
+        "name",
     ]
 
 
@@ -70,7 +89,14 @@ class GameVisibleStatusAdmin(admin.ModelAdmin):
 
 @admin.register(InfoMaterials)
 class InfoMaterialsAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "name",
+        "priority",
+    ]
+
+    search_fields = [
+        "name",
+    ]
 
 
 @admin.register(PCParentOrganization)
@@ -159,13 +185,30 @@ class PCTimeTableAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "name",
+        "priority",
+    ]
+
+    search_fields = [
+        "name",
+    ]
 
 
 @admin.register(Room)
 class RoomAdmin(admin.ModelAdmin):
     list_filter = [
-        "floor__pc",
+        "pc",
+    ]
+    list_display = [
+        "name",
+        "floor",
+        "pc",
+        "visible",
+    ]
+
+    search_fields = [
+        "name",
     ]
 
 
@@ -185,11 +228,34 @@ class ServiceAdmin(admin.ModelAdmin):
 
 @admin.register(Worker)
 class WorkerAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ['date_get_info']
+
+    list_display = [
+        "fio",
+        "email",
+        "absent",
+        "date_get_info",
+    ]
+
+    search_fields = [
+        "fio",
+    ]
+
 
 
 @admin.register(WorkerInDepartment)
 class WorkerInDepartmentAdmin(admin.ModelAdmin):
-    list_filter = [
+    readonly_fields = ['date_get_info']
+
+    list_display = [
+        "worker__fio",
         "dep",
+        "post",
+        "head_of_dep",
+        "date_get_info",
+        "visible"
+    ]
+
+    list_filter = [
+        "dep__pc",
     ]

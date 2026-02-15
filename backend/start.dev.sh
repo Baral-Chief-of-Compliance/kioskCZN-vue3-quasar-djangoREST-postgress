@@ -12,6 +12,9 @@ python3 ./kioskCZN/manage.py makemigrations
 echo "Выполняем миграции базы данных..."
 python3 ./kioskCZN/manage.py migrate
 
+echo "Выполняем миграции базы данных приложения kioskController..."
+python3 ./kioskCZN/manage.py migrate kioskController
+
 
 #Проверяем, существует ли суперпользователь
 

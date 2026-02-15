@@ -33,7 +33,8 @@ class WorkerInDepartment(models.Model):
     post = models.ForeignKey(verbose_name='Должность в отделе', to=Post, on_delete=models.SET_NULL, null=True, blank=True)
     head_of_dep = models.BooleanField(verbose_name='Глава отдела', default=False)
     services = models.ManyToManyField(verbose_name='Услуги сотрудника', to=Service, blank=True)
-    visible = models.BooleanField(verbose_name=DISPLAY_STATUS_NAME, default=False)
+    visible = models.BooleanField(verbose_name=DISPLAY_STATUS_NAME, default=True)
+    date_get_info = models.DateField(verbose_name='Дата обновления информации', auto_now=True)
 
 
     def __str__(self):

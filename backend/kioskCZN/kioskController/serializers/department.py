@@ -6,5 +6,5 @@ from kioskController.models import Department
 class DepartmentSerializer(serializers.ModelSerializer):
 
     class Meta:
-        models = Department
+        model = Department
         fields = '__all__'

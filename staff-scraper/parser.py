@@ -1,4 +1,5 @@
 import json
+import time
 from datetime import date
 import logging
 import os
@@ -92,14 +93,21 @@ class WorkeParser(object):
     ]
 
     def __init__(self, 
-                 url_rest_users : str,
-                 url_rest_posts : str,
-                 url_rest_deps : str,
-                 ):
+                url_rest_rooms: str,
+                url_rest_workers_in_deps: str,
+                url_rest_workers: str,
+                url_rest_posts: str,
+                url_rest_deps: str
+                ):
         """Конструктор класс парсера"""
+        #url для rest взаимодействия с кабинетами кадрового центра
+        self.url_rest_rooms = url_rest_rooms
 
-        # url для rest взаимодействия с пользователями в бд
-        self.url_rest_users = url_rest_users
+        #url для rest взаимодействия с работниками отделов в бд
+        self.url_rest_workers_in_deps = url_rest_workers_in_deps
+
+        # url для rest взаимодействия с работниками в бд
+        self.url_rest_workers = url_rest_workers
 
         # url для rest взаимодейсвия с должностями в бд
         self.url_rest_posts = url_rest_posts
@@ -107,36 +115,268 @@ class WorkeParser(object):
         # url для rest взаимодействия с отделами в бд
         self.url_rest_deps = url_rest_deps
 
+
     def get_data_about_all_personal_center(self):
         """Получить данные с каждого персонального центра"""
         for pc in self.__PERSONAL_CENTERS:
-            error, html_from_page = self.get_data_from_url(
-                '{}{}.html'.format(
-                    os.getenv('URL_PHONE_BOOK', ''),
-                    pc['page_id']
-                )
+
+            # todo
+            # обработать данные 
+            # и отправлТь их не бекенд
+            # предварительно сделать методы добавляние, отделов, постов, сотрудников
+            # с учето
+            html_from_page = f"phones_book_page/{pc['page_id']}.html"
+            self.get_from_html_data(
+                html_page_path=html_from_page,
+                test=True
             )
+            data_from_page = self.get_departments_name()
 
-            if error:
-                logging.error(
-                    'error while getting html page' \
-                    'from {} with id={}'.format(
-                        os.getenv('URL_PHONE_BOOK', ''),
-                        pc['page_id']
+            for dep_name in data_from_page.keys():
+                dep_payload = {
+                    'pc': pc['page_id'],
+                    'name': dep_name
+                }
+                try:
+                    res = requests.get(
+                        url=self.url_rest_deps,
+                        params=dep_payload
                     )
-                )
 
-            else:
-                # todo
-                # обработать данные 
-                # и отправлТь их не бекенд
-                # предварительно сделать методы добавляние, отделов, постов, сотрудников
-                # с учето
-                self.get_from_html_data(
-                    html_page_path=html_from_page
-                )
-                data_from_page = self.get_departments_name()
-                print(data_from_page)
+                    if res.status_code != 200:
+                        logging.error(f'status code from dep rest {res.status_code} error: {res.text}')
+                    else:
+                        res_json = res.json()
+                        deps = res_json
+
+                        current_dep = None #текущий отдел
+                        if len(deps) == 0:
+                            # Значит этого отдела надо добавить
+                            res = requests.post(
+                                url=self.url_rest_deps,
+                                data=json.dumps({
+                                    'name': dep_name,
+                                    'pc': pc['page_id']
+                                }),
+                                headers={'Content-Type': 'application/json'}
+                            )
+
+                            if res.status_code != 201:
+                                logging.error(f"status code from dep rest {res.status_code} error: {res.text}")
+                            else:
+                                logging.info(f"add {dep_name} to pc with id={ pc['page_id']}")
+                                current_dep = res.json()
+                        else:
+                            current_dep = deps[0]
+
+                        # Проходим сотрудников отдела
+                        if current_dep:
+                            for em in data_from_page[dep_name]:
+                                # Проверка должности
+                                em_post = None
+                                try:
+                                    post_payload = {
+                                        'name': em['post']
+                                    }
+                                    res = requests.get(
+                                        url=self.url_rest_posts,
+                                        params=post_payload
+                                    )
+
+                                    if res.status_code != 200:
+                                        logging.error(f'status from post rest code {res.status_code} error: {res.text}')
+                                    else:
+                                        res_json = res.json()
+                                        posts = res_json
+
+                                        if len(posts) == 0:
+                                            #Значит данную должность надо добавить
+                                            res = requests.post(
+                                                url=self.url_rest_posts,
+                                                data=json.dumps({
+                                                    'name': em['post'],
+                                                }),
+                                                headers={'Content-Type': 'application/json'}
+                                            )
+                                            if res.status_code != 201:
+                                                logging.error(f"status code from post rest {res.status_code} error: {res.text}")
+                                            else:
+                                                logging.info(f"add post {em['post']} to system")
+                                                em_post = res.json()
+                                        else:
+                                            em_post = posts[0]
+                                except Exception as ex:
+                                    logging.error(f'error while make check exist post: {ex }')
+
+
+                                # Есть ли в спарсенных данных кабинет у сотрудника
+                                # Проверка кабинета
+                                em_room = None
+                                if em['room']: 
+                                    try:
+                                        room_payload = {
+                                            'pc': pc['page_id'],
+                                            'name': em['room']
+                                        }
+                                        res = requests.get(
+                                            url=self.url_rest_rooms,
+                                            params=room_payload
+                                        )
+
+                                        if res.status_code != 200:
+                                            logging.error(f'status from room rest code {res.status_code} error: {res.text}')
+                                        else:
+                                            res_json = res.json()
+                                            rooms = res_json
+
+                                            if len(rooms) == 0:
+                                                #Значит данный кабинет надо добавить
+                                                res = requests.post(
+                                                    url=self.url_rest_rooms,
+                                                    data=json.dumps({
+                                                        'name': em['room'],
+                                                        'pc': pc['page_id']
+                                                    }),
+                                                    headers={'Content-Type': 'application/json'}
+                                                )
+                                                if res.status_code != 201:
+                                                    logging.error(f"status code from room rest {res.status_code} error: {res.text}")
+                                                else:
+                                                    logging.info(f"add room {em['room']} to pc id={pc['page_id']}")
+                                                    em_room = res.json()
+                                            else:
+                                                em_room = posts[0]
+                                    except Exception as ex:
+                                        logging.error(f'error while make check exist room: {ex }')
+
+                                # Проверка Сотрудника
+                                employer = None
+
+                                try:
+                                    employer_payload = {
+                                        'id': em['id']
+                                    }
+                                    
+                                    res = requests.get(
+                                        url=self.url_rest_workers,
+                                        params=employer_payload
+                                    )
+
+                                    if res.status_code != 200:
+                                        logging.error(f'status from worker rest code {res.status_code} error: {res.text}')
+                                    else:
+                                        res_json = res.json()
+                                        employers = res_json
+                                        # Для добавления и обновления сотрудника
+                                        emp_info = {
+                                            'id': em['id'],
+                                            'fio': em['fio'],
+                                            # 'date_get_info': em['date_of_get_info'],
+                                            'absent': em['absent']
+                                        }
+
+                                        if em['phone']:
+                                            emp_info['phone'] = em['phone']
+
+                                        if em['room']:
+                                            emp_info['room'] = em_room['id']
+
+                                        if em['email']:
+                                            emp_info['email'] = em['email']
+                                        if len(employers) == 0:
+                                            # Необходимо добавить сотрудника
+                                            res = requests.post(
+                                                url=self.url_rest_workers,
+                                                data=json.dumps(emp_info),
+                                                headers={'Content-Type': 'application/json'}
+                                            )
+                                            if res.status_code != 201:
+                                                logging.error(f"status code from worker rest {res.status_code} error: {res.text}")
+                                            else:
+                                                logging.info(f"add worker {em['fio']} in system ")
+                                                employer = res.json()
+
+                                        else:
+                                            employer = employers[0]
+                                            # Если сотрудник есть в базе, то ему необходимо обновить данные
+                                            res = requests.patch(
+                                                url=f"{self.url_rest_workers}{em['id']}/",
+                                                data=json.dumps(emp_info),
+                                                headers={'Content-Type': 'application/json'}
+                                            )
+
+                                            if res.status_code != 200:
+                                                logging.error(f"status code from worker rest patch {res.status_code} error: {res.text}")
+
+                                except Exception as ex:
+                                    logging.error(f'error while make check exist employer: {ex}')
+
+
+                                # Проверка сотрудника в отделе
+                                if employer:
+                                    try:
+                                        # Если сотрудник есть, то теперь мы добавим сотрудника в отдел
+                                        # Точнее проверим есть ли он в отделе, если есть, то обновим его,
+                                        # если нет, то добавим его
+
+                                        employer_in_dep = None
+                                        employer_in_dep_payload = {
+                                            'worker': em['id'],
+                                            'dep': current_dep['id']
+                                        }
+
+                                        res = requests.get(
+                                            url=self.url_rest_workers_in_deps,
+                                            params=employer_in_dep_payload
+                                        )
+
+                                        if res.status_code != 200:
+                                            logging.error(f'status from worker_deps rest code {res.status_code} error: {res.text}')
+                                        else:
+                                            res_json = res.json()
+                                            employers_deps = res_json
+
+                                            emp_in_deps_info = {
+                                                'worker': em['id'],
+                                                'dep': current_dep['id'],
+                                                'post': em_post['id'],
+                                                'head_of_dep': em['head_of_department'],
+                                            }
+
+                                            if len(employers_deps) == 0:
+                                                # Необходимо его добавить в отделе в базе
+
+                                                res = requests.post(
+                                                    url=self.url_rest_workers_in_deps,
+                                                    data=json.dumps(emp_in_deps_info),
+                                                    headers={'Content-Type': 'application/json'}
+                                                )
+
+                                                if res.status_code != 201:
+                                                    logging.error(f"status code from worker rest {res.status_code} error: {res.text}")
+                                                else:
+                                                    logging.info(f"add worker {em['fio']} in system ")
+                                            else:
+                                                employer_in_dep_id = employers_deps[0]['id']
+                                                # Если сотрудник есть в базе, то ему необходимо обновить данные
+                                                res = requests.patch(
+                                                    url=f"{self.url_rest_workers_in_deps}{employer_in_dep_id}/",
+                                                    data=json.dumps(emp_in_deps_info),
+                                                    headers={'Content-Type': 'application/json'}
+                                                )
+
+                                                if res.status_code != 200:
+                                                    logging.error(f"status code from worker_in_deps rest patch {res.status_code} error: {res.text}")
+
+                                    except Exception as ex:
+                                        logging.error(f'error while make check exist worker_deps: {ex}')
+
+                except Exception as ex:
+                    logging.error(f'error while make check exist dep: {ex}')
+                time.sleep(1)
+
+
+
 
 
 
@@ -150,6 +390,8 @@ class WorkeParser(object):
         if bool(int(os.getenv('PROXY_USE'))):
             proxies['http'] = os.getenv('PROXY_PATH')
             proxies['https'] = os.getenv('PROXY_PATH')
+            
+        logging.info(f'proxy {proxies}')   
 
         response = requests.get(
             headers=headers,

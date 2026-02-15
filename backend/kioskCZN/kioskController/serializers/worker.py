@@ -14,3 +14,10 @@ class WorkerInDepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkerInDepartment
         fields = '__all__'
+
+
+class WorkerInDepartmentSearch(serializers.Serializer):
+    """Сериализатор для поиска сотрудников"""
+    worker_id = serializers.IntegerField(min_value=1)
+    pc = serializers.IntegerField(min_value=1)
+    department_name = serializers.CharField(max_length=256)

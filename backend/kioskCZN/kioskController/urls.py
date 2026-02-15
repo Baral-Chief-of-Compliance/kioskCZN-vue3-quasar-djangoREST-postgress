@@ -15,6 +15,7 @@ router.register(r"posts", views.PostViewSet, basename="post")
 router.register(r"rooms", views.RoomViewSet, basename="room")
 router.register(r"services", views.ServiceViewSet, basename="serivce")
 router.register(r"workers", views.WorkerViewSet, basename="worker")
+router.register(r"workers_in_departments", views.WorkerInDepartmentViewSet, basename="workers_in_departments")
 
 
 urlpatterns = [

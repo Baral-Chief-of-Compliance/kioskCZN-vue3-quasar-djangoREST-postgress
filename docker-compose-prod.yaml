@@ -11,7 +11,7 @@ services:
     container_name: kiosk-v2-database
     restart: always
     ports:
-      - "5432:5432"
+      - 5433:5432
 
     env_file:
       - ./dev-env/database.env
@@ -29,7 +29,7 @@ services:
     container_name: kiosk-v2-backend
     build:
       context: ./backend
-      dockerfile: Dockerfile.for-build
+      dockerfile: Dockerfile.prod
     env_file: ./dev-env/backend.env
 
     ports:
@@ -40,6 +40,11 @@ services:
     networks:
       - kiosk-network
 
+    volumes:
+      - ./logs:/home/django-app/kioskCZN/logs
+      - ./kiosk_media:/home/django-app/kioskCZN/media
+      - ./kioskContollerAppMigrations:/home/django-app/kioskCZN/kioskController/migrations
+
   staff-scraper:
     container_name: kiosk-v2-staff-scraper
     build:
@@ -48,8 +53,8 @@ services:
     env_file: ./dev-env/staff-scraper.env
 
     volumes:
-      - ./db_init:/docker-entrypoint-initdb.d
-      - ./database/data:/var/lib/postgresql/data
+      - ./logs:/home/staff-scraper/logs
+      - ./phones_book_page:/home/staff-scraper/phones_book_page
 
     networks:
       - kiosk-network
