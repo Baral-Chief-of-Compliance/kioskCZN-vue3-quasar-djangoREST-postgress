@@ -6,7 +6,11 @@
         color="orange"
         no-caps
     >
-        <span>каб. <b>{{ props.room }}</b> этаж <b>{{ props.floor }}</b></span>
+        <span>
+            <span v-if="props.showCabinetLabele">каб. </span>
+            <b>{{ props.room }}</b>
+            <span v-if="props.floor"> этаж <b>{{ props.floor }}</b></span>
+        </span>
     </q-btn>
 </template>
 
@@ -14,13 +18,17 @@
 
 const props = defineProps({
     room: {
-        type: Number,
-        default: 306
+        type: String,
+        default: '306'
     },
 
     floor: {
         type: Number,
         default: 3
+    },
+    showCabinetLabele: {
+        type: Boolean,
+        default: false
     }
 })
 

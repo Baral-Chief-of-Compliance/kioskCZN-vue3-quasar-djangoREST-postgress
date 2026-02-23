@@ -41,6 +41,7 @@ services:
       - kiosk-network
 
     volumes:
+      - ./backend/kioskCZN:/home/django-app/kioskCZN
       - ./logs:/home/django-app/kioskCZN/logs
       - ./kiosk_media:/home/django-app/kioskCZN/media
       - ./kioskContollerAppMigrations:/home/django-app/kioskCZN/kioskController/migrations

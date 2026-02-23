@@ -19,9 +19,9 @@ export const usePCStore = defineStore('personalCenter', {
 
     actions: {
         setStore(data){
-            this.urlParam = data?.personnel_center
-            this.pcId = data?.object
-            this.pcName = data?.pc_name
+            this.urlParam = data?.url_path
+            this.pcId = data?.id
+            this.pcName = data?.name
         }
     }
 })

@@ -20,8 +20,8 @@ const props = defineProps({
     },
 
     room: {
-        type: Number,
-        default: 306
+        type: String,
+        default: '306'
     },
 
     floor: {

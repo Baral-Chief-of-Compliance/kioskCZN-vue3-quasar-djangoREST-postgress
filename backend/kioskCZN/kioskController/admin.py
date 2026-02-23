@@ -214,7 +214,7 @@ class RoomAdmin(admin.ModelAdmin):
 
 # Подключение CKEditor для описания услуг
 class ServiceDescriptionForm(forms.ModelForm):
-    description = forms.TimeField(label="Описание", widget=CKEditorUploadingWidget())
+    description = forms.CharField(label="Описание", widget=CKEditorUploadingWidget())
     
     class Meta:
         model = Service
@@ -246,6 +246,10 @@ class WorkerAdmin(admin.ModelAdmin):
 @admin.register(WorkerInDepartment)
 class WorkerInDepartmentAdmin(admin.ModelAdmin):
     readonly_fields = ['date_get_info']
+
+    search_fields = [
+        "worker__fio",
+    ]
 
     list_display = [
         "worker__fio",

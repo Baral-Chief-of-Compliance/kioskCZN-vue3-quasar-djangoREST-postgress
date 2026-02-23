@@ -21,6 +21,7 @@ from kioskController import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/v1.0/czn-kiosk/', include((
         urls.urlpatterns,
         'kioskController'

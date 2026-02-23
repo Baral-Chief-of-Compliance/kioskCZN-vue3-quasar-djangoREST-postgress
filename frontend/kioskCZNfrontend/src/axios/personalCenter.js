@@ -8,7 +8,12 @@ import { api } from "src/boot/axios";
  */
 export async function getPersonalCenterData(urlPCParam){
     const res = await api.get(
-        `/${urlPCParam}`
+        `personal_centers/`,{
+            params: {
+                url_path: urlPCParam,
+            }
+        }
+
     )
     return res.data
 }
@@ -19,6 +24,6 @@ export async function getPersonalCenterData(urlPCParam){
  * @returns 
  */
 export async function getALLPersonalCenters(){
-    const res = await api.get()
-    return res.data?.pcs
+    const res = await api.get('personal_centers/')
+    return res.data
 }

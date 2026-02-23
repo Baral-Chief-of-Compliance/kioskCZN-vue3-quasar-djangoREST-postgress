@@ -3,9 +3,9 @@
     <div class="column">
         <personal-center-btn-link
             v-for="pc in personalCentersList"
-            v-bind:key="pc.pc_query_param"
-            :label="pc.pc_name"
-            :url-param="pc.pc_query_param"
+            v-bind:key="pc.id"
+            :label="pc.name"
+            :url-param="pc.url_path"
         />
     </div>
     </q-page>
