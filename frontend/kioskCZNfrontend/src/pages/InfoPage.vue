@@ -8,10 +8,12 @@
             <card-menu 
                 titel="О кадровом центре"
                 icon="info"
+                :link="MAIN_INFO_PC"
             />
             <card-menu
                 titel="Документы"
                 icon="article"
+                :link="DOCUMENTS"
             />
         </div>
 
@@ -21,6 +23,7 @@
 <script setup>
 import { useWindowSize, useElementSize } from '@vueuse/core';
 import { inject, computed, useTemplateRef } from 'vue';
+import { DOCUMENTS, MAIN_INFO_PC } from 'src/router/pathName';
 
 import TitelPage from 'src/components/TitelPage.vue';
 import CardMenu from 'src/components/CardMenu.vue';

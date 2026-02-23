@@ -39,6 +39,20 @@ class PCHeadInfoPhone(models.Model):
         verbose_name_plural = 'Номера телефонов руководителей КЦ'
         db_table = 'pc_head_info_phone'
 
+class PCHeadInfoEmail(models.Model):
+    """Электронная почта руководителя КЦ"""
+    pc_head_info = models.ForeignKey(verbose_name=PC_HEAD_INFO_NAME, to=PCHeadInfo, on_delete=models.CASCADE)
+    email = models.EmailField(verbose_name='Почта рукводителя')
+    priority = models.PositiveIntegerField(verbose_name=DISPLAY_ORDER_NAME, default=999)
+
+    def __str__(self) -> str:
+        return f'Email {self.pc_head_info}'
+    
+    class Meta:
+        verbose_name = 'Email руководителя КЦ'
+        verbose_name_plural = 'Email руководителей КЦ'
+        db_table = 'pc_head_info_email'
+
 
 class PCHeadInfoTimeTable(models.Model):
     """Часы приема руководителя КЦ"""

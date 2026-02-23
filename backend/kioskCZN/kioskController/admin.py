@@ -8,12 +8,12 @@ InfoMaterials, PCParentOrganization, PCParentOrganizationPhone,\
 PCParentOrganizationAddress, PCParentOrganizationEmail, PCHeadInfo,\
 PCHeadInfoPhone, PCHeadInfoTimeTable, PC, PCSocialNetworks,\
 PCAddress, PCPhone, PCEmail, PCSites, PCTimeTable, Post,\
-Room, Service, Worker, WorkerInDepartment
+Room, Service, Worker, WorkerInDepartment, PCHeadInfoEmail, ShowDepartmentInOtherPC
 
 
-admin.site.site_header = 'Киос ЦЗН МО | Админ-панель'  # Отображается вверху
-admin.site.site_title = 'Киос ЦЗН МО | Админ-панель'  # Title страницы
-admin.site.index_title = 'Киос ЦЗН МО | Админ-панель'  # На главной после входа
+admin.site.site_header = 'Киоск ЦЗН МО | Админ-панель'  # Отображается вверху
+admin.site.site_title = 'Киоск ЦЗН МО | Админ-панель'  # Title страницы
+admin.site.index_title = 'Киоск ЦЗН МО | Админ-панель'  # На главной после входа
 
 
 @admin.register(APIkey)
@@ -101,22 +101,45 @@ class InfoMaterialsAdmin(admin.ModelAdmin):
 
 @admin.register(PCParentOrganization)
 class PCParentOrganizationAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "name",
+    ]
+    search_fields = [
+        "name",
+    ]
 
 
 @admin.register(PCParentOrganizationPhone)
 class PCParentOrganizationPhoneAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "org",
+        "phone",
+    ]
+    search_fields = [
+        "org",
+    ]
 
 
 @admin.register(PCParentOrganizationAddress)
 class PCParentOrganizationAddressAdmin(admin.ModelAdmin):
-    pass 
+    list_display = [
+        "org",
+        "address",
+    ]
+    search_fields = [
+        "org",
+    ]
 
 
 @admin.register(PCParentOrganizationEmail)
 class PCParentOrganizationEmailAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+        "org",
+        "email",
+    ]
+    search_fields = [
+        "org",
+    ]
 
 
 @admin.register(PCHeadInfo)
@@ -124,30 +147,64 @@ class PCHeadInfoAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
     ]
+    list_display = [
+        "pc",
+        "worker",
+        "name",
+    ]
 
 
 @admin.register(PCHeadInfoPhone)
 class PCHeadInfoPhoneAdmin(admin.ModelAdmin):
     list_filter = [
+        "pc_head_info__pc",
+    ]
+    list_display = [
         "pc_head_info",
+        "phone",
+    ]
+
+@admin.register(PCHeadInfoEmail)
+class PCHeadInfoEmailAdmin(admin.ModelAdmin):
+    list_filter = [
+        "pc_head_info__pc",
+    ]
+    list_display = [
+        "pc_head_info",
+        "email",
     ]
 
 @admin.register(PCHeadInfoTimeTable)
 class PCHeadInfoTimeTableAdmin(admin.ModelAdmin):
     list_filter = [
+        "pc_head_info__pc",
+    ]
+    list_display = [
         "pc_head_info",
+        "day_of_week",
+        "start_time",
+        "end_time"
     ]
 
 
 @admin.register(PC)
 class PCAdmin(admin.ModelAdmin):
-    pass
+    list_display = [
+      "name",
+      "url_path",
+      "id_parsing",
+    ]
 
 
 @admin.register(PCSocialNetworks)
 class PCSocialNetworksAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
+    ]
+    list_display = [
+       "pc",
+       "name",
+       "link"
     ]
 
 
@@ -156,6 +213,10 @@ class PCAddressAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
     ]
+    list_display = [
+        "pc",
+        "address",
+    ]
 
 
 @admin.register(PCPhone)
@@ -163,23 +224,46 @@ class PCPhoneAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
     ]
+    list_display = [
+        "pc",
+        "name",
+        "phone",
+    ]
 
 @admin.register(PCEmail)
 class PCEmailAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
     ]
+    list_display = [
+        "pc",
+        "name",
+        "email",
+    ]
+
 
 @admin.register(PCSites)
 class PCSitesAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
     ]
+    list_display = [
+        "pc",
+        "name",
+        "url",
+    ]
 
 @admin.register(PCTimeTable)
 class PCTimeTableAdmin(admin.ModelAdmin):
     list_filter = [
         "pc",
+    ]
+    list_display = [
+        "pc",
+        "day_of_week",
+        "day_off",
+        "time_start",
+        "time_end"
     ]
 
 
@@ -262,4 +346,19 @@ class WorkerInDepartmentAdmin(admin.ModelAdmin):
 
     list_filter = [
         "dep__pc",
+    ]
+
+@admin.register(ShowDepartmentInOtherPC)
+class ShowDepartmentInOtherPCAdmin(admin.ModelAdmin):
+    list_display = [
+        "pc",
+        "dep",
+    ]
+
+    list_filter = [
+        "pc",
+    ]
+
+    search_fields = [
+        "dep",
     ]

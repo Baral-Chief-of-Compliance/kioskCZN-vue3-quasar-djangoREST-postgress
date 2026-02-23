@@ -20,9 +20,16 @@ import { INDEX, CHOOSE_PC } from 'src/router/pathName';
 const pcStore = usePCStore()
 const router = useRouter()
 
+const props = defineProps({
+    pathName: {
+        type: String,
+        default: INDEX
+    }
+})
+
 function goHome(){
     if (pcStore.getUrlParam != null){
-        router.push({name: INDEX, params: {pc: pcStore.getUrlParam}})
+        router.push({name: props.pathName, params: {pc: pcStore.getUrlParam}})
     }else{
         router.push({name: CHOOSE_PC})
     }

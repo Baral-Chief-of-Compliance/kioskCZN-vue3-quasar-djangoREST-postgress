@@ -56,6 +56,6 @@ class PCParentOrganizationEmail(models.Model):
         return f'Email "{self.org}"'
     
     class Meta:
-        verbose_name = 'Электроный адрес'
-        verbose_name_plural = 'Элктронные адреса выщестоящих организаций'
+        verbose_name = 'Email вышестоящей организации'
+        verbose_name_plural = 'Email вышестоящих организаций'
         db_table = 'pc_parent_organization_email'

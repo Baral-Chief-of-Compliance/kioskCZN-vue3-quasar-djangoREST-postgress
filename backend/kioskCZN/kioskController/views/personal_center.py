@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 
 from kioskController.models import PC, Department
-from kioskController.serializers import PCSerializer
+from kioskController.serializers import PCSerializer, PCDetailSerializer
 
 
 class PCViewSet(viewsets.ModelViewSet):
@@ -13,6 +13,12 @@ class PCViewSet(viewsets.ModelViewSet):
     serializer_class = PCSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = '__all__'
+
+    def get_serializer_class(self):
+        if self.action == "retrieve":
+            return PCDetailSerializer
+        else:
+            return PCSerializer
 
     @action(detail=True, methods=['get'])
     def get_departments(self, request, pk=None):

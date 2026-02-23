@@ -9,3 +9,5 @@ export const EMPLOYEES = 'employees' //Сотрудники
 export const MAP = 'map' //Интерактивная карта
 export const INDEX = 'index' //Главная страница для кадрового центра
 export const CHOOSE_PC = 'choose_pc' //Страница, где надо указать, какой вы КЦ выберете
+export const DOCUMENTS = 'documents' //Страница, где отображаются документа КЦ
+export const MAIN_INFO_PC = 'main_info_pc' //Информация о кадровом центре

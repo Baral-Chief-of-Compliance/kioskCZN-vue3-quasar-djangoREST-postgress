@@ -13,6 +13,7 @@ class PC(models.Model):
     parent_org = models.ForeignKey(verbose_name=PC_PARENT_OGR, to=PCParentOrganization, on_delete=models.CASCADE, blank=True, null=True)
     url_path= models.CharField(verbose_name="Наименование url пути", unique=True)
     id_parsing = models.IntegerField(verbose_name="Id идентификации КЦ в телефонном справочнике", unique=True)
+    main = models.BooleanField(verbose_name='Управляющий центр', default=False)
 
     def __str__(self) -> str:
         return self.name
@@ -86,8 +87,8 @@ class PCEmail(models.Model):
         return f'email "{self.email}" {self.pc}'
     
     class Meta:
-        verbose_name = 'Электронная почта КЦ'
-        verbose_name_plural = 'Электронные почты КЦ'
+        verbose_name = 'Email КЦ'
+        verbose_name_plural = 'Email КЦ'
         db_table = 'pc_email'
 
 
