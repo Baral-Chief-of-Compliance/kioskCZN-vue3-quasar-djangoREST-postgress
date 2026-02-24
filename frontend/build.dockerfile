@@ -1,15 +1,20 @@
-FROM node:lts-alpine3.22
+FROM node:24-bullseye-slim
 
 
 RUN mkdir -p /home/frontend
 
 WORKDIR /home/frontend
 
-# Копируем директорию kioskCZNfrontend в контейнер
-COPY kioskCZNfrontend/ .
+# Копируем package-lock.jsonв контейнер
+COPY kioskCZNfrontend/package-lock.json .
+
+# Копируем package.json контейнер
+COPY kioskCZNfrontend/package.json .
+
 
 # Устанавливаем зависимости
-RUN npm install
+RUN npm ci --ignore-scripts || npm install --force
+
 
 # Проверяем версию Node.js при запуске контейнера
 CMD ["node", "--version"]
