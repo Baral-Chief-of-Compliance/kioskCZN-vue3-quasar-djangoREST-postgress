@@ -46,24 +46,24 @@ services:
       - ./kiosk_media:/home/django-app/kioskCZN/media
       - ./kioskContollerAppMigrations:/home/django-app/kioskCZN/kioskController/migrations
 
-  frontend:
-    container_name: kiosk-v2-frontend
-    build:
-      context: ./frontend
-      dockerfile: prod.dockerfile
-    env_file: ./dev-env/frontend.env
+  # frontend:
+  #   container_name: kiosk-v2-frontend
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: prod.dockerfile
+  #   env_file: ./dev-env/frontend.env
 
-    ports:
-      - 3000:9000
-    depends_on:
-      - backend
+  #   ports:
+  #     - 3000:9000
+  #   depends_on:
+  #     - backend
 
-    networks:
-      - kiosk-network
+  #   networks:
+  #     - kiosk-network
 
-    volumes:
-      - ./frontend/kioskCZNfrontend/src:/home/frontend/src
-      - ./frontend/kioskCZNfrontend/public:/home/frontend/public
+  #   volumes:
+  #     - ./frontend/kioskCZNfrontend/src:/home/frontend/src
+  #     - ./frontend/kioskCZNfrontend/public:/home/frontend/public
 
   staff-scraper:
     container_name: kiosk-v2-staff-scraper

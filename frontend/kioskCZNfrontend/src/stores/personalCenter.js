@@ -13,7 +13,11 @@ export const usePCStore = defineStore('personalCenter', {
         getPCId: (state) => state.pcId,
         getPCName: (state) => state.pcName,
         getEmptyStatus: (state) => {
-            return state.pcId === null
+            if (state.pcId){
+                return false
+            }else{
+                return true
+            }
         }
     },
 

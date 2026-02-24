@@ -40,7 +40,7 @@ export default defineConfig((/* ctx */) => {
         API:  process.env.API || "http://localhost:4444/api/v1.0/czn-kiosk/"
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: 'history', // available values: 'hash', 'history'
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,

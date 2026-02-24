@@ -16,35 +16,18 @@
 </template>
 
 <script setup>
-import { onMounted, provide, useTemplateRef } from 'vue';
+import { provide, useTemplateRef } from 'vue';
 
 import { useElementSize } from '@vueuse/core';
-import { useRoute, useRouter } from 'vue-router';
 
 import MainLogo from 'src/components/MainLogo.vue';
 import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
 import CurrentDateTime from 'src/components/CurrentDateTime.vue';
-import { usePCStore } from 'src/stores/personalCenter';
-import { CHOOSE_PC } from 'src/router/pathName';
 
 const headerEl = useTemplateRef('headerEl')
 const { height: headerHeight } = useElementSize(headerEl)
 
 provide('headerHeight', headerHeight)
-
-
-const route = useRoute()
-const router = useRouter()
-
-const pcStore = usePCStore()
-
-onMounted(() => {
-  if (route.name != CHOOSE_PC){
-    if (pcStore.getEmptyStatus){
-      router.push({name: CHOOSE_PC})
-    }
-  }
-})
 
 </script>
 
