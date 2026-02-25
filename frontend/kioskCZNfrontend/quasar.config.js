@@ -37,7 +37,7 @@ export default defineConfig((/* ctx */) => {
         node: 'node20',
       },
       env: {
-        API:  process.env.API || "http://localhost:4444/api/v1.0/czn-kiosk/"
+        API:  process.env.API || "http://localhost:3001/api/v1.0/czn-kiosk/"
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'

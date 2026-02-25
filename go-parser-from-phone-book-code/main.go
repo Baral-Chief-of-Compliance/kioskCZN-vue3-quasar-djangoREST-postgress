@@ -40,7 +40,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	for i := 1; i < 15; i++ {
+	for i := 1; i < 16; i++ {
 		url := fmt.Sprintf("%s/%d.html", url_base, i)
 		logMessage("Начинаем загрузку с URL: " + url)
 
