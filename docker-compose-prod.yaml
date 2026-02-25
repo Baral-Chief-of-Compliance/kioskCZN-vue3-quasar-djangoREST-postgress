@@ -19,7 +19,6 @@ services:
     image: postgres:17.6-trixie
 
     volumes:
-      - ./db_init:/docker-entrypoint-initdb.d
       - ./database/data:/var/lib/postgresql/data
 
     networks:
