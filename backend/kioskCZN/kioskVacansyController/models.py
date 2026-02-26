@@ -7,14 +7,14 @@ class Districts(models.Model):
     name = models.CharField(verbose_name='Наименование района', max_length=256)
     min_code = models.BigIntegerField(verbose_name='Наименьший порог кода района')
     max_code = models.BigIntegerField(verbose_name='Наибольший порог кода района')
-    work_place = models.BigIntegerField(verobose_name='Кол-во рабочих мест')
+    work_places = models.BigIntegerField(verbose_name='Кол-во рабочих мест', default=0)
 
     def __str__(self) -> str:
         return self.name
 
     class Meta:
         verbose_name = 'Район'
-        verbose_name_plural = 'Района'
+        verbose_name_plural = 'Районы'
         db_table = 'vacansy_district'
 
 

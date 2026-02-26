@@ -15,6 +15,8 @@ python3 ./kioskCZN/manage.py migrate
 echo "Выполняем миграции базы данных приложения kioskController..."
 python3 ./kioskCZN/manage.py migrate kioskController
 
+echo "Выполняем миграции базы данных приложения kioskVacansyController..."
+python3 ./kioskCZN/manage.py migrate kioskVacansyController
 
 #Проверяем, существует ли суперпользователь
 
@@ -34,6 +36,9 @@ fi
 
 echo "Создание кадровых центров в базе"
 python3 ./kioskCZN/manage.py settings_personal_centers
+
+echo "Создание районов для парсинга вакансий"
+python3 ./kioskCZN/manage.py settings_districts
 
 
 echo "Запуск серверной части киосков ЦЗН МО..."
