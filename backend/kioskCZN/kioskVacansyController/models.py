@@ -20,84 +20,87 @@ class Districts(models.Model):
 
 class Vacansy(models.Model):
     """Вакансия"""
-    id = models.CharField(verbose_name='id', max_length=256, primary_key=True)
-    stateRegionCode = models.CharField(verbose_name='stateRegionCode', default='Отсутствует')
-    vacancyName = models.CharField(verbose_name='vacancyName', default='Отсутствует', max_length=512)
-    codeProfessionalSphere = models.CharField(verbose_name='codeProfessionalSphere', default='Отсутствует', max_length=512)
-    professionalSphereName = models.CharField(verbose_name='professionalSphereName', default='Отсутствует', max_length=512)
-    vacancyAddress = models.CharField(verbose_name='vacancyAddress', default='Отсутствует', max_length=512)
-    vacancyAddressAdditionalInfo  = models.CharField(verbose_name='vacancyAddressAdditionalInfo', default='Отсутствует', max_length=512)
-    salary = models.CharField(verbose_name='salary', default='Отсутствует', max_length=512)
-    salaryMin = models.IntegerField(verbose_name='salaryMin', default=0)
-    salaryMax = models.IntegerField(verbose_name='salaryMax', default=999999)
-    socialProtecteds = models.CharField(verbose_name='socialProtecteds', default='Отсутствует')
-    languageKnowledge = models.CharField(verbose_name='languageKnowledge', default='Отсутствует') #по данным с вакансиям, тут приходит list, но нам нужно сюда отпралвять строку просто с языками через ,
-    busyType = models.CharField(verbose_name='busyType', default='Отсутствует')
-    skills : str = Field(default='Отсутствует') #аналогично, как с languageKnowledge, также строка с навыками через ,
+    id = models.CharField(verbose_name='id', max_length=256, primary_key=True, db_column='id')
+    stateRegionCode = models.CharField(verbose_name='stateRegionCode', default='Отсутствует', db_column='stateRegionCode')
+    vacancyName = models.CharField(verbose_name='vacancyName', default='Отсутствует', max_length=512, db_column='vacancyName')
+    codeProfessionalSphere = models.CharField(verbose_name='codeProfessionalSphere', default='Отсутствует', max_length=512, db_column='codeProfessionalSphere')
+    professionalSphereName = models.CharField(verbose_name='professionalSphereName', default='Отсутствует', max_length=512, db_column='professionalSphereName')
+    vacancyAddress = models.CharField(verbose_name='vacancyAddress', default='Отсутствует', max_length=512, db_column='vacancyAddress')
+    vacancyAddressAdditionalInfo  = models.CharField(verbose_name='vacancyAddressAdditionalInfo', default='Отсутствует', max_length=512, db_column='vacancyAddressAdditionalInfo')
+    salary = models.CharField(verbose_name='salary', default='Отсутствует', max_length=512, db_column='salary')
+    salaryMin = models.IntegerField(verbose_name='salaryMin', default=0, db_column='salaryMin')
+    salaryMax = models.IntegerField(verbose_name='salaryMax', default=999999, db_column='salaryMax')
+    socialProtecteds = models.TextField(verbose_name='socialProtecteds', default='Отсутствует', db_column='socialProtecteds')
+    languageKnowledge = models.TextField(verbose_name='languageKnowledge', default='Отсутствует', db_column='languageKnowledge') #по данным с вакансиям, тут приходит list, но нам нужно сюда отпралвять строку просто с языками через ,
+    busyType = models.TextField(verbose_name='busyType', default='Отсутствует', db_column='busyType')
+    skills = models.TextField(verbose_name='skills', default='Отсутствует', db_column='skills') #аналогично, как с languageKnowledge, также строка с навыками через ,
     #ключи с workPlace
-    workPlaceForeign : Optional[bool] = Field(default=None)
-    workPlaceOrdinary : Optional[bool] = Field(default=None)
-    workPlaceQuota : Optional[bool] = Field(default=None)
-    workPlaceSpecial : Optional[bool] = Field(default=None)
+    workPlaceForeign = models.BooleanField(verbose_name='workPlaceForeign', blank=True, null=True, db_column='workPlaceForeign')
+    workPlaceOrdinary = models.BooleanField(verbose_name='workPlaceOrdinary', blank=True, null=True, db_column='workPlaceOrdinary')
+    workPlaceQuota = models.BooleanField(verbose_name='workPlaceQuota', blank=True, null=True, db_column='workPlaceQuota')
+    workPlaceSpecial = models.BooleanField(verbose_name='workPlaceSpecial', blank=True, null=True, db_column='workPlaceSpecial')
     #конец workPlace
 
-    trainingDays : int = Field(default=0)
-    shift : str = Field(default='Отсутствует')  #аналогично, как с languageKnowledge, также строка с смежность или че через , хз я не понял
-    hardSkills : str = Field(default='Отсутствует') #аналогично, как с languageKnowledge, также строка через ,
-    softSkills : str = Field(default='Отсутствует') #аналогично, как с languageKnowledge, также строка через ,
-    experienceRequirements : int = Field(default=0)
-    scheduleType : str = Field(default='Отсутствует')
-    careerPerspective : bool = Field(default=False)
-    codeExternalSystem : str = Field(default='Отсутствует')
-    needMedcard : str = Field(default='Отсутствует')
-    sourceType : str = Field(default='Отсутствует')
-    requiredDriveLicense : str = Field(default='Отсутствует')  #аналогично, как с languageKnowledge, также строка через ,
-    changeTime : str = Field(default='Отсутствует')
-    contactPerson : str = Field(default='Отсутствует')
-    fullCompanyName : str = Field(default='Отсутствует')
-    companyBusinessSize : str = Field(default='Отсутствует')
-    dateModify : str = Field(default='Отсутствует')
-    workPlaces : int = Field(default=1)
-    isUzbekistanRecruitment : bool = Field(default=False)
-    federalDistrictCode : int 
-    datePublished : str = Field(default='Отсутствует')
-    accommodationCapability : bool = Field(default=False)
-    foreignWorkersCapability : bool = Field(default=False)
-    isQuoted : bool = Field(default=False)
-    creationDate : str = Field(default='Отсутствует')
-    responsibilities : str = Field(default='Отсутствует')
-    addressCode : int = Field(
-        default=0,
-        sa_column=sa.Column(sa.BigInteger)
-    )
-    regionName : str = Field(default='Отсутствует')
-    status : str = Field(default='Отсутствует')
-    vacancyUrl : str = Field(default='Отсутствует')
+    trainingDays = models.IntegerField(verbose_name='trainingDays', default=0, db_column='trainingDays')
+    shift = models.TextField(verbose_name='shift', default='Отсутствует', db_column='shift')  #аналогично, как с languageKnowledge, также строка с смежность или че через , хз я не понял
+    hardSkills = models.TextField(verbose_name='hardSkills', default='Отсутствует', db_column='hardSkills') #аналогично, как с languageKnowledge, также строка через ,
+    softSkills = models.TextField(verbose_name='softSkills', default='Отсутствует', db_column='softSkills') #аналогично, как с languageKnowledge, также строка через ,
+    experienceRequirements = models.IntegerField(verbose_name='experienceRequirements', default=0, db_column='experienceRequirements')
+    scheduleType = models.TextField(verbose_name='scheduleType', default='Отсутствует', db_column='scheduleType')
+    careerPerspective = models.BooleanField(verbose_name='careerPerspective', default=False, db_column='careerPerspective')
+    codeExternalSystem = models.TextField(verbose_name='codeExternalSystem', default='Отсутствует', db_column='codeExternalSystem')
+    needMedcard = models.TextField(verbose_name='needMedcard', default='Отсутствует', db_column='needMedcard')
+    sourceType = models.TextField(verbose_name='sourceType', default='Отсутствует', db_column='sourceType')
+    requiredDriveLicense = models.TextField(verbose_name='requiredDriveLicense', default='Отсутствует', db_column='requiredDriveLicense')  #аналогично, как с languageKnowledge, также строка через ,
+    changeTime = models.TextField(verbose_name='changeTime', default='Отсутствует', db_column='changeTime')
+    contactPerson = models.TextField(verbose_name='contactPerson', default='Отсутствует', db_column='contactPerson')
+    fullCompanyName = models.TextField(verbose_name='fullCompanyName', default='Отсутствует', db_column='fullCompanyName')
+    companyBusinessSize = models.TextField(verbose_name='companyBusinessSize', default='Отсутствует', db_column='companyBusinessSize')
+    dateModify = models.TextField(verbose_name='dateModify', default='Отсутствует', db_column='dateModify')
+    workPlaces = models.IntegerField(verbose_name='workPlaces', default=1, db_column='workPlaces')
+    isUzbekistanRecruitment = models.BooleanField(verbose_name='isUzbekistanRecruitment', default=False, db_column='isUzbekistanRecruitment')
+    federalDistrictCode = models.IntegerField(verbose_name='federalDistrictCode', default=0, db_column='federalDistrictCode')
+    datePublished = models.TextField(verbose_name='datePublished', default='Отсутствует', db_column='datePublished')
+    accommodationCapability = models.BooleanField(verbose_name='accommodationCapability', default=False, db_column='accommodationCapability')
+    foreignWorkersCapability = models.BooleanField(verbose_name='foreignWorkersCapability', default=False, db_column='foreignWorkersCapability')
+    isQuoted = models.BooleanField(verbose_name='isQuoted', default=False, db_column='isQuoted')
+    creationDate = models.TextField(verbose_name='creationDate', default='Отсутствует', db_column='creationDate')
+    responsibilities = models.TextField(verbose_name='responsibilities',default='Отсутствует', db_column='responsibilities')
+    addressCode = models.BigIntegerField(verbose_name='addressCode', default=0, db_column='addressCode')
+    regionName = models.TextField(verbose_name='regionName', default='Отсутствует', db_column='regionName')
+    status = models.TextField(verbose_name='status', default='Отсутствует', db_column='status')
+    vacancyUrl = models.TextField(verbose_name='vacancyUrl', default='Отсутствует', db_column='vacancyUrl')
     #ключи с geo
-    latitude : Optional[float] = Field(default=0.0)
-    longitude : Optional[float] = Field(default=0.0)
+    latitude = models.BooleanField(verbose_name='latitude', default=0.0, blank=True, null=True, db_column='latitude')
+    longitude = models.BooleanField(verbose_name='longitude', default=0.0, blank=True, null=True, db_column='longitude')
     #конец ключей с geo
 
     #ключи с educationRequirements
-    educationType : str = Field(default='Отсутствует')
+    educationType = models.TextField(verbose_name='educationType', default='Отсутствует', blank=True, null=True, db_column='educationType')
     #конец ключей с educationRequirements (но не факт)
 
     # есть такой ключи premium там идет {} хз зачем там
 
     #ключи с company
-    companyCode : str = Field(default='Отсутствует')
-    url : str = Field(default='Отсутствует')
-    inn : str = Field(default='Отсутствует')
-    kpp : str = Field(default='Отсутствует')
-    ogrn : str = Field(default='Отсутствует')
+    companyCode = models.TextField(verbose_name='companyCode', default='Отсутствует', db_column='companyCode')
+    url = models.TextField(verbose_name='url', default='Отсутствует', db_column='url')
+    inn = models.TextField(verbose_name='inn', default='Отсутствует', db_column='inn')
+    kpp = models.TextField(verbose_name='kpp', default='Отсутствует', db_column='kpp')
+    ogrn = models.TextField(verbose_name='ogrn', default='Отсутствует', db_column='ogrn')
     #конец ключей с company
 
-    isModerated : Optional[bool] = Field(default=None)
-    deleted : Optional[bool] = Field(default=None)
-    visibility : str = Field(default='Отсутствует')
+    isModerated = models.BooleanField(verbose_name='isModerated', blank=True, null=True, db_column='isModerated')
+    deleted = models.BooleanField(verbose_name='deleted', blank=True, null=True, db_column='deleted')
+    visibility = models.TextField(verbose_name='visibility', default='Отсутствует', blank=True, null=True, db_column='visibility')
 
     #ключи с contactList
-    contactType : str = Field(default='Отсутствует')
-    contactValue : str = Field(default='Отсутствует')
-    isModerated : Optional[bool] = Field(default=None)
-    isPreferred : Optional[bool] = Field(default=None)
+    contactType = models.TextField(verbose_name='contactType', default='Отсутствует', db_column='contactType')
+    contactValue = models.TextField(verbose_name='contactValue', default='Отсутствует', db_column='contactValue')
+    isModerated = models.BooleanField(verbose_name='isModerated', null=True, blank=True, db_column='isModerated')
+    isPreferred = models.BooleanField(verbose_name='isPreferred', null=True, blank=True, db_column='isPreferred')
+
+
+    class Meta:
+        verbose_name = 'Вакансия'
+        verbose_name_plural = 'Вакансии'
+        db_table = 'vacansy'
