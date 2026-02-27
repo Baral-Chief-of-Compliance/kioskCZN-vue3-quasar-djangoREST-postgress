@@ -13,7 +13,7 @@ class Department(models.Model):
     visible = models.BooleanField(verbose_name=DISPLAY_STATUS_NAME, default=False)
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.pc.name} - {self.name}'
     
     class Meta:
         verbose_name = 'Отдел кадрового центра'

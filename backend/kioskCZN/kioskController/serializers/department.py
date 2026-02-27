@@ -1,4 +1,7 @@
+from datetime import datetime
+
 from rest_framework import serializers
+
 
 from kioskController.models import Department, Worker, WorkerInDepartment
 from kioskController.serializers.worker import WorkInDepartmentFullInfoSerializer
@@ -18,9 +21,12 @@ class DepartmentWithModifiedNameSerializer(serializers.ModelSerializer):
 
     def get_workers(self, obj: Department):
         """Получить работников отдела"""
+        today = datetime.today()
+
         worker = WorkerInDepartment.objects.filter(
             dep=obj,
-            visible=True
+            visible=True,
+            date_get_info=today.date()
         ).order_by('-head_of_dep', 'post')
 
         serializer = WorkInDepartmentFullInfoSerializer(worker, many=True)

@@ -20,14 +20,14 @@ class Districts(models.Model):
 
 class Vacansy(models.Model):
     """Вакансия"""
-    id = models.CharField(verbose_name='id', max_length=256, primary_key=True, db_column='id')
-    stateRegionCode = models.CharField(verbose_name='stateRegionCode', default='Отсутствует', db_column='stateRegionCode')
-    vacancyName = models.CharField(verbose_name='vacancyName', default='Отсутствует', max_length=512, db_column='vacancyName')
-    codeProfessionalSphere = models.CharField(verbose_name='codeProfessionalSphere', default='Отсутствует', max_length=512, db_column='codeProfessionalSphere')
-    professionalSphereName = models.CharField(verbose_name='professionalSphereName', default='Отсутствует', max_length=512, db_column='professionalSphereName')
-    vacancyAddress = models.CharField(verbose_name='vacancyAddress', default='Отсутствует', max_length=512, db_column='vacancyAddress')
-    vacancyAddressAdditionalInfo  = models.CharField(verbose_name='vacancyAddressAdditionalInfo', default='Отсутствует', max_length=512, db_column='vacancyAddressAdditionalInfo')
-    salary = models.CharField(verbose_name='salary', default='Отсутствует', max_length=512, db_column='salary')
+    id = models.TextField(verbose_name='id', primary_key=True, db_column='id')
+    stateRegionCode = models.TextField(verbose_name='stateRegionCode', default='Отсутствует', db_column='stateRegionCode')
+    vacancyName = models.TextField(verbose_name='vacancyName', default='Отсутствует', db_column='vacancyName')
+    codeProfessionalSphere = models.TextField(verbose_name='codeProfessionalSphere', default='Отсутствует', db_column='codeProfessionalSphere')
+    professionalSphereName = models.TextField(verbose_name='professionalSphereName', default='Отсутствует', db_column='professionalSphereName')
+    vacancyAddress = models.TextField(verbose_name='vacancyAddress', default='Отсутствует', db_column='vacancyAddress')
+    vacancyAddressAdditionalInfo  = models.TextField(verbose_name='vacancyAddressAdditionalInfo', default='Отсутствует', db_column='vacancyAddressAdditionalInfo')
+    salary = models.TextField(verbose_name='salary', default='Отсутствует', db_column='salary')
     salaryMin = models.IntegerField(verbose_name='salaryMin', default=0, db_column='salaryMin')
     salaryMax = models.IntegerField(verbose_name='salaryMax', default=999999, db_column='salaryMax')
     socialProtecteds = models.TextField(verbose_name='socialProtecteds', default='Отсутствует', db_column='socialProtecteds')

@@ -73,6 +73,7 @@ def main():
                         if err:
                             logging.error('while add vacansy into db {}'.format(err))
 
+        logging.error('finish get vacansy from open data')
         time.sleep(3600)
 
 
