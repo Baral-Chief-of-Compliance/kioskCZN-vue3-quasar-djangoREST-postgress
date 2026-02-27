@@ -74,6 +74,19 @@ services:
     networks:
       - kiosk-network
 
+  vacansy-scraper:
+    container_name: kiosk-czn-vacansy-scraper
+    build:
+      context: ./vacansy-scraper
+      dockerfile: prod.dockerfile
+    env_file: ./dev-env/vacansy-scraper.env
+
+    volumes:
+      - ./logs:/home/vacansy-scraper/logs
+
+    networks:
+     - kiosk-network
+
 
 networks:
   kiosk-network:

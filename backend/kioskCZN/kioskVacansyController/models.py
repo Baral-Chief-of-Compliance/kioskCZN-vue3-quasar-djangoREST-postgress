@@ -71,8 +71,8 @@ class Vacansy(models.Model):
     status = models.TextField(verbose_name='status', default='Отсутствует', db_column='status')
     vacancyUrl = models.TextField(verbose_name='vacancyUrl', default='Отсутствует', db_column='vacancyUrl')
     #ключи с geo
-    latitude = models.BooleanField(verbose_name='latitude', default=0.0, blank=True, null=True, db_column='latitude')
-    longitude = models.BooleanField(verbose_name='longitude', default=0.0, blank=True, null=True, db_column='longitude')
+    latitude = models.FloatField(verbose_name='latitude', default=0.0, blank=True, null=True, db_column='latitude')
+    longitude = models.FloatField(verbose_name='longitude', default=0.0, blank=True, null=True, db_column='longitude')
     #конец ключей с geo
 
     #ключи с educationRequirements

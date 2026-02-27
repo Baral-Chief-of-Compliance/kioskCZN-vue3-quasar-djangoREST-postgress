@@ -22,6 +22,7 @@ class VacansyAdmin(admin.ModelAdmin):
         'vacancyName',
         'salaryMin',
         'salaryMax',
+        'workPlaces'
     ]
 
     search_fields = [
