@@ -42,6 +42,10 @@ class WorkInDepartmentFullInfoSerializer(serializers.ModelSerializer):
         'get_room_id'
     )
 
+    room_show = serializers.SerializerMethodField(
+        'get_room_show_status'
+    )
+
     floor = serializers.SerializerMethodField(
         'get_floor'
     )
@@ -109,3 +113,15 @@ class WorkInDepartmentFullInfoSerializer(serializers.ModelSerializer):
                 None
         else:
             return None
+        
+    def get_room_show_status(self, obj: WorkerInDepartment):
+        room_id = self.get_room_id(obj)
+
+        if room_id:
+            room = obj.worker.room
+            if room.vector_info:
+                return True
+            else:
+                return False
+        else:
+            return False

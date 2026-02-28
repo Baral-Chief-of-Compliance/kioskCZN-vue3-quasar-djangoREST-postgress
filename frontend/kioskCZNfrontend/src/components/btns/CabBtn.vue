@@ -5,6 +5,7 @@
         unelevated
         color="orange"
         no-caps
+        :disable="props.disable"
     >
         <span>
             <span v-if="props.showCabinetLabele">каб. </span>
@@ -27,6 +28,11 @@ const props = defineProps({
         default: 3
     },
     showCabinetLabele: {
+        type: Boolean,
+        default: false
+    },
+
+    disable:{
         type: Boolean,
         default: false
     }

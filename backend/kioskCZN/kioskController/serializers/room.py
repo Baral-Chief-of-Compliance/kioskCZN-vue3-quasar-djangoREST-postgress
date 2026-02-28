@@ -3,6 +3,7 @@ from rest_framework import serializers
 from kioskController.models import Room
 
 
+
 class RoomSerializer(serializers.ModelSerializer):
 
     class Meta:

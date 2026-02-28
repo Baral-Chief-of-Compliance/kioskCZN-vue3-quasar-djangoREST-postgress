@@ -23,8 +23,8 @@
                 <service-name 
                     :label="departmentsStore.getActiveDepartmentName"
                     class="q-mb-sm"
+                    v-model="departmentNameHeight"
                 />
-
                 <scroll-area 
                     class="q-mt-xl"
                     v-if="departmentsStore.getWorkersFromActiveDep.length > 0"
@@ -38,6 +38,7 @@
                         :floor="emp.floor"
                         :room="emp.room_name"
                         :post="emp.post_name"
+                        :disable-cab-btn="!emp.room_show"
                     />
                 </scroll-area>
 
@@ -73,12 +74,14 @@ const loading = ref(true)
 const headerHeight = inject('headerHeight')
 const {height: windowHeight } = useWindowSize()
 
+const departmentNameHeight = ref(0)
+
 const loadingHeight = computed(() => {
     return  `${windowHeight.value - headerHeight.value}px`
 })
 
 const emploerListHeight = computed(() => {
-    return  `${windowHeight.value - (headerHeight.value + 200)}px`
+    return  `${windowHeight.value - (headerHeight.value + departmentNameHeight.value + 150)}px`
 })
 
 //Получить отделы кадрового центра
