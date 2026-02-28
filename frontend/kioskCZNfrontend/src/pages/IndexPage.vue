@@ -81,16 +81,18 @@ const menuPoints = [
 ]
 
 onMounted(async() => {
-  try{
-    const res = await getPersonalCenterData(route.params.pc)
-    if (res.length > 0){
-      pcStore.setStore(res[0])
-    }else{
-      router.push({name: CHOOSE_PC})
-    }
-  } catch(err){
-    console.error(err)
-    router.push({name: CHOOSE_PC})
+  if (pcStore.pcId === null){
+      try{
+        const res = await getPersonalCenterData(route.params.pc)
+        if (res.length > 0){
+          pcStore.setStore(res[0])
+        }else{
+          router.push({name: CHOOSE_PC})
+        }
+      } catch(err){
+        console.error(err)
+        router.push({name: CHOOSE_PC})
+      }
   }
 })
 </script>

@@ -245,9 +245,9 @@ class WorkeParser(object):
                                                     logging.info(f"add room {em['room']} to pc id={pc['page_id']}")
                                                     em_room = res.json()
                                             else:
-                                                em_room = posts[0]
+                                                em_room = rooms[0]
                                     except Exception as ex:
-                                        logging.error(f'error while make check exist room: {ex }')
+                                        logging.error(f'error while make check exist room: {ex}')
 
                                 # Проверка Сотрудника
                                 employer = None

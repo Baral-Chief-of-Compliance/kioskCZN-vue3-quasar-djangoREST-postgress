@@ -16,18 +16,45 @@
 </template>
 
 <script setup>
-import { provide, useTemplateRef } from 'vue';
+import { provide, useTemplateRef, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 import { useElementSize } from '@vueuse/core';
 
 import MainLogo from 'src/components/MainLogo.vue';
 import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
 import CurrentDateTime from 'src/components/CurrentDateTime.vue';
+import { CHOOSE_PC } from 'src/router/pathName';
+import { usePCStore } from 'src/stores/personalCenter';
+import { getPersonalCenterData } from 'src/axios/personalCenter';
 
 const headerEl = useTemplateRef('headerEl')
 const { height: headerHeight } = useElementSize(headerEl)
 
 provide('headerHeight', headerHeight)
+
+
+const route = useRoute()
+const router = useRouter()
+
+
+const pcStore = usePCStore()
+
+onMounted(async() => {
+  if (route.name != CHOOSE_PC){
+    try{
+      const res = await getPersonalCenterData(route.params.pc)
+      if (res.length > 0){
+        pcStore.setStore(res[0])
+      }else{
+        router.push({name: CHOOSE_PC})
+      }
+    } catch(err){
+      console.error(err)
+      router.push({name: CHOOSE_PC})
+    }
+  }
+})
 
 </script>
 

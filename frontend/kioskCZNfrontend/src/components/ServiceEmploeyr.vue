@@ -1,7 +1,7 @@
 <template>
     <div class="row justify-between q-mb-md">
-        <div class="col">{{ props.post }}</div>
-        <div class="col">{{ props.name }}</div>
+        <div class="col q-mr-xl">{{ props.post }}</div>
+        <div class="col q-mr-xl">{{ props.name }}</div>
         <cab-btn class="col" :room="props.room" :floor="props.floor" />
     </div>
 </template>
