@@ -1,6 +1,7 @@
 from datetime import date
 
 from rest_framework import serializers
+from django.db.models import Subquery, OuterRef
 
 from kioskController.models import Floor, Room, WorkerInDepartment
 
@@ -52,11 +53,22 @@ class RoomWithWorkersSerializer(serializers.ModelSerializer):
         """Получаем всех сотрудников, которые находятся в этой комнате и visible=True"""
         today = date.today()
 
-        workers_in_dep = WorkerInDepartment.objects.filter(
+        # Для каждого worker'а находим ID его записи с наименьшим priority (наивысший приоритет)
+        subquery = WorkerInDepartment.objects.filter(
+            worker=OuterRef('worker'),
             worker__room=obj,
             visible=True,
             date_get_info=today
-        ).select_related('worker', 'post').distinct()
+        ).order_by('post__priority', 'id').values('id')[:1]
+        
+        # Берем только те записи, которые попали в подзапрос (уникальные worker'ы)
+        # и сортируем по приоритету должности
+        workers_in_dep = WorkerInDepartment.objects.filter(
+            id__in=Subquery(subquery),
+            worker__room=obj,
+            visible=True,
+            date_get_info=today
+        ).select_related('worker', 'post').order_by('post__priority')
         
         return WorkerInDepartmentShortSerializer(workers_in_dep, many=True).data
     

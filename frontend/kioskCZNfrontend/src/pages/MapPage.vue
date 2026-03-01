@@ -14,6 +14,43 @@
                     @click="floorsStore.setActiveFloor(index)"
                 />
             </div>
+
+            <div class="flex flex-center q-mt-xl" style="position: relative;">
+                <card-info-room 
+                    v-if="floorsStore.activeRoom"
+                    :name="floorsStore.getActiveRoomName"
+                    :workers="floorsStore.getActiveRoomWorkers"
+                />
+                <img
+                style="height: 776px; width: 1000px; display: block;"
+                :src="floorsStore.getActiveFloorImg"
+                usemap="#pc-map"
+                />
+
+                <svg
+                    viewBox="0 0 1000 776"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"
+                >
+                <polygon
+                    v-if=" floorsStore.activeRoom"
+                    :points=" floorsStore.activeRoom.vector_info"
+                    fill="rgba(255, 0, 0, 0.3)"
+                    stroke="red"
+                    stroke-width="2"
+                />
+                </svg>
+
+                <map name="pc-map">
+                <area
+                    v-for="r in floorsStore.getActiveFloorRooms"
+                    v-bind:key="r.id"
+                    shape="poly"
+                    :coords="r.vector_info"
+                    :alt="r.name"
+                    @click="setActiveRoom(r)"
+                >
+                </map>
+            </div>
         </div>
         <not-found-content v-else :height="loadingHeight" />
     </q-page>
@@ -29,6 +66,7 @@ import { getFloorsFromPC } from 'src/axios/floors';
 import TitelPage from 'src/components/TitelPage.vue';
 import NotFoundContent from 'src/components/NotFoundContent.vue';
 import LoadingSpinner from 'src/components/LoadingSpinner.vue';
+import CardInfoRoom from 'src/components/CardInfoRoom.vue';
 
 
 const floorsStore = useFloorsStore()
@@ -85,6 +123,10 @@ const floorBtnClass = computed(() => {
 
 })
 
+const setActiveRoom = (room) => {
+    floorsStore.activeRoom = room
+}
+
 
 onMounted(async () => {
     await getPCFloors()
@@ -92,6 +134,7 @@ onMounted(async () => {
 
 
 onUnmounted(() => {
+    floorsStore.$reset()
     if (unsubscribePCStoreAction){
         unsubscribePCStoreAction()
     }
