@@ -37,6 +37,7 @@
                         :name="emp.fio"
                         :floor="emp.floor"
                         :room="emp.room_name"
+                        :room-id="emp.room_id"
                         :post="emp.post_name"
                         :disable-cab-btn="!emp.room_show"
                     />

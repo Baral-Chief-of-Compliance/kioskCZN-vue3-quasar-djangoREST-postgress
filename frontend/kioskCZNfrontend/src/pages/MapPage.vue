@@ -82,6 +82,17 @@ const loadingHeight = computed(() => {
 })
 
 
+const props = defineProps({
+    activeRoomId: {
+        type: Number,
+        default: 0
+    },
+    activeFloor: {
+        type: Number,
+        default: 0
+    }
+})
+
 //Получить этажи кадрового центра
 const getPCFloors = async() => {
     loading.value = true
@@ -93,6 +104,16 @@ const getPCFloors = async() => {
         }
 
         floorsStore.setStore(res.data)
+
+        // проверка если в params параметры этажа и кабинета,
+        // которые необходимо отобразить
+        if (props.activeFloor != 0){
+            floorsStore.findFloor(props.activeFloor)
+        }
+
+        if(props.activeRoomId != 0){
+            floorsStore.setActiveRoom(props.activeRoomId)
+        }
     }
     loading.value = false
 }

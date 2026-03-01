@@ -82,6 +82,24 @@ export const useFloorsStore = defineStore('floors', {
             }
         },
 
+        /**
+         * Найти этаж по его номеру в массиве этажей хранилища
+         * @param {number} floorNumber 
+         */
+        findFloor(floorNumber){
+            const floorIndex = this.floors.findIndex(f => f.number === floorNumber)
+
+            if (floorIndex != -1){
+                this.activeFloorIndex = floorIndex
+            }else{
+                this.activeFloorIndex = 0
+            }
+        },
+
+        /**
+         * Выбрать активную команту по id на текущем этаже
+         * @param {number} id 
+         */
         setActiveRoom(id=0){
             if (this.floors.length > 0){
                 if (this.floors[this.activeFloorIndex].rooms.length > 0){

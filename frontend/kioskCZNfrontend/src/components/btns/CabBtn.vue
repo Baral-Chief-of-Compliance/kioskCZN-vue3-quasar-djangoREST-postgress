@@ -6,6 +6,7 @@
         color="orange"
         no-caps
         :disable="props.disable"
+        @click="goRoomFloor"
     >
         <span>
             <span v-if="props.showCabinetLabele">каб. </span>
@@ -16,11 +17,33 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router';
+import {MAP} from 'src/router/pathName.js';
+
+
+const router = useRouter()
+
+const goRoomFloor = () => {
+    if (!props.disable && props.roomId && props.floor){
+        router.push({
+            name: MAP,
+            query: {
+                roomId: props.roomId,
+                floor: props.floor
+            }
+        }) 
+    }
+}
 
 const props = defineProps({
     room: {
         type: String,
         default: '306'
+    },
+
+    roomId: {
+        type: Number,
+        default: 1
     },
 
     floor: {

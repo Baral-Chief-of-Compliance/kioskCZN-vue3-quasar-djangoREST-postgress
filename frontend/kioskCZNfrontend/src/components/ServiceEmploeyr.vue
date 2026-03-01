@@ -5,6 +5,7 @@
         <cab-btn 
             class="col"
             :room="props.room"
+            :room-id="props.roomId"
             :floor="props.floor" 
             :disable="props.disableCabBtn"
         />
@@ -27,6 +28,11 @@ const props = defineProps({
     room: {
         type: String,
         default: '306'
+    },
+
+    roomId:{
+        type: Number,
+        default: 1
     },
 
     floor: {
