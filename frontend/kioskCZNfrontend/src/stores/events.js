@@ -11,7 +11,7 @@ export const useEventStore = defineStore('events', {
 
     actions: {
         setStore(data){
-            this.events = data?.events
+            this.events = data
         }
     }
 })

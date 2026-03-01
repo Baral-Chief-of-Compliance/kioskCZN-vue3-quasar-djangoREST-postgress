@@ -4,12 +4,22 @@ from kioskController.models import PC, PCSocialNetworks, PCAddress,\
 PCPhone, PCEmail, PCSites, PCTimeTable, PCHeadInfo,\
 PCHeadInfoPhone, PCHeadInfoEmail, PCHeadInfoTimeTable
 
+from kioskController.serializers import PCHeadInfoPhoneSerializer,\
+    PCHeadInfoTimeTableSerializer, PCHeadInfoEmailSerializer, PCParentOrganizationSerializer
+
 
 class PCSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PC
         fields = '__all__'
+
+
+class PCSocialNetworksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PCSocialNetworks
+        fields = '__all__'
+
 
 
 class PCDetailSerializer(serializers.ModelSerializer):
@@ -38,9 +48,18 @@ class PCDetailSerializer(serializers.ModelSerializer):
         'get_head_info'
     )
 
+    parent_org = serializers.SerializerMethodField(
+        'get_parent_org'
+    )
+
     def get_social_networks(self, obj: PC):
         """Получить список социальных сетей КЦ"""
-        pass
+        social_networks = PCSocialNetworks.objects.filter(
+            pc=obj
+        )
+
+        return PCSocialNetworksSerializer(social_networks, many=True).data
+
 
     def get_address(self, obj: PC):
         """Получить адресс кадрового центра"""
@@ -149,9 +168,17 @@ class PCDetailSerializer(serializers.ModelSerializer):
             "head_worker" : None,
             "head_name": None,
             "head_photo": None,
+            "head_phones": [],
+            "head_emails": [],
+            "head_timetable": [],
+
             "main_head_worker": None,
             "main_head_name": None,
-            "main_head_photo": None
+            "main_head_photo": None,
+            "main_head_phones": [],
+            "main_head_emails": [],
+            "main_head_timetable": []
+
         }
 
         if head_info_pc:
@@ -159,16 +186,72 @@ class PCDetailSerializer(serializers.ModelSerializer):
                 results['head_worker'] = head_info_pc.worker.fio
             results['head_name'] = head_info_pc.name
             if head_info_pc.photo:
-                results['head_photo'] = head_info_pc.photo.url
+                request = self.context.get('request')
+                if request:
+                    results['head_photo'] = request.build_absolute_uri(head_info_pc.photo.url)
+
+            # Телефоны директора КЦ
+            pcHeadPhones = PCHeadInfoPhone.objects.filter(
+                pc_head_info=head_info_pc
+            ).order_by('priority')
+
+            results['head_phones'] = PCHeadInfoPhoneSerializer(pcHeadPhones, many=True).data
+
+            # Почты директора КЦ
+            pcHeadEmails = PCHeadInfoEmail.objects.filter(
+                pc_head_info=head_info_pc
+            ).order_by('priority')
+
+            results['head_emails'] = PCHeadInfoEmailSerializer(pcHeadEmails, many=True).data
+
+            # Расписание директора кц 
+            pcHeadTimeTables = PCHeadInfoTimeTable.objects.filter(
+                pc_head_info=head_info_pc
+            ).order_by('day_of_week')
+
+            results['head_timetable'] = PCHeadInfoTimeTableSerializer(pcHeadTimeTables, many=True).data
+            
 
         if head_info_pc_main:
             if head_info_pc_main.worker:
                 results["main_head_worker"] = head_info_pc_main.worker.fio
             results["main_head_name"] = head_info_pc_main.name
             if head_info_pc_main.photo:
-                results["main_head_photo"] = head_info_pc_main.photo.url
+                request = self.context.get('request')
+                if request:
+                    results["main_head_photo"] = request.build_absolute_uri(head_info_pc_main.photo.url)
+
+            # Телефоны директора КЦ
+            pcHeadPhones = PCHeadInfoPhone.objects.filter(
+                pc_head_info=head_info_pc_main
+            ).order_by('priority')
+
+            results['main_head_phones'] = PCHeadInfoPhoneSerializer(pcHeadPhones, many=True).data
+
+            # Почты директора КЦ
+            pcHeadEmails = PCHeadInfoEmail.objects.filter(
+                pc_head_info=head_info_pc_main
+            ).order_by('priority')
+
+            results['main_head_emails'] = PCHeadInfoEmailSerializer(pcHeadEmails, many=True).data
+
+            # Расписание директора кц 
+            pcHeadTimeTables = PCHeadInfoTimeTable.objects.filter(
+                pc_head_info=head_info_pc_main
+            ).order_by('day_of_week')
+
+            results['main_head_timetable'] = PCHeadInfoTimeTableSerializer(pcHeadTimeTables, many=True).data
 
         return results
+    
+
+    def get_parent_org(self, obj: PC):
+        parent_org = obj.parent_org
+        if parent_org:
+            return PCParentOrganizationSerializer(parent_org).data
+        else:
+            return None
+
 
     class Meta:
         model = PC
@@ -181,5 +264,6 @@ class PCDetailSerializer(serializers.ModelSerializer):
             "emails",
             "sites",
             "timetables",
-            "head_info"
+            "head_info",
+            "parent_org"
         ]

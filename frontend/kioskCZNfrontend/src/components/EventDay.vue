@@ -17,12 +17,14 @@
                 <event-info
                     v-else
                     class="q-mb-lg"
-                    v-for="(event, index) in props.events"
+                    v-for="(event, index) in props.events.filter(ev => new Date(ev.date_start).toDateString() === new Date(props.date).toDateString())"
                     v-bind:key="index"
-                    :event-name="event.event_name"
-                    :event-date-start="event.event_start_time"
-                    :event-date-end="event.event_end_time"
+                    :event-name="event.name"
+                    :event-date-start="event.date_start"
+                    :event-date-end="event.date_end"
                     :past-day-status="props.pastDayStatus"
+                    :event-time-start="event.time_start"
+                    :event-time-end="event.time_end"
                 />
             </div>
         </div>
@@ -40,7 +42,7 @@ const dateOfEvent = computed(() => {
     return formatDateToRussian(props.date)
 })
 
-const emptyDay = computed(() => props.events.length > 0 ? false : true)
+const emptyDay = computed(() => props.events.filter(ev => new Date(ev.date_start).toDateString() === new Date(props.date).toDateString()).length > 0 ? false : true)
 
 const dayOfWeekClass = computed(() => ({
     'text-h1': true,

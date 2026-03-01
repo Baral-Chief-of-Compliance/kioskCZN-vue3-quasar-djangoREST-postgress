@@ -1,7 +1,7 @@
 <template>
     <div class="col">
         <div :class="timeEventClass">
-            {{ timeEvent }}
+            <span v-if="props.eventTimeStart && props.eventTimeEnd">{{ showTime(props.eventTimeStart, props.eventTimeEnd) }}</span>
         </div>
         <div :class="eventNameClass">
             {{ props.eventName }}
@@ -13,9 +13,18 @@
 <script setup>
 import { computed } from 'vue'
 
-const timeEvent = computed(() => {
-    return `${props.eventDateStart}-${props.eventDateEnd}`
-})
+
+const showTime = (startTime, endTime) => {
+    const formatTime = (time) => {
+        // Берем только часы и минуты (первые 5 символов)
+        return time.substring(0, 5);
+    };
+    return `${formatTime(startTime)} - ${formatTime(endTime)}`;
+}
+
+// const timeEvent = computed(() => {
+//     return `${props.eventDateStart}-${props.eventDateEnd}`
+// })
 
 const timeEventClass = computed(() => ({
     'text-orange-9': !props.pastDayStatus,
@@ -31,6 +40,14 @@ const props = defineProps({
     eventName : {
         type: String,
         default: "Наименование мероприятия"
+    },
+
+    eventTimeStart: {
+        type: String,
+    },
+    eventTimeEnd: {
+        type: String,
+
     },
 
     eventDateStart : {

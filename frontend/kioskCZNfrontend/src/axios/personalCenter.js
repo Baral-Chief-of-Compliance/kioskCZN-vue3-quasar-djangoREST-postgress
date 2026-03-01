@@ -20,6 +20,20 @@ export async function getPersonalCenterData(urlPCParam){
 
 
 /**
+ * Получить информацию о кадровом центре
+ * @param {number} pcId - id кадрвого центра
+ * @returns {object}
+ */
+export async function getPersonalCenterInfo(pcId){
+    const res = await api.get(
+        `personal_centers/${pcId}/`
+    )
+
+    return res
+}
+
+
+/**
  * Получить все кадровые центры в системе
  * @returns 
  */
