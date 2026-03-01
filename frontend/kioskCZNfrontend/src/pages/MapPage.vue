@@ -114,6 +114,10 @@ const getPCFloors = async() => {
         if(props.activeRoomId != 0){
             floorsStore.setActiveRoom(props.activeRoomId)
         }
+
+        if (floorsStore.activeRoom === null){
+            floorsStore.setActiveRoom()
+        }
     }
     loading.value = false
 }
