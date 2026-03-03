@@ -20,6 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from kioskController import urls
+from kioskVacansyController import urls as kiosk_vacansy_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +28,11 @@ urlpatterns = [
     path('api/v1.0/czn-kiosk/', include((
         urls.urlpatterns,
         'kioskController'
-    ), namespace='kioskController'))
+    ), namespace='kioskController')),
+    path('api/v1.0/czn-kiosk/vacansy-controller/', include((
+        kiosk_vacansy_urls.urlpatterns,
+        'kioskVacansyController'
+    ), namespace='kioskVacansyController')),
 ]
 
 if settings.DEBUG:

@@ -13,7 +13,10 @@
         </q-card-section>
 
         <q-card-actions>
-            <q-icon class="menu-card-icon" :name="icon" :size="sizeIcon +'px'"></q-icon>
+            <div v-if="props.forDistricts" class="menu-card-vacansy-count  text-h4">
+                Кол-во рабочих мест: <span class="text-bold q-ml-md">{{ props.workPlaceCount }}</span>
+            </div>
+            <q-icon v-if="!props.forDistricts" class="menu-card-icon" :name="icon" :size="sizeIcon +'px'"></q-icon>
         </q-card-actions>
     </q-card>
 </template>
@@ -55,6 +58,16 @@ const props = defineProps({
     sizeIcon: {
         type: Number,
         default: 60
+    },
+
+    forDistricts: {
+        type: Boolean,
+        default: false
+    },
+
+    workPlaceCount: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -67,7 +80,9 @@ const setColor = computed(() => {
 })
 
 function goPage(){
-    router.push({name: props.link})
+    if (!props.forDistricts){
+        router.push({name: props.link})
+    }
 }
 
 </script>
@@ -86,5 +101,11 @@ function goPage(){
         position: absolute;
         bottom: 40px;
         right: 40px;
+    }
+
+    .menu-card-vacansy-count{
+        position: absolute;
+        bottom: 40px;
+        left: 40px;
     }
 </style>
