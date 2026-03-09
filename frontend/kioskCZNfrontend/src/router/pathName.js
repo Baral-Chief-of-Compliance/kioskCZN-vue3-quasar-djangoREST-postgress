@@ -11,3 +11,4 @@ export const INDEX = 'index' //Главная страница для кадро
 export const CHOOSE_PC = 'choose_pc' //Страница, где надо указать, какой вы КЦ выберете
 export const DOCUMENTS = 'documents' //Страница, где отображаются документа КЦ
 export const MAIN_INFO_PC = 'main_info_pc' //Информация о кадровом центре
+export const DISTRICT_DETAIL = 'district' //Детальный информация о районе

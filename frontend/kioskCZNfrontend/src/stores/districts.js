@@ -2,7 +2,12 @@ import { defineStore } from "pinia";
 
 export const useDistircts = defineStore('districts', {
     state: () =>({
-        districts: []
+        districts: [],
+        districtId: null,
+        districtName: 'Наименование района',
+        districtMinCode: null,
+        districtMaxCode: null,
+        loading: true
     }),
 
     /**

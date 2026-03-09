@@ -12,3 +12,17 @@ export async function getDistricts(){
 
     return res
 }
+
+
+/**
+ * Получить райно
+ * @param {number} districtId - id района
+ * @returns {object} - объект ответа от backend
+ */
+export async function getDistrictDetail(districtId){
+    const res = await api.get(
+        `vacansy-controller/districts/${districtId}/`
+    )
+
+    return res
+}
