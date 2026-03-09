@@ -12,6 +12,8 @@
                         :titel="d.name"
                         for-districts
                         :work-place-count="d.count_vacansy"
+                        :district-id="d.id"
+                        :link="DISTRICT_DETAIL"
                     />
                 </div>
             </scroll-area>
@@ -32,6 +34,7 @@ import LoadingSpinner from 'src/components/LoadingSpinner.vue';
 import ScrollArea from 'src/components/ScrollArea.vue';
 import { getDistricts } from 'src/axios/districts';
 import CardMenu from 'src/components/CardMenu.vue';
+import { DISTRICT_DETAIL } from 'src/router/pathName';
 
 
 const pcStore = usePCStore()

@@ -68,6 +68,11 @@ const props = defineProps({
     workPlaceCount: {
         type: Number,
         default: 0
+    },
+
+    districtId: {
+        type: Number,
+        default: 0
     }
 })
 
@@ -82,6 +87,13 @@ const setColor = computed(() => {
 function goPage(){
     if (!props.forDistricts){
         router.push({name: props.link})
+    }else{
+        router.push({
+            name: props.link,
+            params: {
+                district_id: props.districtId
+            }
+        })
     }
 }
 
