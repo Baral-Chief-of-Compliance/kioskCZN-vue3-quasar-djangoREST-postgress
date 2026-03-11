@@ -7,6 +7,7 @@ export const useDistircts = defineStore('districts', {
         districtName: null,
         districtMinCode: null,
         districtMaxCode: null,
+        workPlaces: 0
     }),
     actions: {
         /**

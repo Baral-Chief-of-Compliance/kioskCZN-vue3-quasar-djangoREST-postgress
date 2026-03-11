@@ -27,3 +27,17 @@ export async function getVacancies(
     return res
 
 }
+
+
+/**
+ * Получить информацию о вакансии детально
+ * @param {string} id 
+ * @returns 
+ */
+export async function getVacancieDetail(id){
+    const res = await api.get(
+        `vacansy-controller/vacancies/${id}/`, 
+    )
+
+    return res
+}

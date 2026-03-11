@@ -47,15 +47,14 @@ def main():
     time.sleep(30)
     while True:
 
-        err = dbCon.delete_all_vacancies()
-        if err:
-            logging.error('error while delete all vacancies from db: {}'.format(err))
-            sys.exit()
-        else:
-            err, res = vp.get_all_vacansy()
+        err, res = vp.get_all_vacansy()
 
+        if err:
+            logging.error('Error while get_all_vacansy: {}'.format(err))
+        else:
+            err = dbCon.delete_all_vacancies()
             if err:
-                logging.error('Error while get_all_vacansy: {}'.format(err))
+                logging.error('error while delete all vacancies from db: {}'.format(err))
             else:
                 res = res.json()
 

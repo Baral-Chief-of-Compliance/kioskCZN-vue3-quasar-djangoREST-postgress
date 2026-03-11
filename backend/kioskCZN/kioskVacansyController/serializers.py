@@ -24,7 +24,8 @@ class VacansyInListSerializer(serializers.ModelSerializer):
             'salary',
             'salaryMin',
             'salaryMax',
-            'workPlaces'
+            'workPlaces',
+            'fullCompanyName'
         ]
 
 

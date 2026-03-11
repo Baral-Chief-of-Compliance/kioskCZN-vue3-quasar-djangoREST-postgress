@@ -1,5 +1,5 @@
 <template>
-    <q-card class="no-shadow vacansy-card q-mb-md">
+    <q-card @click="showDeatilInfoAboutVacancie" class="no-shadow vacansy-card q-mb-md">
         <q-card-section>
             <div class="vacansy-card-name">{{ props.name }}</div>
             <div class="q-mt-xs vacansy-card-address">{{ props.address }}</div>
@@ -9,6 +9,12 @@
 </template>
 
 <script setup>
+import { useQuasar } from 'quasar';
+
+import VacancieDetailDialog from './VacancieDetailDialog.vue';
+
+
+const $q = useQuasar()
 
 const props = defineProps({
     id:{
@@ -42,6 +48,15 @@ const props = defineProps({
 
 })
 
+const showDeatilInfoAboutVacancie = () => {
+    $q.dialog({
+        component: VacancieDetailDialog,
+        componentProps: {
+            vacancieId: props.id
+        }
+    })
+}
+
 </script>
 
 <style scoped>
@@ -67,9 +82,9 @@ const props = defineProps({
     }
 
     .vacansy-card-address{
-        font-size: 14px;
+        font-size: 13px;
         line-height: 1.286;
-        color: #25282b; 
+        color: #25282b;
     }
 
 </style>

@@ -11,7 +11,7 @@ class ServicesService{
          'services/'
         )
 
-        return res.data
+        return res
     }
 
     /**

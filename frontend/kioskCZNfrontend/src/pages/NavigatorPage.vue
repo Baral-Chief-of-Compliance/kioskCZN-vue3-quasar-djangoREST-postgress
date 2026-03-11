@@ -1,7 +1,8 @@
 <template>
     <q-page>
         <titel-page titel="Навигатор мер поддержки" />
-        <div class="row q-mt-lg q-mx-md" v-if="!servicesStore.getEmptyStatus">
+        <loading-spinner :height="loadingHeight" v-if="loading" />
+        <div class="row q-mt-lg q-mx-md" v-else-if="!servicesStore.getEmptyStatus && !loading">
             <div class="col-4">
                 <scroll-area
                     height="850px"
@@ -17,14 +18,18 @@
                 </scroll-area>
             </div>
             <div class="col-8">
-                <service-name :label="servicesStore.activeService.name" class="q-mb-sm" />
-                <scroll-area height="400px">
+                <service-name 
+                    :label="servicesStore.activeService.name" 
+                    class="q-mb-sm" 
+                    v-model="serviceTitelHeight"
+                />
+                <scroll-area :height="serviceTextHeight">
                 <service-description :raw-html="servicesStore.activeService.description" class="q-mr-xl q-ml-md" />                
                 </scroll-area>
 
                 <scroll-area v-if="
                     !activeServiceWorkersLoading && 
-                    servicesStore.activeServiceWorkers.length > 0
+                    servicesStore.activeServiceWorkers.length > 0 && showWorker
                     " 
                     class="q-mt-xl" 
                     height="380px"
@@ -42,11 +47,11 @@
 
                 </scroll-area>
 
-                <div v-else-if="activeServiceWorkersLoading">
+                <div v-else-if="activeServiceWorkersLoading && showWorker">
                     <loading-spinner height="400px" />
                 </div>
 
-                <empty-block-info text="Ой, на сегодня нет сотрудников, которые предоставляют данную меру поддержки..." v-else />
+                <empty-block-info text="Ой, на сегодня нет сотрудников, которые предоставляют данную меру поддержки..." v-else-if="showWorker" />
             </div>
         </div>
         <notification-empty v-else />
@@ -54,7 +59,9 @@
 </template>
 
 <script setup>
-import { onMounted, watch, ref } from 'vue';
+import { onMounted, watch, ref, inject, computed } from 'vue';
+
+import { useWindowSize } from '@vueuse/core';
 
 import ScrollArea from 'src/components/ScrollArea.vue';
 import TitelPage from 'src/components/TitelPage.vue';
@@ -70,17 +77,44 @@ import LoadingSpinner from 'src/components/LoadingSpinner.vue';
 import EmptyBlockInfo from 'src/components/EmptyBlockInfo.vue';
 
 
+const showWorker = ref(false)
+const loading = ref(true)
+const serviceTitelHeight = ref(0)
+
+const headerHeight = inject('headerHeight')
+const {height: windowHeight } = useWindowSize()
+
+const loadingHeight = computed(() => {
+    return  `${windowHeight.value - headerHeight.value}px`
+})
+
+const serviceTextHeight = computed(() => {
+    return  `${windowHeight.value - (headerHeight.value + serviceTitelHeight.value + 120)}px`
+})
+
 const servicesStore = useServicesStore()
 const pcStore = usePCStore()
 
 const activeServiceWorkersLoading = ref(true)
 
 
-onMounted(async() => {
-    const services = await ServicesService.getAll()
+const getServices = async() => {
+    loading.value = true
+    const res = await ServicesService.getAll();
+
+    if (res.status != 200){
+        return;
+    }
+
     servicesStore.setStore(
-        services
+        res.data
     )
+
+    loading.value = false
+}
+
+onMounted(async() => {
+    await getServices()
 })
 
 watch(() => servicesStore.activeService, async (service) => {

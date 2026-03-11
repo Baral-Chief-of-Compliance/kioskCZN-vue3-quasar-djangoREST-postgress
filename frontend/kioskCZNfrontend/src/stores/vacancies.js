@@ -8,7 +8,7 @@ export const useVacanciesStore = defineStore('vacancies', {
         nextPage: null,
         previousPage: null,
         pages: 0,
-        count: 0
+        count: 0,
     }),
 
     actions: {

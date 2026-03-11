@@ -16,25 +16,34 @@
                 left 
                 @click="goPreviousPage"
             />
-            <scroll-area class="col" :height="scrollHeght">
-                <div class="row justify-between q-mx-xl">
-                    <vacancie-card 
-                        v-for="v in vacanciesStore.vacancies"
-                        v-bind:key="v.id"
-                        :id="v.id"
-                        :name="v.vacancyName"
-                        :salary="v.salary"
-                        :salary-min="v.salaryMin"
-                        :salary-max="v.salaryMax"
-                        :work-places="v.workPlaces"
-                        :address="v.vacancyAddress"
-                    />
-                </div> 
-            </scroll-area>
-            <control-weeks-btn 
+            <div class="col">
+                <scroll-area :height="scrollHeght">
+                    <div class="row justify-between q-mx-xl">
+                        <vacancie-card 
+                            v-for="v in vacanciesStore.vacancies"
+                            v-bind:key="v.id"
+                            :id="v.id"
+                            :name="v.vacancyName"
+                            :salary="v.salary"
+                            :salary-min="v.salaryMin"
+                            :salary-max="v.salaryMax"
+                            :work-places="v.workPlaces"
+                            :address="v.vacancyAddress"
+                        />
+                    </div> 
+                </scroll-area>
+                <vacansy-page-info class="q-mt-md"
+                    :count="vacanciesStore.count"
+                    :work-places="districtsStore.workPlaces"
+                    :current-page="vacanciesStore.currentPage"
+                    :pages="vacanciesStore.pages"
+                />
+            </div>
+            <control-weeks-btn
                 :disable="vacanciesStore.currentPage === vacanciesStore.pages" 
                 @click="goNextPage"
             />
+
         </div>
 
     </q-page>
@@ -58,6 +67,7 @@ import EmptyBlockInfo from 'src/components/EmptyBlockInfo.vue';
 import VacancieCard from 'src/components/VacancieCard.vue';
 import ScrollArea from 'src/components/ScrollArea.vue';
 import ControlWeeksBtn from 'src/components/btns/ControlWeeksBtn.vue';
+import VacansyPageInfo from 'src/components/VacansyPageInfo.vue';
 
 
 const route = useRoute()
@@ -75,7 +85,7 @@ const loadingHeight = computed(() => {
 })
 
 const scrollHeght = computed(() => {
-    return  `${windowHeight.value - (headerHeight.value + 100)}px`
+    return  `${windowHeight.value - (headerHeight.value + 150)}px`
 })
 
 const loading = ref(true)
@@ -95,6 +105,7 @@ const getVacansyFromDistrict = async() => {
         districtsStore.districtName = res.data.name
         districtsStore.districtMinCode = res.data.min_code
         districtsStore.districtMaxCode = res.data.max_code
+        districtsStore.workPlaces = res.data.count_vacansy
 
         const vacanciesRes = await getVacancies(
             districtsStore.districtMinCode,
