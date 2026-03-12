@@ -6,7 +6,7 @@
 >
         <q-card :style="cardStyle">   
             <q-card-section>
-                {{ props.vacancieId }}
+                <div class="vacansy-name">{{ vacansyName }}</div>
             </q-card-section>
             <q-card-section>
                 <loading-spinner 
@@ -14,15 +14,23 @@
                     :height="loadingHeight" 
                 />
                 <scroll-area
+                    v-else
                     :height="loadingHeight" 
                 >
-
+                    <div v-if="vacancieInfo && Object.keys(vacancieInfo).length" class="col q-mx-xl">
+                        <vacancie-row-info
+                        v-for="([key, value], index) in objectEntries"
+                        :key="index"
+                        :titel="key"
+                        :value="value"
+                        />
+                    </div>
                 </scroll-area>
             </q-card-section>
             <q-separator></q-separator>
-            <q-card-actions>
+            <q-card-actions class="justify-end">
                 <q-btn 
-                    class="full-width cancel-btn" 
+                    class="cancel-btn" 
                     label="Закрыть" 
                     @click="onDialogCancel"
                     unelevated
@@ -45,9 +53,26 @@ import { useWindowSize } from '@vueuse/core';
 import LoadingSpinner from './LoadingSpinner.vue';
 import ScrollArea from './ScrollArea.vue';
 import { getVacancieDetail } from 'src/axios/vacancies';
+import VacancieRowInfo from './vacancie/VacancieRowInfo.vue';
 
 const { dialogRef, onDialogHide, onDialogCancel } = useDialogPluginComponent()
 const loading = ref(true)
+
+const vacancieInfo = ref({})
+
+const vacansyName = computed(() => {
+    if (vacancieInfo.value != {}){
+        if ('vacancyName' in vacancieInfo.value){
+            return vacancieInfo.value.vacancyName
+        }
+    }
+
+    return 'Загрузка...'
+})
+
+const objectEntries = computed(() => {
+  return Object.entries(vacancieInfo.value)
+})
 
 const {height: windowHeight, width: windowWidth} = useWindowSize()
 
@@ -79,6 +104,8 @@ const getVacancieDetailById = async () => {
     if (res.status != 200){
         return;
     }
+    console.log(res.data)
+    vacancieInfo.value = res.data
     loading.value = false
 }
 
@@ -89,7 +116,15 @@ onMounted(async() => {
 </script>
 
 <style scoped>
-.cancel-btn{
-    border-radius: 10px !important;
-}
+    .cancel-btn{
+        border-radius: 10px !important;
+    }
+    .vacansy-name{
+        color: #25282b;
+        font-size: 20px;
+        line-height: 1.4;
+        font-weight: 600;
+        letter-spacing: .2px;
+        word-break: break-word;
+    }
 </style>
