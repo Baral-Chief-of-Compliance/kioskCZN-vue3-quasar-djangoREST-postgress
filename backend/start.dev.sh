@@ -40,6 +40,8 @@ python3 ./kioskCZN/manage.py settings_personal_centers
 echo "Создание районов для парсинга вакансий"
 python3 ./kioskCZN/manage.py settings_districts
 
+echo "Создание версии приложения"
+python3 ./kioskCZN/manage.py create_version
 
 echo "Запуск серверной части киосков ЦЗН МО..."
 python3 ./kioskCZN/manage.py runserver 0.0.0.0:8000
