@@ -25,6 +25,8 @@
                         :value="value"
                         />
                     </div>
+
+                    <vacancie-address-info />
                 </scroll-area>
             </q-card-section>
             <q-separator></q-separator>
@@ -54,6 +56,7 @@ import LoadingSpinner from './LoadingSpinner.vue';
 import ScrollArea from './ScrollArea.vue';
 import { getVacancieDetail } from 'src/axios/vacancies';
 import VacancieRowInfo from './vacancie/VacancieRowInfo.vue';
+import VacancieAddressInfo from './vacancie/VacancieAddressInfo.vue';
 
 const { dialogRef, onDialogHide, onDialogCancel } = useDialogPluginComponent()
 const loading = ref(true)

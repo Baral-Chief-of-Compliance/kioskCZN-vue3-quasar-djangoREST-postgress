@@ -27,6 +27,8 @@ import CurrentDateTime from 'src/components/CurrentDateTime.vue';
 import { CHOOSE_PC } from 'src/router/pathName';
 import { usePCStore } from 'src/stores/personalCenter';
 import { getPersonalCenterData } from 'src/axios/personalCenter';
+import { useYandexApiKeyStore } from 'src/stores/yandexApiKeys';
+import { getActiveYandexApiKey } from 'src/axios/yandexKeys';
 
 const headerEl = useTemplateRef('headerEl')
 const { height: headerHeight } = useElementSize(headerEl)
@@ -39,6 +41,16 @@ const router = useRouter()
 
 
 const pcStore = usePCStore()
+const yandexApiKeyStore = useYandexApiKeyStore()
+
+const setYandexApiKey = async() => {
+  const res = await getActiveYandexApiKey();
+  if (res.status != 200){
+    return;
+  }
+
+  yandexApiKeyStore.setKey(res.data)
+}
 
 onMounted(async() => {
   if (route.name != CHOOSE_PC){
@@ -54,6 +66,8 @@ onMounted(async() => {
       router.push({name: CHOOSE_PC})
     }
   }
+
+  await setYandexApiKey()
 })
 
 </script>

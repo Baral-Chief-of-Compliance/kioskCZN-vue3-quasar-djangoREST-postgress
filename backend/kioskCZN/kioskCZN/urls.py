@@ -21,6 +21,7 @@ from django.conf.urls.static import static
 
 from kioskController import urls
 from kioskVacansyController import urls as kiosk_vacansy_urls
+from yandexApiKeys import urls as yandex_api_keys_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +34,11 @@ urlpatterns = [
         kiosk_vacansy_urls.urlpatterns,
         'kioskVacansyController'
     ), namespace='kioskVacansyController')),
+
+    path('api/v1.0/czn-kiosk/yandex-api-keys/', include((
+        yandex_api_keys_urls.urlpatterns,
+        'yandexApiKeys'
+    ), namespace='yandexApiKeys')),
 ]
 
 if settings.DEBUG:
