@@ -113,7 +113,6 @@ const getVacansyFromDistrict = async() => {
             vacanciesStore.currentPage
         )
 
-        console.log(vacanciesRes)
 
         if (vacanciesRes.status != 200){
             return;

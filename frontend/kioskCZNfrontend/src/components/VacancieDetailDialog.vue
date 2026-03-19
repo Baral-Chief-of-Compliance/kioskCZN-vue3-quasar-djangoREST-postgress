@@ -25,8 +25,20 @@
                         :value="value"
                         />
                     </div>
+                    
+                    <vacancie-address-info class="q-mx-xl"
+                        :width="widthForAddress"
+                        :longitude="vacancieInfo['longitude']"
+                        :latitude="vacancieInfo['latitude']"
+                        :vacancy-address="vacancieInfo['vacancyAddress']"
+                        :vacancy-address-additional-info="vacancieInfo['vacancyAddressAdditionalInfo']"
+                    />
 
-                    <vacancie-address-info />
+                    <vacanci-qr-codes 
+                        class="q-mx-xl q-mt-xl"
+                        :vacancy-url="vacancieInfo['vacancyUrl']"
+                        :url="vacancieInfo['url']"
+                    />
                 </scroll-area>
             </q-card-section>
             <q-separator></q-separator>
@@ -57,6 +69,7 @@ import ScrollArea from './ScrollArea.vue';
 import { getVacancieDetail } from 'src/axios/vacancies';
 import VacancieRowInfo from './vacancie/VacancieRowInfo.vue';
 import VacancieAddressInfo from './vacancie/VacancieAddressInfo.vue';
+import VacanciQrCodes from './vacancie/VacanciQrCodes.vue';
 
 const { dialogRef, onDialogHide, onDialogCancel } = useDialogPluginComponent()
 const loading = ref(true)
@@ -89,6 +102,10 @@ const cardStyle = computed(() => ({
     height: '81vh'
 }))
 
+const widthForAddress = computed(() => {
+    return `${windowWidth.value * 0.6}px`
+})
+
 
 defineEmits([
     ...useDialogPluginComponent.emits
@@ -107,7 +124,6 @@ const getVacancieDetailById = async () => {
     if (res.status != 200){
         return;
     }
-    console.log(res.data)
     vacancieInfo.value = res.data
     loading.value = false
 }

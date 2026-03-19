@@ -27,8 +27,6 @@ import BooleanPropery from './BooleanPropery.vue';
 
 const valueShow = {
     professionalSphereName: 'Сфера деятельности',
-    vacancyAddress: 'Адрес вакансии',
-    vacancyAddressAdditionalInfo: 'Адресс доп. информация',
     salary: 'Зарплата',
     salaryMin: 'Минимальная зарплата',
     salaryMax: 'Максимальная зарплата',
@@ -60,11 +58,7 @@ const valueShow = {
     responsibilities: 'Обязанности',
     regionName: 'Регион',
     status: 'Статус',
-    vacancyUrl: 'Ссылка на вакансию',
-    latitude: 'Широта',
-    longitude: 'Долгота',
     educationType: 'Образование',
-    url: 'Ссылка на работодателя',
     inn: 'ИНН',
     kpp: 'КПП',
     ogrn: 'ОГРН',
@@ -72,15 +66,32 @@ const valueShow = {
     contactValue: 'Контактная информация',
     isModerated: 'Вакансия прошла модерацию'
 }
+
+const mapValueShow = {
+    vacancyAddress: 'Адрес вакансии',
+    vacancyAddressAdditionalInfo: 'Адресс доп. информация',
+}
 const showRow = computed(() => {
-    return  props.titel in valueShow
+    if (props.inMap){
+        return props.titel in mapValueShow
+    }else{
+        return  props.titel in valueShow
+    }
 })
 
 const processTitel = computed(() => {
-    if (props.titel in valueShow){
-        return valueShow[props.titel]
+    if (props.inMap){
+        if (props.titel in mapValueShow){
+            return mapValueShow[props.titel]
+        }else{
+            return 'Свойство'
+        }
     }else{
-        return 'Свойство'
+        if (props.titel in valueShow){
+            return valueShow[props.titel]
+        }else{
+            return 'Свойство'
+        }
     }
 })
 
@@ -92,6 +103,11 @@ const props = defineProps({
 
     value: {
         default: 'Значение'
+    },
+
+    inMap: {
+        type: Boolean,
+        default: false
     }
 })
 </script>
