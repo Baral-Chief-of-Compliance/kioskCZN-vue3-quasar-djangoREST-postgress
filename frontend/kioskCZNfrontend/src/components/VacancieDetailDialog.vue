@@ -139,7 +139,7 @@ onMounted(async() => {
         border-radius: 10px !important;
     }
     .vacansy-name{
-        color: #25282b;
+        color: var(--q-dark);
         font-size: 20px;
         line-height: 1.4;
         font-weight: 600;

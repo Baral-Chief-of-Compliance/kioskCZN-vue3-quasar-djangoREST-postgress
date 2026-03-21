@@ -32,9 +32,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { YandexMap, YandexMarker } from 'vue-yandex-maps'
-import VacancieRowInfo from './VacancieRowInfo.vue'
+import { ref, computed } from 'vue';
+import { YandexMap, YandexMarker } from 'vue-yandex-maps';
+import VacancieRowInfo from './VacancieRowInfo.vue';
+import { useYandexApiKeyStore } from 'src/stores/yandexApiKeys';
+
+const yaAPIKeyStore = useYandexApiKeyStore()
+
 
 const props = defineProps({
     latitude: { // Широта
@@ -65,10 +69,10 @@ const mapCenter = computed(() => [props.latitude, props.longitude])
 const zoom = ref(17)
 
 const settings = {
-  apiKey: 'd3fcbd49-8bb4-4daa-b0d5-3a92837a126f',
+  apiKey: yaAPIKeyStore.apiKey,
   lang: 'ru_RU',
   coordorder: 'latlong',
-  debug: false, // Включаем для отладки
+  debug: false,
   version: '2.1'
 }
 

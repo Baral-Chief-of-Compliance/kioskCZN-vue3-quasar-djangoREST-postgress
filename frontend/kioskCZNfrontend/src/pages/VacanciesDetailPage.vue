@@ -17,6 +17,7 @@
                 @click="goPreviousPage"
             />
             <div class="col">
+                <search-vacancie-field />
                 <scroll-area :height="scrollHeght">
                     <div class="row justify-between q-mx-xl">
                         <vacancie-card 
@@ -68,6 +69,7 @@ import VacancieCard from 'src/components/VacancieCard.vue';
 import ScrollArea from 'src/components/ScrollArea.vue';
 import ControlWeeksBtn from 'src/components/btns/ControlWeeksBtn.vue';
 import VacansyPageInfo from 'src/components/VacansyPageInfo.vue';
+import SearchVacancieField from 'src/components/vacancie/SearchVacancieFIeld.vue'
 
 
 const route = useRoute()

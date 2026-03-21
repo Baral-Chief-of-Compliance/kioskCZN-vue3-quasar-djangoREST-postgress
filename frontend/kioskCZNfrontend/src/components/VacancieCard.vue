@@ -64,11 +64,11 @@ const showDeatilInfoAboutVacancie = () => {
         width: 385px;
         height: 172px;
         border-radius: 10px !important;
-        border: 1px solid #e8e8e8;
+        border: 1px solid var(--q-light);
     }
 
     .vacansy-card-name{
-        color: #25282b;
+        color: var(--q-dark);
         line-height: 1.25;
         font-weight: 600;
         font-size: 16px;
@@ -78,13 +78,13 @@ const showDeatilInfoAboutVacancie = () => {
     .vacansy-card-salary{
         font-size: 16px;
         line-height: 1.5;
-        color: #25282b;
+        color: var(--q-dark);
     }
 
     .vacansy-card-address{
         font-size: 13px;
         line-height: 1.286;
-        color: #25282b;
+        color: var(--q-dark);
     }
 
 </style>

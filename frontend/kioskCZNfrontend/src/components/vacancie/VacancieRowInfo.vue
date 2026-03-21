@@ -8,7 +8,7 @@
                 <div 
                     v-if="typeof props.value !== 'boolean' && props.value !== undefined"
                 >
-                    {{ props.value }}
+                    {{ processValue }}
                 </div>
                 <boolean-propery 
                     v-else
@@ -71,6 +71,16 @@ const mapValueShow = {
     vacancyAddress: 'Адрес вакансии',
     vacancyAddressAdditionalInfo: 'Адресс доп. информация',
 }
+
+const dataFormatNameValue = [
+    'datePublished', 'changeTime' 
+]
+
+const dictValueName = [
+    'requiredDriveLicense', 'languageKnowledge',
+    'skills', 'hardSkills', 'softSkills'
+]
+
 const showRow = computed(() => {
     if (props.inMap){
         return props.titel in mapValueShow
@@ -92,6 +102,26 @@ const processTitel = computed(() => {
         }else{
             return 'Свойство'
         }
+    }
+})
+
+const processValue = computed(() => {
+    if (typeof props.value !== 'boolean'){
+        if (dataFormatNameValue.includes(props.titel)){
+            const date = new Date(props.value); 
+            const ruDate = new Intl.DateTimeFormat('ru-RU').format(date);
+            return ruDate;
+        }else if (dictValueName.includes(props.titel)) {
+            if (props.value.length == 0){
+                return 'Не требуются'
+            }else{
+                return props.value
+            }
+        }else{
+            return props.value
+        }
+    }else{
+        return props.value
     }
 })
 
@@ -118,11 +148,11 @@ const props = defineProps({
         letter-spacing: .2px;
         font-size: 20px;
         line-height: 1.4;
-        color: #25282b;
+        color: var(--q-dark);
     }
 
     .info-value{
-        color: #25282b;
+        color: var(--q-dark);
         font-size: 16px;
         font-weight: 500;
         line-height: 1.5;

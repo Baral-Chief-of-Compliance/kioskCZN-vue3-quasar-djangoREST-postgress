@@ -38,7 +38,7 @@ const props = defineProps({
         letter-spacing: .2px;
         font-size: 24px;
         line-height: 1.4;
-        color: #25282b;
+        color: var(--q-dark);
     }
 
 </style>
