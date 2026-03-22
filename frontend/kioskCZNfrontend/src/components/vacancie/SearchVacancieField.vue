@@ -8,16 +8,28 @@
                     color="grey-7"
                 />
             </div>
-            <div :class="searchValueClass">
+            <div
+                :class="searchValueClass">
                 {{ searchValue }}
             </div>
         </div>
+        <q-popup-proxy
+            @hide="closeKeyboard"
+            transition-show="scale"
+            transition-hide="scale"
+            :breakpoint="0"
+            :offset="[-50, 0]"
+        >
+            <keyboard-component />
+        </q-popup-proxy>
     </div>
 </template>
 
 <script setup>
 import { computed, ref, useTemplateRef, watch } from 'vue';
 import { useElementSize } from '@vueuse/core';
+
+import KeyboardComponent from './keyboard/KeyboardComponent.vue';
 
 
 const active = ref(false)
@@ -54,6 +66,13 @@ const useSearchingField = () => {
         searchValue.value = 'Найти...'
     }
 }
+
+const closeKeyboard = () => {
+    if (active.value){
+        active.value = false
+    }
+}
+
 </script>
 
 <style scoped>

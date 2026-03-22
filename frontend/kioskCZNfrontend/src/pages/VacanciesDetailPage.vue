@@ -17,7 +17,10 @@
                 @click="goPreviousPage"
             />
             <div class="col">
-                <search-vacancie-field />
+                <search-vacancie-field 
+                    v-model="searchValueHeight"
+                    class="q-mb-md q-mx-xl"
+                />
                 <scroll-area :height="scrollHeght">
                     <div class="row justify-between q-mx-xl">
                         <vacancie-card 
@@ -69,7 +72,7 @@ import VacancieCard from 'src/components/VacancieCard.vue';
 import ScrollArea from 'src/components/ScrollArea.vue';
 import ControlWeeksBtn from 'src/components/btns/ControlWeeksBtn.vue';
 import VacansyPageInfo from 'src/components/VacansyPageInfo.vue';
-import SearchVacancieField from 'src/components/vacancie/SearchVacancieFIeld.vue'
+import SearchVacancieField from 'src/components/vacancie/SearchVacancieField.vue'
 
 
 const route = useRoute()
@@ -86,8 +89,10 @@ const loadingHeight = computed(() => {
     return  `${windowHeight.value - headerHeight.value}px`
 })
 
+const searchValueHeight = ref(0)
+
 const scrollHeght = computed(() => {
-    return  `${windowHeight.value - (headerHeight.value + 150)}px`
+    return  `${windowHeight.value - (headerHeight.value + 160 + searchValueHeight.value)}px`
 })
 
 const loading = ref(true)
