@@ -12,6 +12,15 @@
                 :class="searchValueClass">
                 {{ searchValue }}
             </div>
+            <div class="col justify-end flex">
+                <q-icon
+                    v-if="showBackSpaceAll"
+                    @click="backSpaceAll"
+                    size="30px"
+                    color="grey-7"
+                    name="close"
+                />
+            </div>
         </div>
         <q-popup-proxy
             @hide="closeKeyboard"
@@ -20,7 +29,9 @@
             :breakpoint="0"
             :offset="[-50, 0]"
         >
-            <keyboard-component />
+            <keyboard-component 
+                v-model="searchValue"
+            />
         </q-popup-proxy>
     </div>
 </template>
@@ -49,10 +60,22 @@ const searchFieldClass = computed(() => ({
 }))
 
 const searchValueClass = computed(() => ({
-    'col-11 justify-start content-center flex search-text': true,
+    'col-10 justify-start content-center flex search-text': true,
     'st-active': active.value,
     'st-inactive text-grey': !active.value,
 }))
+
+const showBackSpaceAll = computed(() => {
+    if (searchValue.value === 'Найти...' || searchValue.value.length === 0){
+        return false
+    }else{
+        return true
+    }
+})
+
+const backSpaceAll = () => {
+    searchValue.value = ''
+}
 
 watch(searchFieldHeight, (newValue) => {
     model.value = newValue
@@ -61,9 +84,9 @@ watch(searchFieldHeight, (newValue) => {
 const useSearchingField = () => {
     active.value = !active.value
     if (active.value){
-        searchValue.value = ''
-    }else{
-        searchValue.value = 'Найти...'
+        if (searchValue.value === 'Найти...'){
+            searchValue.value = ''
+        }
     }
 }
 

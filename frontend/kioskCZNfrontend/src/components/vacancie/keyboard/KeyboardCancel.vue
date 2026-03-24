@@ -1,23 +1,18 @@
 <template>
     <q-btn
         class="keyboard-btn"
-        @click="addLetter"
-        :label="props.letter"
+        @click="eraseLetter"
+        icon="backspace"
     />
 </template>
 
 <script setup>
-const props = defineProps({
-    letter : {
-        type: String,
-        default: 'a'
-    }
-})
-
 const model = defineModel({ default: '' })
 
-const addLetter = () => {
-    model.value += props.letter
+const eraseLetter = () => {
+    if (model.value.length > 0){
+        model.value = model.value.slice(0, model.value.length - 1)
+    }
 }
 
 </script>

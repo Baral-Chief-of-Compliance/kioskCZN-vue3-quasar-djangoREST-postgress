@@ -1,7 +1,7 @@
 <template>
     <div ref="keyboard" class="q-mt-lg q-mx-sm">
         <div
-            class="row flex justify-center content-center q-mb-md"
+            class="row justify-center q-mb-md"
             v-for="(lr, index) in lettersRows"
             v-bind:key="index"
         >
@@ -10,6 +10,16 @@
                 v-for="(l, i) in lr"
                 v-bind:key="i"
                 :letter="l"
+                v-model="model"
+            />
+            <keyboard-cancel
+                v-if="index === 2"
+                v-model="model"
+            />
+        </div>
+        <div class="row justify-center q-mb-lg q-mx-sm">
+            <keyboard-space-btn 
+                v-model="model"
             />
         </div>
     </div>
@@ -17,6 +27,10 @@
 
 <script setup>
 import KeyboardBtn from './KeyboardBtn.vue';
+import KeyboardCancel from './KeyboardCancel.vue';
+import KeyboardSpaceBtn from './KeyboardSpaceBtn.vue';
+
+const model = defineModel({ default: '' })
 
 const lettersRows = [
     ['й', 'ц', 'у','к','е','н','г','ш','щ','з','х','ъ'],
