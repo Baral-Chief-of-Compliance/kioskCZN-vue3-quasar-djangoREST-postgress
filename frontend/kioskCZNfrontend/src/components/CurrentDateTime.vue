@@ -28,7 +28,7 @@ function getDayMonthYear(seconds){
     var month = date.getMonth()
 
     if (day / 10  < 1) day = `0${day}`
-    if (month / 10 < 1) month = `0${month}` 
+    if (month / 10 < 1) month = `0${month + 1}` 
     return `${day}.${month}.${date.getFullYear()}`
 }
 

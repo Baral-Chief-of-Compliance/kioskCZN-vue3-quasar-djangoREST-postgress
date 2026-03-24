@@ -16,15 +16,15 @@
 </template>
 
 <script setup>
-import { provide, useTemplateRef, onMounted } from 'vue';
+import { provide, useTemplateRef, onMounted, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import { useElementSize } from '@vueuse/core';
+import { useElementSize,  useIdle } from '@vueuse/core';
 
 import MainLogo from 'src/components/MainLogo.vue';
 import PersonnelCenterTitle from 'src/components/PersonnelCenterTitle.vue';
 import CurrentDateTime from 'src/components/CurrentDateTime.vue';
-import { CHOOSE_PC } from 'src/router/pathName';
+import { CHOOSE_PC, INDEX } from 'src/router/pathName';
 import { usePCStore } from 'src/stores/personalCenter';
 import { getPersonalCenterData } from 'src/axios/personalCenter';
 import { useYandexApiKeyStore } from 'src/stores/yandexApiKeys';
@@ -42,6 +42,20 @@ const router = useRouter()
 
 const pcStore = usePCStore()
 const yandexApiKeyStore = useYandexApiKeyStore()
+
+//Для обработки бездйствий пользователя
+const { idle, reset } = useIdle(10 * 60 * 1000) // 10 min
+
+watch(idle, (idleValue) => {
+  if (idleValue) {
+    if (pcStore.urlParam !== null){
+      router.push({name: INDEX})
+    }else{
+      router.push({name: CHOOSE_PC})
+    }
+    reset()
+  }
+})
 
 const setYandexApiKey = async() => {
   const res = await getActiveYandexApiKey();
