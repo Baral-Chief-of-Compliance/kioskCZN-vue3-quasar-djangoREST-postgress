@@ -13,10 +13,11 @@ from kioskVacansyController.paginators import CustomPageNumberPagination
 class VacansyFilter(rest_filter.FilterSet):
     address_code__gte = rest_filter.NumberFilter(field_name='addressCode', lookup_expr='gte')
     address_code__lte = rest_filter.NumberFilter(field_name='addressCode', lookup_expr='lte')
+    search = rest_filter.CharFilter(field_name='vacancyName', lookup_expr='icontains')
 
     class Meta:
         model = Vacansy
-        fields = ['addressCode']
+        fields = ['addressCode', 'search']
 
 
 class DistrictsViewSet(viewsets.ModelViewSet):

@@ -5,18 +5,25 @@ import { api } from "src/boot/axios";
  * Получить вакансии с районов по их минимальных и максимальным адресс кодам
  * @param {number} minAddressCode - минимальный код района
  * @param {number} maxAddressCode - максимальный код района
+ * @param {string} vacanciName
  * @returns {object} - ответ сервера
  */
 export async function getVacancies(
     minAddressCode,
     maxAddressCode,
-    page=1
+    page=1,
+    vacanciName = ''
 ){
     let params = {
         address_code__gte: minAddressCode,
         address_code__lte: maxAddressCode,
         page: page
     }
+
+    if (vacanciName.length > 0){
+        params.search = vacanciName
+    }
+    
     const res = await api.get(
         `vacansy-controller/vacancies/`,
         {

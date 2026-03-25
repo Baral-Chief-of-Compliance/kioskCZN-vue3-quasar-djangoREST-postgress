@@ -4,9 +4,13 @@
             :path-name="VACANCIES"
             :titel="districtsStore.getName"
         />
-        <loading-spinner v-if="loading" :height="loadingHeight"/>
+        <search-vacancie-field 
+                    v-model="searchValueHeight"
+                    class="q-mb-md q-mx-xl"
+        />
+        <loading-spinner v-if="vacanciesStore.loading" :height="loadingHeight"/>
         <empty-block-info 
-            v-else-if="!loading && vacanciesStore.vacancies.length == 0"
+            v-else-if="!vacanciesStore.loading && vacanciesStore.vacancies.length == 0"
             :height="loadingHeight"
             text="Ой, не удалось найти вакансии..."
         />
@@ -17,10 +21,6 @@
                 @click="goPreviousPage"
             />
             <div class="col">
-                <search-vacancie-field 
-                    v-model="searchValueHeight"
-                    class="q-mb-md q-mx-xl"
-                />
                 <scroll-area :height="scrollHeght">
                     <div class="row justify-between q-mx-xl">
                         <vacancie-card 
@@ -95,11 +95,10 @@ const scrollHeght = computed(() => {
     return  `${windowHeight.value - (headerHeight.value + 160 + searchValueHeight.value)}px`
 })
 
-const loading = ref(true)
 
 
 const getVacansyFromDistrict = async() => {
-    loading.value = true
+    vacanciesStore.loading = true
 
     if (pcStore.pcId != null && route.params.district_id != null){
         const res = await getDistrictDetail(route.params.district_id)
@@ -117,7 +116,8 @@ const getVacansyFromDistrict = async() => {
         const vacanciesRes = await getVacancies(
             districtsStore.districtMinCode,
             districtsStore.districtMaxCode,
-            vacanciesStore.currentPage
+            vacanciesStore.currentPage,
+            vacanciesStore.vacancieName
         )
 
 
@@ -140,7 +140,7 @@ const getVacansyFromDistrict = async() => {
     }
 
 
-    loading.value = false
+    vacanciesStore.loading = false
 }
 
 const goNextPage = async() => {
