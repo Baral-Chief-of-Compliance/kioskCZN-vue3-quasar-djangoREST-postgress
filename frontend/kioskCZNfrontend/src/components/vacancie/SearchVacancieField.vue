@@ -1,5 +1,5 @@
 <template>
-    <div @click="useSearchingField" ref="searchField" class="col">
+    <div @click="useSearchingField" class="col">
         <div :class="searchFieldClass">
             <div class="col-auto q-mr-md">
                 <q-icon 
@@ -37,8 +37,7 @@
 </template>
 
 <script setup>
-import { computed, ref, useTemplateRef, watch } from 'vue';
-import { useElementSize } from '@vueuse/core';
+import { computed, ref, watch } from 'vue';
 import { useVacanciesStore } from 'src/stores/vacancies';
 import { useDistircts } from 'src/stores/districts';
 import { getVacancies } from 'src/axios/vacancies';
@@ -52,11 +51,6 @@ const districtsStore = useDistircts()
 
 const active = ref(false)
 const searchValue = ref('Найти...')
-
-const searchField = useTemplateRef('searchField')
-const { height: searchFieldHeight } = useElementSize(searchField)
-
-const model = defineModel(0)
 
 
 const searchFieldClass = computed(() => ({
@@ -84,14 +78,10 @@ const backSpaceAll = () => {
     searchValue.value = ''
 }
 
-watch(searchFieldHeight, (newValue) => {
-    model.value = newValue
-})
-
 const timerId = ref(null) //Таймер для поиска
 
 watch(searchValue, async(newValue) => {
-    if (newValue != 'Найти...' && newValue.length > 0){
+    if (newValue != 'Найти...'){
         if (timerId.value !=null){
             clearTimeout(timerId.value)
         }

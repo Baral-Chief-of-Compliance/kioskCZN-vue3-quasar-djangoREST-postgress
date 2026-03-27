@@ -10,7 +10,8 @@ export const useVacanciesStore = defineStore('vacancies', {
         pages: 0,
         count: 0,
         loading: true,
-        vacancieName: ''
+        vacancieName: '',
+        filter: false
     }),
 
     actions: {

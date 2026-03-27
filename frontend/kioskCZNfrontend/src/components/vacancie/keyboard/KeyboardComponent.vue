@@ -12,6 +12,11 @@
                 :letter="l"
                 v-model="model"
             />
+
+            <keyboard-clean 
+                v-if="index === 1"
+                v-model="model"
+            />
             <keyboard-cancel
                 v-if="index === 2"
                 v-model="model"
@@ -27,8 +32,9 @@
 
 <script setup>
 import KeyboardBtn from './KeyboardBtn.vue';
-import KeyboardCancel from './KeyboardCancel.vue';
 import KeyboardSpaceBtn from './KeyboardSpaceBtn.vue';
+import KeyboardCancel from './KeyboardCancel.vue';
+import KeyboardClean from './KeyboardClean.vue';
 
 const model = defineModel({ default: '' })
 

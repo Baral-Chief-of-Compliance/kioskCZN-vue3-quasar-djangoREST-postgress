@@ -4,10 +4,10 @@
             :path-name="VACANCIES"
             :titel="districtsStore.getName"
         />
-        <search-vacancie-field 
-                    v-model="searchValueHeight"
-                    class="q-mb-md q-mx-xl"
-        />
+        <div ref="searchBar" class="row q-mt-lg q-mb-md search-bar">
+            <search-vacancie-filter class="q-mr-lg" />
+            <search-vacancie-field/>
+        </div>
         <loading-spinner v-if="vacanciesStore.loading" :height="loadingHeight"/>
         <empty-block-info 
             v-else-if="!vacanciesStore.loading && vacanciesStore.vacancies.length == 0"
@@ -54,9 +54,9 @@
 </template>
 
 <script setup>
-import { ref, inject, computed, onMounted, onUnmounted } from 'vue';
+import { inject, computed, onMounted, onUnmounted, useTemplateRef } from 'vue';
 
-import { useWindowSize } from '@vueuse/core';
+import { useWindowSize, useElementSize } from '@vueuse/core';
 import { useRoute } from 'vue-router';
 
 import TitelPage from 'src/components/TitelPage.vue';
@@ -73,7 +73,7 @@ import ScrollArea from 'src/components/ScrollArea.vue';
 import ControlWeeksBtn from 'src/components/btns/ControlWeeksBtn.vue';
 import VacansyPageInfo from 'src/components/VacansyPageInfo.vue';
 import SearchVacancieField from 'src/components/vacancie/SearchVacancieField.vue'
-
+import SearchVacancieFilter from 'src/components/vacancie/SearchVacancieFilter.vue';
 
 const route = useRoute()
 
@@ -89,7 +89,10 @@ const loadingHeight = computed(() => {
     return  `${windowHeight.value - headerHeight.value}px`
 })
 
-const searchValueHeight = ref(0)
+
+const searchBar = useTemplateRef('searchBar')
+
+const {height: searchValueHeight} = useElementSize(searchBar)
 
 const scrollHeght = computed(() => {
     return  `${windowHeight.value - (headerHeight.value + 160 + searchValueHeight.value)}px`
@@ -179,3 +182,11 @@ onUnmounted(() => {
     vacanciesStore.$reset()
 })
 </script>
+
+<style scoped>
+
+.search-bar{
+    margin-right: 110px;
+    margin-left: 110px;
+}
+</style>
