@@ -14,14 +14,14 @@ class PCParentOrganizationPhoneSerializer(serializers.ModelSerializer):
 class PCParentOrganizationAddressSerializer(serializers.ModelSerializer):
 
     class Meta:
-        models = PCParentOrganizationAddress
+        model = PCParentOrganizationAddress
         fields = '__all__'
 
 
 class PCParentOrganizationEmailSerializer(serializers.ModelSerializer):
 
     class Meta:
-        models = PCParentOrganizationEmail
+        model = PCParentOrganizationEmail
         fields = '__all__'
 
 
@@ -45,8 +45,7 @@ class PCParentOrganizationSerializer(serializers.ModelSerializer):
         address = PCParentOrganizationAddress.objects.filter(
             org=obj
         )
-
-        return PCParentOrganizationAddressSerializer(address, many=True).data
+        return  PCParentOrganizationAddressSerializer(address, many=True).data
     
     def get_emails(self, obj: PCParentOrganization):
         """Получить emails вышестоящий оргнизации"""

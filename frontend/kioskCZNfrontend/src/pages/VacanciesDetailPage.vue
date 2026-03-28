@@ -5,7 +5,7 @@
             :titel="districtsStore.getName"
         />
         <div ref="searchBar" class="row q-mt-lg q-mb-md search-bar">
-            <search-vacancie-filter class="q-mr-lg" />
+            <!-- <search-vacancie-filter class="q-mr-lg" /> -->
             <search-vacancie-field/>
         </div>
         <loading-spinner v-if="vacanciesStore.loading" :height="loadingHeight"/>
@@ -73,7 +73,7 @@ import ScrollArea from 'src/components/ScrollArea.vue';
 import ControlWeeksBtn from 'src/components/btns/ControlWeeksBtn.vue';
 import VacansyPageInfo from 'src/components/VacansyPageInfo.vue';
 import SearchVacancieField from 'src/components/vacancie/SearchVacancieField.vue'
-import SearchVacancieFilter from 'src/components/vacancie/SearchVacancieFilter.vue';
+// import SearchVacancieFilter from 'src/components/vacancie/SearchVacancieFilter.vue';
 
 const route = useRoute()
 

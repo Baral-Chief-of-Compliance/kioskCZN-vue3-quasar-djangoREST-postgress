@@ -23,14 +23,16 @@
             </div>
         </div>
         <q-popup-proxy
+            v-model="popUp"
             @hide="closeKeyboard"
             transition-show="scale"
             transition-hide="scale"
             :breakpoint="0"
-            :offset="[-50, 0]"
+            :offset="[-80, 0]"
         >
-            <keyboard-component 
+            <keyboard-component
                 v-model="searchValue"
+                @close-keyboard="popUp = false"
             />
         </q-popup-proxy>
     </div>
@@ -52,6 +54,7 @@ const districtsStore = useDistircts()
 const active = ref(false)
 const searchValue = ref('Найти...')
 
+const popUp = ref(false)
 
 const searchFieldClass = computed(() => ({
     'row': true,

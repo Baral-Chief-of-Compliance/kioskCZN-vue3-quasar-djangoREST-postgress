@@ -22,9 +22,14 @@
                 v-model="model"
             />
         </div>
-        <div class="row justify-center q-mb-lg q-mx-sm">
+        <div class="row justify-center q-mb-md q-mx-sm">
             <keyboard-space-btn 
                 v-model="model"
+            />
+        </div>
+        <div class="row q-mb-lg q-mx-sm">
+            <keyboard-close-btn 
+                @click="$emit('closeKeyboard')"
             />
         </div>
     </div>
@@ -35,6 +40,7 @@ import KeyboardBtn from './KeyboardBtn.vue';
 import KeyboardSpaceBtn from './KeyboardSpaceBtn.vue';
 import KeyboardCancel from './KeyboardCancel.vue';
 import KeyboardClean from './KeyboardClean.vue';
+import KeyboardCloseBtn from './KeyboardCloseBtn.vue';
 
 const model = defineModel({ default: '' })
 

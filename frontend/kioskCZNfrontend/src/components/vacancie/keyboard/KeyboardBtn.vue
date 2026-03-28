@@ -29,6 +29,7 @@ const addLetter = () => {
     height: 9.5vh;
     font-size: 3vh;
     font-weight: 700;
+    color: var(--q-dark);
 }
 
 </style>

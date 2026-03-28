@@ -1,8 +1,8 @@
 <template>
-    <div class="text-left text-h3 text-indigo text-bold">
-        Информация<br />
-        о руководстве учреждения
-    </div>
+    <tab-titel 
+        titel-first="Информация"
+        titel-second="о руководстве учреждения"
+    />
 
     <div class="row q-mt-xl">
         <div class="col">
@@ -31,6 +31,7 @@
 
 <script setup>
 import HeadCard from './HeadCard.vue';
+import TabTitel from './TabTitel.vue';
 
 const props = defineProps({
     headInfo: {

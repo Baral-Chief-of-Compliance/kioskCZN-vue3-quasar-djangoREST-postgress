@@ -126,7 +126,7 @@ class PCDetailSerializer(serializers.ModelSerializer):
                 {
                     'name': s.name,
                     'url': s.url,
-                    'qr_code_img': s.qr_code_img.url
+                    'qr_code_img': s.qr_code_img.url if s.qr_code_img else None
                 }
             )
 

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :style="qrCodeStyle">
         <loading-spinner :height="props.width" v-if="!qrCodeValue" />
         <img 
             v-else :src="qrCodeValue"
@@ -34,11 +34,19 @@ const props = defineProps({
     }
 })
 
-
+const opts = {
+    errorCorrectionLevel: 'H',
+    type: 'image/jpeg',
+    quality: 0.3,
+    margin: 1,
+    color: {
+        dark:"#164FA4",
+    }
+}
 
 const generateQR = async url => {
   try {
-    return await QRCode.toDataURL(url)
+    return await QRCode.toDataURL(url, opts)
   } catch (err) {
     console.error(err)
   }
