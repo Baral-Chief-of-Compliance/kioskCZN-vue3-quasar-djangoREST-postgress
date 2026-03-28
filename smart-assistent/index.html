@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Смарт Ассистент</title>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <script src="jquery-3.7.1.js"></script>
+</head>
+<body>
+
+    <a href="http://czn.local:3000/murmansk " id="return-btn">
+        Выйти
+    </a>
+
+    <!-- Содержимое страницы -->
+    <div id="scene_1" class="scene">
+        <button id="btn" class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_2" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+
+    <div id="scene_3" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button id="select_1" class="select-variant btn"></button>
+        <button id="select_2" class="select-variant btn"></button>
+    </div>
+
+    <div id="scene_4" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_5" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_6" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_7" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_8" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_9" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+
+        <button id="select_1" class="small-select-variant btn"></button>
+        <button id="select_2" class="small-select-variant btn"></button>
+        <button id="select_3" class="small-select-variant btn"></button>
+        <button id="select_4" class="small-select-variant btn"></button>
+    </div>
+
+    <div id="scene_10" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_11" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_12" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_13" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_14" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+        <button class="pass-test btn"></button>
+    </div>
+
+    <div id="scene_15" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="error btn"></button>
+        <button class="correct btn"></button>
+    </div>
+
+    <div id="scene_16_1" class="scene" >
+        <button id="grade-page-btn-16" class="grade-page-btn btn"></button>
+        <button id="burger-page-btn-16" class="burger-btn btn"></button>
+        <button id="return-btn-16" class="btn"></button>
+    </div>
+
+    <div id="scene_17" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="error btn"></button>
+        <button class="correct btn"></button>
+    </div>
+
+
+    <div id="scene_16_2" class="scene" >
+        <button id="grade-page-btn-16" class="grade-page-btn btn"></button>
+        <button id="burger-page-btn-16" class="burger-btn btn"></button>
+        <button id="return-btn-16" class="btn"></button>
+    </div>
+
+    <div id="scene_18" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="error btn"></button>
+        <button class="correct btn"></button>
+    </div>
+
+    <div id="scene_16_3" class="scene" >
+        <button id="grade-page-btn-16" class="grade-page-btn btn"></button>
+        <button id="burger-page-btn-16" class="burger-btn btn"></button>
+        <button id="return-btn-16" class="btn"></button>
+    </div>
+
+    <div id="scene_19" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="error btn"></button>
+        <button class="correct btn"></button>
+    </div>
+
+    <div id="scene_16_4" class="scene" >
+        <button id="grade-page-btn-16" class="grade-page-btn btn"></button>
+        <button id="burger-page-btn-16" class="burger-btn btn"></button>
+        <button id="return-btn-16" class="btn"></button>
+    </div>
+
+    <div id="scene_20" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="error btn"></button>
+        <button class="correct btn"></button>
+    </div>
+
+    <div id="scene_16_5" class="scene" >
+        <button id="grade-page-btn-16" class="grade-page-btn btn"></button>
+        <button id="burger-page-btn-16" class="burger-btn btn"></button>
+        <button id="return-btn-16" class="btn"></button>
+    </div>
+
+    <div id="scene_21" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_22" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_23" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_24" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_25" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_26" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_27" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_28" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+    </div>
+
+    <div id="scene_29" class="scene">
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="search-work btn"></button>
+    </div>
+
+    <div id="scene_30" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="sod btn"></button>
+    </div>
+
+    <div id="scene_31" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+        <button class="next-page-btn btn"></button>
+    </div>
+
+    <div id="scene_32" class="scene">
+        <button class="prev-page-btn btn"></button>
+        <button class="grade-page-btn btn"></button>
+        <button class="burger-btn btn"></button>
+    </div>
+
+    <div id="scene_33" class="scene">
+        <button class="burger-btn btn"></button>
+        <div id="easy-use">
+            <div class="grade_1"></div>
+            <button id="easy-use-grade_1" class="grade-btn btn"></button>
+
+            <div class="grade_2"></div>
+            <button id="easy-use-grade_2" class="grade-btn btn"></button>
+
+            <div class="grade_3"></div>
+            <button id="easy-use-grade_3" class="grade-btn btn"></button>
+
+            <div class="grade_4"></div>
+            <button id="easy-use-grade_4" class="grade-btn btn"></button>
+
+            <div class="grade_5"></div>
+            <button id="easy-use-grade_5" class="grade-btn btn"></button>
+
+        </div>
+        <div id="info">
+            <div class="grade_1"></div>
+            <button id="info-grade_1" class="grade-btn btn"></button>
+
+            <div class="grade_2"></div>
+            <button id="info-grade_2" class="grade-btn btn"></button>
+
+            <div class="grade_3"></div>
+            <button id="info-grade_3" class="grade-btn btn"></button>
+
+            <div class="grade_4"></div>
+            <button id="info-grade_4" class="grade-btn btn"></button>
+
+            <div class="grade_5"></div>
+            <button id="info-grade_5" class="grade-btn btn"></button>
+
+        </div>
+    </div>
+</body>
+    <script src="script.js"></script>
+</html>

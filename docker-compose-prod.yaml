@@ -60,6 +60,18 @@ services:
   #   networks:
   #     - kiosk-network
 
+  nginx:
+    container_name: kiosk-v2-nginx
+    build:
+      context: ./nginx
+      dockerfile: dockerfile.prod
+    volumes:
+      - ./logs:/var/log/nginx/
+      - ./frontend/kioskCZNfrontend/dist/spa:/usr/share/nginx/html
+      - ./smart-assistent:/home/app/smart-assistent/
+    ports:
+      - 3000:80
+
   staff-scraper:
     container_name: kiosk-v2-staff-scraper
     build:
