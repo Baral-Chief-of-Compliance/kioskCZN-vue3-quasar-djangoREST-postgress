@@ -69,6 +69,8 @@ services:
       - ./logs:/var/log/nginx/
       - ./frontend/kioskCZNfrontend/dist/spa:/usr/share/nginx/html
       - ./smart-assistent:/home/app/smart-assistent/
+      - ./games:/home/app/games/
+    env_file: ./dev-env/nginx-prod.env
     ports:
       - 3000:80
 

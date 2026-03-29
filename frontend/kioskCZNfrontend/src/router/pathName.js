@@ -4,6 +4,7 @@ export const VACANCIES = 'vacancies' //Вакансии
 export const EVENTS = 'events' //Афиша мероприятий
 export const SMART_ASSISTENT = 'smart_assitent' //Самрт-ассистент
 export const GAMES = 'games' //Игры
+export const GAMES_DETAIL = 'games_detail' //Игры детально
 export const INFO = 'info' //Важная информация
 export const EMPLOYEES = 'employees' //Сотрудники
 export const MAP = 'map' //Интерактивная карта

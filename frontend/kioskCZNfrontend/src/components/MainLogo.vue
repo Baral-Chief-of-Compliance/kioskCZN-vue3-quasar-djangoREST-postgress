@@ -1,7 +1,7 @@
 <template>
     <img 
         alt="CZN Logo"
-        src="/src/assets/czn-logo.svg"
+        src="/czn-logo.svg"
         :style="{
             width: width + 'px',
             height: height + 'px'
