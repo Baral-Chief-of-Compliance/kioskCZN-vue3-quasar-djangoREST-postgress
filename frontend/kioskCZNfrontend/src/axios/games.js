@@ -16,3 +16,17 @@ export async function getGames(pcId){
 
     return res
 }
+
+
+/**
+ * Получить игру по её id
+ * @param {number} gameId 
+ * @returns 
+ */
+export async function getGameById(gameId){
+    const res = await api.get(
+        `games/${gameId}/`
+    )
+
+    return res
+}

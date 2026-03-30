@@ -7,13 +7,14 @@
         />
         <div 
             v-else-if="!loading && games.length > 0"
-            class="row justify-between q-mx-md"
+            class="q-col-gutter-md row items-start q-mx-md q-mt-xl"
         >
-            <card-menu 
+            <game-card 
                 v-for="g in games"
-                :key="g.id"
-                :titel="g.name"
-                icon="sports_esports"
+                v-bind:key="g.id"
+                :name="g.name"
+                :img-url="g.img"
+                :game-id="g.id"
             />
         </div>
         <not-found-content v-else :height="`${windowHeight}px`" />
@@ -27,8 +28,8 @@ import NotFoundContent from 'src/components/NotFoundContent.vue';
 import LoadingSpinner from 'src/components/LoadingSpinner.vue';
 import { useWindowSize } from '@vueuse/core';
 import { usePCStore } from 'src/stores/personalCenter';
-import CardMenu from 'src/components/CardMenu.vue';
 import { getGames } from 'src/axios/games';
+import GameCard from 'src/components/games/GameCard.vue';
 
 
 const pcStore = usePCStore()

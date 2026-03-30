@@ -4,6 +4,7 @@ import {
   EVENTS,
   SMART_ASSISTENT,
   GAMES,
+  GAMES_DETAIL,
   INFO,
   EMPLOYEES,
   MAP,
@@ -28,6 +29,7 @@ const routes = [
       { path: ':pc([a-zA-Z]+)/' + EVENTS, component: () => import('pages/EventsPage.vue'), name: EVENTS},
       { path: ':pc([a-zA-Z]+)/' + SMART_ASSISTENT, component: () => import('pages/SmartAssistentPage.vue'), name: SMART_ASSISTENT},
       { path: ':pc([a-zA-Z]+)/' + GAMES, component: () => import('pages/GamesPage.vue'), name: GAMES},
+      { path: ':pc([a-zA-Z]+)/' + GAMES + '/:game_id(\\d+)', component: () => import('pages/GamePageDetail.vue'), name: GAMES_DETAIL},
       { path: ':pc([a-zA-Z]+)/' + INFO, component: () => import('pages/InfoPage.vue'), name: INFO},
       { path: ':pc([a-zA-Z]+)/' + EMPLOYEES, component: () => import('pages/EmployeesPage.vue'), name: EMPLOYEES},
       { 

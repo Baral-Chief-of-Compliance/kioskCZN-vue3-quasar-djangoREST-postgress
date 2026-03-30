@@ -8,6 +8,7 @@ class Game(models.Model):
     """Игры в информационном киоске"""
     name = models.CharField(verbose_name=TITEL_NAME, max_length=128)
     priority = models.PositiveIntegerField(verbose_name=DISPLAY_ORDER_NAME, default=999)
+    img = models.ImageField(verbose_name='Заставка для игры',upload_to='games_screen/', blank=True, null=True)
 
     def __str__(self) -> str:
         return self.name

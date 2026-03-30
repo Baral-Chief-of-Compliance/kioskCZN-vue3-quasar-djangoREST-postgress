@@ -37,8 +37,8 @@ export default defineConfig((/* ctx */) => {
         node: 'node20',
       },
       env: {
-        API:  process.env.API || "http://localhost:3001/api/v1.0/czn-kiosk/",
-        SMART_ASSISTENT_API: process.env.SMART_ASSISTENT_API || "http://localhost:3000/smart-assistent/"
+        API:  process.env.API || "http://172.25.31.33:3001/api/v1.0/czn-kiosk/",
+        SMART_ASSISTENT_API: process.env.SMART_ASSISTENT_API || "http://172.25.31.33:3000/smart-assistent/"
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'
