@@ -4,11 +4,16 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /home/app/smart-assistent
 RUN mkdir -p /home/app/games
+RUN mkdir -p /etc/nginx/ssl
+
+COPY ssl/cert.crt /etc/nginx/ssl/cert.crt
+COPY ssl/privkey.key /etc/nginx/ssl/privkey.key
 
 # Настройки безопасности
 RUN chmod -R 755 /usr/share/nginx/html &&\
-    chmod -R 755 /home/app/smart-assistent
+    chmod -R 755 /home/app/smart-assistent &&\
+    chmod 600 /etc/nginx/ssl/privkey.key
 
-EXPOSE 3000
+EXPOSE 3000 443
 
 CMD ["nginx", "-g", "daemon off;"]
