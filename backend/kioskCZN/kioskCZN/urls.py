@@ -24,7 +24,7 @@ from kioskVacansyController import urls as kiosk_vacansy_urls
 from yandexApiKeys import urls as yandex_api_keys_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api/admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('api/v1.0/czn-kiosk/', include((
         urls.urlpatterns,

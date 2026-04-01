@@ -57,6 +57,7 @@ services:
       - ./smart-assistent:/home/app/smart-assistent/
       - ./games:/home/app/games/
       - ./django-app-staticfiles:/django-app-staticfiles/
+      - ./kiosk_media:/django-app-media/
     env_file: ./dev-env/nginx-prod.env
     ports:
       - 3000:443
