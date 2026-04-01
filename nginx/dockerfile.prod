@@ -6,6 +6,9 @@ RUN mkdir -p /home/app/smart-assistent
 RUN mkdir -p /home/app/games
 RUN mkdir -p /etc/nginx/ssl
 
+RUN mkdir -p /django-app-staticfiles
+RUN mkdir -p /django-app-media
+
 COPY ssl/cert.crt /etc/nginx/ssl/cert.crt
 COPY ssl/privkey.key /etc/nginx/ssl/privkey.key
 
@@ -16,4 +19,4 @@ RUN chmod -R 755 /usr/share/nginx/html &&\
 
 EXPOSE 3000 443
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "sleep 50 && nginx -g 'daemon off;'"]

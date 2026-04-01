@@ -47,6 +47,7 @@ echo "Сбор статики..."
 python3 ./kioskCZN/manage.py collectstatic --noinput
 
 echo "Запуск серверной части киосков ЦЗН МО..."
+cd /home/django-app/kioskCZN/ && \
 gunicorn -b 0.0.0.0:8000 kioskCZN.wsgi:application
 
 if [ $? -ne 0 ]; then

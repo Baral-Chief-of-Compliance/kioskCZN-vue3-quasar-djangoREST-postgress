@@ -44,6 +44,7 @@ services:
       - ./logs:/home/django-app/kioskCZN/logs
       - ./kiosk_media:/home/django-app/kioskCZN/media
       - ./kioskContollerAppMigrations:/home/django-app/kioskCZN/kioskController/migrations
+      - ./django-app-staticfiles:/home/django-app/kioskCZN/staticfiles
 
   nginx:
     container_name: kiosk-v2-nginx
@@ -55,9 +56,13 @@ services:
       - ./frontend/kioskCZNfrontend/dist/spa:/usr/share/nginx/html
       - ./smart-assistent:/home/app/smart-assistent/
       - ./games:/home/app/games/
+      - ./django-app-staticfiles:/django-app-staticfiles/
     env_file: ./dev-env/nginx-prod.env
     ports:
       - 3000:443
+
+    networks:
+      - kiosk-network
 
   staff-scraper:
     container_name: kiosk-v2-staff-scraper

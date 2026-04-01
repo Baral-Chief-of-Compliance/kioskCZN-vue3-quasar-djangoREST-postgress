@@ -7,3 +7,5 @@ __pycache__
 phones_book_page
 kiosk_media
 logs
+django-app-staticfiles
+staticfiles

@@ -7,10 +7,15 @@ COPY . .
 RUN ls -la start.dev.sh
 
 # Меняем формат файла на Unix (на всякий случай)
-RUN sed -i 's/\r$//' start.dev.sh
+# RUN sed -i 's/\r$//' start.dev.sh
+RUN sed -i 's/\r$//' start.prod.sh
 
-RUN chmod -R 777 ./start.dev.sh
 
-ENTRYPOINT ["/bin/sh", "-c", "sleep 20 && ./start.dev.sh"]
+# RUN chmod -R 777 ./start.dev.sh
+RUN chmod -R 777 ./start.prod.sh
+
+
+# ENTRYPOINT ["/bin/sh", "-c", "sleep 20 && ./start.dev.sh"]
+ENTRYPOINT ["/bin/sh", "-c", "sleep 20 && ./start.prod.sh"]
 
 EXPOSE 8000
