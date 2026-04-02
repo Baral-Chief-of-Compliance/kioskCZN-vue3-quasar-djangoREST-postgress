@@ -3,7 +3,7 @@
 
 import { defineConfig } from '#q-app/wrappers'
 
-export default defineConfig((/* ctx */) => {
+export default defineConfig(ctx => {
   return {
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
@@ -37,8 +37,8 @@ export default defineConfig((/* ctx */) => {
         node: 'node20',
       },
       env: {
-        API:  process.env.API || "https://172.25.31.33:3000/api/v1.0/czn-kiosk/",
-        SMART_ASSISTENT_API: process.env.SMART_ASSISTENT_API || "https://172.25.31.33:3000/smart-assistent/"
+        API:  ctx.dev ? "http://localhost:3001/api/v1.0/czn-kiosk/" : "https://172.25.31.33:3000/api/v1.0/czn-kiosk/",
+        SMART_ASSISTENT_API: ctx.dev  ? "http://localhost:3000/smart-assistent/" : "https://172.25.31.33:3000/smart-assistent/"
       },
 
       vueRouterMode: 'history', // available values: 'hash', 'history'

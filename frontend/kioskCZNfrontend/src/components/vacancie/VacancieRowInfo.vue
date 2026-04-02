@@ -46,7 +46,7 @@ const valueShow = {
     needMedcard: 'Медицинская книжка',
     sourceType: 'Тип вакансии',
     requiredDriveLicense: 'Водительские права',
-    changeTime: 'Обновлено',
+    // changeTime: 'Обновлено',
     contactPerson: 'Контактное лицо',
     fullCompanyName: 'Работодатель',
     workPlaces: 'Кол-во рабочих мест',

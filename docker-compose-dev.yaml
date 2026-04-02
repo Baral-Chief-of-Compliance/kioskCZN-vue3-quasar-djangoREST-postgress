@@ -19,7 +19,6 @@ services:
     image: postgres:17.6-trixie
 
     volumes:
-      - ./db_init:/docker-entrypoint-initdb.d
       - ./database/data:/var/lib/postgresql/data
 
     networks:
@@ -30,15 +29,49 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
-    env_file: ./dev-env/backend.env
+    env_file: ./dev-env/backend.dev.env
 
     ports:
-      - 4444:8000
+      - 3001:8000
     depends_on:
       - database
 
     networks:
       - kiosk-network
+
+    volumes:
+      - ./backend/kioskCZN:/home/django-app/kioskCZN
+      - ./logs:/home/django-app/kioskCZN/logs
+      - ./kiosk_media:/home/django-app/kioskCZN/media
+      - ./kioskContollerAppMigrations:/home/django-app/kioskCZN/kioskController/migrations
+      - ./django-app-staticfiles:/home/django-app/kioskCZN/staticfiles
+
+  staff-scraper:
+    container_name: kiosk-v2-staff-scraper
+    build:
+      context: ./staff-scraper
+      dockerfile: prod.dockerfile
+    env_file: ./dev-env/staff-scraper.env
+
+    volumes:
+      - ./logs:/home/staff-scraper/logs
+      - ./phones_book_page:/home/staff-scraper/phones_book_page
+
+    networks:
+      - kiosk-network
+
+  vacansy-scraper:
+    container_name: kiosk-czn-vacansy-scraper
+    build:
+      context: ./vacansy-scraper
+      dockerfile: prod.dockerfile
+    env_file: ./dev-env/vacansy-scraper.env
+
+    volumes:
+      - ./logs:/home/vacansy-scraper/logs
+
+    networks:
+     - kiosk-network
 
 
 networks:

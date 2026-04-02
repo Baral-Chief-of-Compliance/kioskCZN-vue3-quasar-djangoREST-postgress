@@ -44,7 +44,7 @@
             <q-separator></q-separator>
             <q-card-actions class="justify-end">
                 <q-btn 
-                    class="cancel-btn" 
+                    class="cancel-btn q-mt-xs q-mr-md" 
                     label="Закрыть" 
                     @click="onDialogCancel"
                     unelevated
