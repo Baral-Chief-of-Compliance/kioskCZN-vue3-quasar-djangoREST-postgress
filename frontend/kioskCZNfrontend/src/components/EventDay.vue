@@ -25,6 +25,7 @@
                     :past-day-status="props.pastDayStatus"
                     :event-time-start="event.time_start"
                     :event-time-end="event.time_end"
+                    :description="event.discription"
                 />
             </div>
         </div>

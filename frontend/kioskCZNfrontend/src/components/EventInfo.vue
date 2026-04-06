@@ -1,5 +1,5 @@
 <template>
-    <div class="col">
+    <div @click="showEvent" class="col">
         <div :class="timeEventClass">
             <span v-if="props.eventTimeStart && props.eventTimeEnd">{{ showTime(props.eventTimeStart, props.eventTimeEnd) }}</span>
         </div>
@@ -11,7 +11,18 @@
 
 
 <script setup>
+import { useQuasar } from 'quasar'
 import { computed } from 'vue'
+
+
+const $q = useQuasar()
+
+const showEvent = () => {
+    $q.dialog({
+        title: `«${props.eventName}» в ${showTime(props.eventTimeStart, props.eventTimeEnd)}`,
+        message: props.description
+    })
+}
 
 
 const showTime = (startTime, endTime) => {
@@ -74,6 +85,11 @@ const props = defineProps({
     pastDayStatus: {
         type: Boolean,
         default: false
+    },
+
+    description: {
+        type: String,
+        default: 'Описание мероприятия'
     }
 })
 </script>
