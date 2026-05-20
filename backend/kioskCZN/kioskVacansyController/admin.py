@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from kioskVacansyController.models import Vacansy, Districts
+from kioskVacansyController.models import Vacansy, Districts,\
+UserFromMaxMiniApp, FavoriteVacansy
 
 
 @admin.register(Districts)
@@ -34,3 +35,32 @@ class VacansyAdmin(admin.ModelAdmin):
             # Получаем все поля модели
             return [field.name for field in self.opts.local_fields]
         return []  # Для новых объектов поля редактируемы
+    
+
+@admin.register(UserFromMaxMiniApp)
+class UserFromMaxMiniAppAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'start_use_date'
+    )
+
+    search_fields = (
+        'id', 
+    )
+    
+    readonly_fields = (
+        'start_use_date',
+    )
+
+
+@admin.register(FavoriteVacansy)
+class FavoriteVacansyAdmin(admin.ModelAdmin):
+    list_display = (
+        'user',
+        'vacancy'
+    )
+
+    search_fields = (
+        'user__id',
+        'vacancy__id',
+        'vacancy__vacancyName'
+    )

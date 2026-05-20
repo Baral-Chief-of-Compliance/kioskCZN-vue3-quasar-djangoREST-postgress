@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from django.db.models import Sum
 
-from kioskVacansyController.models import Districts, Vacansy
+from kioskVacansyController.models import Districts, Vacansy,\
+UserFromMaxMiniApp, FavoriteVacansy
 
 
 class VacansySerializer(serializers.ModelSerializer):
@@ -77,4 +78,48 @@ class DistrictsDetailSerializer(serializers.ModelSerializer):
             'min_code',
             'max_code',
             'vacansy'
+        ]
+
+
+class UserFromMaxMiniAppSerializer(serializers.ModelSerializer):
+    """Сериализатор для пользователя Mini App в Max"""
+
+    class Meta:
+        model = UserFromMaxMiniApp
+        fields = [
+            'id'
+        ]
+
+
+class FavoriteVacansySerializer(serializers.ModelSerializer):
+    """Сериализатор для избранных вакансий"""
+
+    class Meta:
+        model = FavoriteVacansy
+        fields = '__all__'
+
+class FavoriteVacansyListSerializer(serializers.ModelSerializer):
+    """Сериализатор для list избранных вакансий"""
+
+    vacancy_name = serializers.CharField(source='vacancy.vacancyName', read_only=True)
+    salary = serializers.CharField(source='vacancy.salary', read_only=True)
+    vacancy_address = serializers.CharField(source='vacancy.vacancyAddress', read_only=True)
+    salary_max = serializers.IntegerField(source='vacancy.salaryMax', read_only=True)
+    salary_min = serializers.IntegerField(source='vacancy.salaryMin', read_only=True)
+    work_places = serializers.IntegerField(source='vacancy.workPlaces', read_only=True)
+    full_company_name = serializers.CharField(source='vacancy.fullCompanyName', read_only=True)
+
+    class Meta:
+        model = FavoriteVacansy
+        fields = [
+            'id',
+            'vacancy',
+            'user',
+            'vacancy_name',
+            'salary',
+            'vacancy_address',
+            'salary_max',
+            'salary_min',
+            'work_places',
+            'full_company_name'
         ]

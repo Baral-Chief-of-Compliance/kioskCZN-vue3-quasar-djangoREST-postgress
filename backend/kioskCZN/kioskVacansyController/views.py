@@ -5,8 +5,10 @@ from django_filters import rest_framework as rest_filter
 from rest_framework.filters import OrderingFilter
 
 from kioskVacansyController.serializers import DistrictsSerializer, DistrictsDetailSerializer,\
-VacansyInListSerializer, VacansySerializer
-from kioskVacansyController.models import Districts, Vacansy
+VacansyInListSerializer, VacansySerializer, UserFromMaxMiniAppSerializer,\
+FavoriteVacansySerializer, FavoriteVacansyListSerializer
+from kioskVacansyController.models import Districts, Vacansy, UserFromMaxMiniApp,\
+FavoriteVacansy
 from kioskVacansyController.paginators import CustomPageNumberPagination
 
 
@@ -33,7 +35,7 @@ class VacansyViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = VacansyFilter
     pagination_class = CustomPageNumberPagination
-    ordering_fields = ['vacancyName', 'salary']  # Поля для сортировки
+    ordering_fields = ['vacancyName', 'salaryMax', 'salaryMin']  # Поля для сортировки
     ordering = ['vacancyName']  # Сортировка по умолчанию
 
     def get_serializer_class(self):
@@ -41,3 +43,21 @@ class VacansyViewSet(viewsets.ModelViewSet):
             return VacansySerializer
         else:
             return self.serializer_class
+        
+    
+class UserFromMaxMiniAppViewSet(viewsets.ModelViewSet):
+    queryset = UserFromMaxMiniApp.objects.all()
+    serializer_class = UserFromMaxMiniAppSerializer
+
+
+class FavoriteVacansyViewSet(viewsets.ModelViewSet):
+    queryset = FavoriteVacansy.objects.all()
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    serializer_class = FavoriteVacansySerializer
+    filterset_fields = '__all__'
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return FavoriteVacansyListSerializer
+        else:
+            return FavoriteVacansySerializer

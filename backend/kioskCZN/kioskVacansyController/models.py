@@ -104,3 +104,38 @@ class Vacansy(models.Model):
         verbose_name = 'Вакансия'
         verbose_name_plural = 'Вакансии'
         db_table = 'vacansy'
+
+
+class UserFromMaxMiniApp(models.Model):
+    id = models.PositiveBigIntegerField(
+        verbose_name='Id пользователя',
+        primary_key=True
+    )
+    start_use_date = models.DateTimeField(
+        verbose_name='Дата начала пользования MiniApp',
+        auto_now_add=True
+    )
+
+    class Meta:
+        verbose_name = 'Пользователь Mini App в Max'
+        verbose_name_plural = 'Пользователи Mini App в Max'
+        db_table = 'users_from_mini_app_max'
+
+
+class FavoriteVacansy(models.Model):
+    user = models.ForeignKey(
+        verbose_name='Пользователь Mini App в Max',
+        to=UserFromMaxMiniApp,
+        on_delete=models.CASCADE
+    )
+
+    vacancy = models.ForeignKey(
+        verbose_name='Избранная вакансия',
+        to=Vacansy,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        verbose_name='Вакансия в изрбанном у пользователя'
+        verbose_name_plural = 'Вакансии в избранном у пользователей'
+        db_table = 'vacancy_in_favorite'
