@@ -26,7 +26,8 @@ class VacansyInListSerializer(serializers.ModelSerializer):
             'salaryMin',
             'salaryMax',
             'workPlaces',
-            'fullCompanyName'
+            'fullCompanyName',
+            'vacancyUrl'
         ]
 
 
@@ -108,6 +109,7 @@ class FavoriteVacansyListSerializer(serializers.ModelSerializer):
     salary_min = serializers.IntegerField(source='vacancy.salaryMin', read_only=True)
     work_places = serializers.IntegerField(source='vacancy.workPlaces', read_only=True)
     full_company_name = serializers.CharField(source='vacancy.fullCompanyName', read_only=True)
+    vacancy_url = serializers.CharField(source='vacancy.vacancyUrl', read_only=True)
 
     class Meta:
         model = FavoriteVacansy
@@ -121,5 +123,6 @@ class FavoriteVacansyListSerializer(serializers.ModelSerializer):
             'salary_max',
             'salary_min',
             'work_places',
-            'full_company_name'
+            'full_company_name',
+            'vacancy_url'
         ]
