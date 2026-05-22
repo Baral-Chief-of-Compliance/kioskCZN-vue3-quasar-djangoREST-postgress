@@ -1,7 +1,8 @@
 from django.contrib import admin
 
 from kioskVacansyController.models import Vacansy, Districts,\
-UserFromMaxMiniApp, FavoriteVacansy
+UserFromMaxMiniApp, FavoriteVacansy, VacancyResponseFromUserMax,\
+MaxUserResume
 
 
 @admin.register(Districts)
@@ -49,6 +50,36 @@ class UserFromMaxMiniAppAdmin(admin.ModelAdmin):
     
     readonly_fields = (
         'start_use_date',
+    )
+
+
+@admin.register(MaxUserResume)
+class MaxUserResumeAdmin(admin.ModelAdmin):
+    list_display = (
+        'user', 'name', 'date'
+    )
+
+    search_fields = (
+        'user__id', 'name'
+    )
+
+    readonly_fields = (
+        'date',
+    )
+
+
+@admin.register(VacancyResponseFromUserMax)
+class VacancyResponseFromUserMaxAdmin(admin.ModelAdmin):
+    list_display = (
+        'resume', 'date', 'vacancy_url'
+    )
+
+    search_fields = (
+        'resume__user__id', 'vacancy_url'
+    )
+
+    readonly_fields = (
+        'date',
     )
 
 

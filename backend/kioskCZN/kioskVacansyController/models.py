@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 
 class Districts(models.Model):
@@ -122,6 +123,34 @@ class UserFromMaxMiniApp(models.Model):
         db_table = 'users_from_mini_app_max'
 
 
+def user_resume_upload_path_with_date(instance, filename):
+    from datetime import datetime
+    now = datetime.now()
+    return f'resume/{instance.user.id}/{now.year}/{now.month:02d}/{now.day:02d}/{filename}'
+
+
+class MaxUserResume(models.Model):
+    user = models.ForeignKey(verbose_name='Пользователь MAX Mini App', to=UserFromMaxMiniApp, on_delete=models.CASCADE)
+    name = models.CharField(verbose_name='Наименование резюме', max_length=128)
+    file = models.FileField(
+        verbose_name='Резюме пользователя',
+        upload_to=user_resume_upload_path_with_date,
+        validators=[FileExtensionValidator(['pdf',])]
+    )
+    date = models.DateTimeField(
+        verbose_name='Дата создания',
+        auto_now_add=True
+    )
+
+    def __str__(self) -> str:
+        return f'Резюме {self.user.id} «{self.name}»'
+
+    class Meta:
+        verbose_name = 'Резюме пользоваетля Max Mini App'
+        verbose_name_plural = 'Резюме пользователя Max Mini App'
+        db_table = 'users_resume_from_mini_app_max'
+
+
 class FavoriteVacansy(models.Model):
     user = models.ForeignKey(
         verbose_name='Пользователь Mini App в Max',
@@ -139,3 +168,28 @@ class FavoriteVacansy(models.Model):
         verbose_name='Вакансия в изрбанном у пользователя'
         verbose_name_plural = 'Вакансии в избранном у пользователей'
         db_table = 'vacancy_in_favorite'
+
+
+class VacancyResponseFromUserMax(models.Model):
+    """Отклик пользователя Max Mini App на вакансию"""
+    resume = models.ForeignKey(
+        verbose_name='Резюме пользователя',
+        to=MaxUserResume,
+        on_delete=models.CASCADE
+    )
+    date = models.DateTimeField(
+        verbose_name='Дата отклика',
+        auto_now_add=True
+    )
+    vacancy_id = models.TextField(
+        verbose_name='id вакансии из базы РостТруда',
+    )
+    vacancy_url = models.URLField(
+        verbose_name='URL вакансии Работа России'    
+    )
+
+
+    class Meta:
+        verbose_name = 'Отклик пользователя Max Mini App'
+        verbose_name_plural = 'Отклики пользователей Max Mini App'
+        db_table = 'vacancy_response_from_mini_app_max'

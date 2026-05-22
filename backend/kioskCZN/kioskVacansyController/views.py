@@ -6,9 +6,10 @@ from rest_framework.filters import OrderingFilter
 
 from kioskVacansyController.serializers import DistrictsSerializer, DistrictsDetailSerializer,\
 VacansyInListSerializer, VacansySerializer, UserFromMaxMiniAppSerializer,\
-FavoriteVacansySerializer, FavoriteVacansyListSerializer
+FavoriteVacansySerializer, FavoriteVacansyListSerializer, VacancyResponseFromUserMaxSerializer, \
+MaxUserResumeSerializer
 from kioskVacansyController.models import Districts, Vacansy, UserFromMaxMiniApp,\
-FavoriteVacansy
+FavoriteVacansy, MaxUserResume, VacancyResponseFromUserMax
 from kioskVacansyController.paginators import CustomPageNumberPagination
 
 
@@ -48,6 +49,18 @@ class VacansyViewSet(viewsets.ModelViewSet):
 class UserFromMaxMiniAppViewSet(viewsets.ModelViewSet):
     queryset = UserFromMaxMiniApp.objects.all()
     serializer_class = UserFromMaxMiniAppSerializer
+
+
+class MaxUserResumeViewSet(viewsets.ModelViewSet):
+    queryset = MaxUserResume.objects.all()
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    serializer_class = MaxUserResumeSerializer
+    filterset_fields = '__all__'
+
+
+class VacancyResponseFromUserMaxViewSet(viewsets.ModelViewSet):
+    queryset = VacancyResponseFromUserMax.objects.all()
+    serializer_class = VacancyResponseFromUserMaxSerializer
 
 
 class FavoriteVacansyViewSet(viewsets.ModelViewSet):

@@ -2,7 +2,7 @@ from rest_framework import serializers
 from django.db.models import Sum
 
 from kioskVacansyController.models import Districts, Vacansy,\
-UserFromMaxMiniApp, FavoriteVacansy
+UserFromMaxMiniApp, FavoriteVacansy, MaxUserResume, VacancyResponseFromUserMax
 
 
 class VacansySerializer(serializers.ModelSerializer):
@@ -90,6 +90,22 @@ class UserFromMaxMiniAppSerializer(serializers.ModelSerializer):
         fields = [
             'id'
         ]
+
+
+class MaxUserResumeSerializer(serializers.ModelSerializer):
+    """Сериализатор для резюме пользователя Mini App в Max"""
+
+    class Meta:
+        models = MaxUserResume
+        fields = '__all__'
+
+
+class VacancyResponseFromUserMaxSerializer(serializers.ModelSerializer):
+    """Сериализатор для Отклика пользователя Max Mini App на вакансию"""
+
+    class Meta:
+        models = VacancyResponseFromUserMax
+        fields = '__all__'
 
 
 class FavoriteVacansySerializer(serializers.ModelSerializer):
