@@ -55,12 +55,14 @@ class MaxUserResumeViewSet(viewsets.ModelViewSet):
     queryset = MaxUserResume.objects.all()
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     serializer_class = MaxUserResumeSerializer
-    filterset_fields = '__all__'
+    filterset_fields = ['user', 'name', 'date']
 
 
 class VacancyResponseFromUserMaxViewSet(viewsets.ModelViewSet):
     queryset = VacancyResponseFromUserMax.objects.all()
     serializer_class = VacancyResponseFromUserMaxSerializer
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = '__all__'
 
 
 class FavoriteVacansyViewSet(viewsets.ModelViewSet):

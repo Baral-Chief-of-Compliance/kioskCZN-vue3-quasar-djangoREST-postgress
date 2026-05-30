@@ -9,6 +9,8 @@ router.register(r"districts", views.DistrictsViewSet, basename="districts")
 router.register(r"vacancies", views.VacansyViewSet, basename="vacancies")
 router.register(r"user_from_max_mini_app", views.UserFromMaxMiniAppViewSet, basename="user_from_max_mini_app")
 router.register(r"favorite_vacancies", views.FavoriteVacansyViewSet, basename="favorite_vacancies")
+router.register(r"resume", views.MaxUserResumeViewSet, basename="resume")
+router.register(r"vacancy_response", views.VacancyResponseFromUserMaxViewSet, basename="vacancy_response")
 
 
 urlpatterns = [

@@ -96,7 +96,7 @@ class MaxUserResumeSerializer(serializers.ModelSerializer):
     """Сериализатор для резюме пользователя Mini App в Max"""
 
     class Meta:
-        models = MaxUserResume
+        model = MaxUserResume
         fields = '__all__'
 
 
@@ -104,7 +104,7 @@ class VacancyResponseFromUserMaxSerializer(serializers.ModelSerializer):
     """Сериализатор для Отклика пользователя Max Mini App на вакансию"""
 
     class Meta:
-        models = VacancyResponseFromUserMax
+        model = VacancyResponseFromUserMax
         fields = '__all__'
 
 
