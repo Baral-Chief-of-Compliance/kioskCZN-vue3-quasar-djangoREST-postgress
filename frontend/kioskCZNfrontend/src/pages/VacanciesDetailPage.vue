@@ -112,8 +112,8 @@ const getVacansyFromDistrict = async() => {
 
         districtsStore.districtId = res.data.id
         districtsStore.districtName = res.data.name
-        districtsStore.districtMinCode = res.data.min_code
-        districtsStore.districtMaxCode = res.data.max_code
+        districtsStore.districtMinCode = res.data.min_code_str
+        districtsStore.districtMaxCode = res.data.max_code_str
         districtsStore.workPlaces = res.data.count_vacansy
 
         const vacanciesRes = await getVacancies(

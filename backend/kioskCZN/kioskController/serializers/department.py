@@ -26,7 +26,8 @@ class DepartmentWithModifiedNameSerializer(serializers.ModelSerializer):
         worker = WorkerInDepartment.objects.filter(
             dep=obj,
             visible=True,
-            date_get_info=today.date()
+            date_get_info=today.date(),
+            worker__absent=False
         ).order_by('-head_of_dep', 'post__priority')
 
         serializer = WorkInDepartmentFullInfoSerializer(worker, many=True)

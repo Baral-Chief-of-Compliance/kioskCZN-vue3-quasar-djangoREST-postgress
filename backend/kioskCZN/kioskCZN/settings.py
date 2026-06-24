@@ -101,7 +101,8 @@ LOCAL_APPS = [
     'kioskController',
     'kioskVacansyController',
     'version',
-    'yandexApiKeys'
+    'yandexApiKeys',
+    'pre_registration'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -289,4 +290,62 @@ CKEDITOR_CONFIGS = {
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
+
+LOGLEVEL = os.getenv('LOGLEVEL', 'INFO').upper()
+
+LOGGING = {
+	'version': 1,
+	'disable_existing_loggers': False,
+	'formatters': {
+		'main_format': {
+			'format': '{asctime} - {levelname} - {module} - {filename} - {message}',
+			'style': '{'
+		},
+	},
+
+	'handlers': {
+		'console': {
+			'class': 'logging.StreamHandler',
+			'formatter': 'main_format',
+		},
+
+		'error_file': {
+			'level': 'ERROR',
+			'class': 'logging.FileHandler',
+			'formatter': 'main_format',
+			'filename': os.path.join(BASE_DIR, 'logs', 'django-project-error.log')
+		},
+
+		'info_file': {
+			'level': 'INFO',
+			'class': 'logging.FileHandler',
+			'formatter': 'main_format',
+			'filename': os.path.join(BASE_DIR, 'logs', 'django-project-info.log')
+		},
+
+		'combined_file': {
+			'class': 'logging.FileHandler',
+			'formatter': 'main_format',
+			'filename': os.path.join(BASE_DIR, 'logs', 'django-project-combined.log'),
+		},
+
+	},
+
+  
+
+	'loggers': {
+		'main': {
+			'handlers': ['console', 'combined_file', 'info_file', 'error_file'],
+			'level': LOGLEVEL,
+			'propagate': True
+		},
+		
+		'django': {
+			'handlers': ['console', 'combined_file', 'info_file', 'error_file'],
+			'level': LOGLEVEL,
+			'propagate': False,
+		},
+	},
 }

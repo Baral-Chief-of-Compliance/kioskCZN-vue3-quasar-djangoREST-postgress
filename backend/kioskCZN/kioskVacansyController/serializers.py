@@ -35,6 +35,8 @@ class DistrictsSerializer(serializers.ModelSerializer):
     """Сериализатор района"""
 
     count_vacansy = serializers.SerializerMethodField('get_count_vacansy')
+    min_code_str = serializers.SerializerMethodField('get_min_code_str')
+    max_code_str = serializers.SerializerMethodField('get_max_code_str')
 
     def get_count_vacansy(self, obj: Districts):
         result = Vacansy.objects.filter(
@@ -45,6 +47,12 @@ class DistrictsSerializer(serializers.ModelSerializer):
         )
 
         return result['total_workplaces'] or 0
+    
+    def get_min_code_str(self, obj: Districts):
+        return str(obj.min_code)
+
+    def get_max_code_str(self, obj: Districts):
+        return str(obj.max_code)
 
     class Meta:
         model = Districts
@@ -53,6 +61,8 @@ class DistrictsSerializer(serializers.ModelSerializer):
             'name',
             'min_code',
             'max_code',
+            'min_code_str',
+            'max_code_str',
             'count_vacansy'
         ]
 

@@ -82,9 +82,9 @@ class WorkInDepartmentFullInfoSerializer(serializers.ModelSerializer):
             if room:
                 return room.name
             else:
-                return 'Отсутствует'
+                return 'Каб. не указан'
         else:
-            return 'Отсутствует'
+            return 'Каб. не указан'
 
     def get_room_id(self, obj: WorkerInDepartment):
         """Получить id кабинета сотрудника"""

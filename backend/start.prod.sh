@@ -43,6 +43,9 @@ python3 ./kioskCZN/manage.py settings_districts
 echo "Создание версии приложения"
 python3 ./kioskCZN/manage.py create_version
 
+echo "Создание конфигов пререгистраций для КЦ"
+python3 ./kioskCZN/manage.py setting_pre_regisrtation
+
 echo "Сбор статики..."
 python3 ./kioskCZN/manage.py collectstatic --noinput
 

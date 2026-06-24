@@ -158,10 +158,9 @@ class FavoriteVacansy(models.Model):
         on_delete=models.CASCADE
     )
 
-    vacancy = models.ForeignKey(
-        verbose_name='Избранная вакансия',
-        to=Vacansy,
-        on_delete=models.CASCADE
+    vacancy = models.CharField(
+        verbose_name='id Избарнной вакансии',
+        max_length=512
     )
 
     class Meta:

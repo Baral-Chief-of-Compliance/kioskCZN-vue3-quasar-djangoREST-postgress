@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from kioskController import urls
 from kioskVacansyController import urls as kiosk_vacansy_urls
 from yandexApiKeys import urls as yandex_api_keys_urls
+from pre_registration import urls as pre_registration_urls
 
 urlpatterns = [
     path('api/admin/', admin.site.urls),
@@ -39,6 +40,10 @@ urlpatterns = [
         yandex_api_keys_urls.urlpatterns,
         'yandexApiKeys'
     ), namespace='yandexApiKeys')),
+    path('api/v1.0/czn-kiosk/pre-registration/', include((
+        pre_registration_urls.urlpatterns,
+        'pre-registration'
+    ), namespace='pre-registration'))
 ]
 
 if settings.DEBUG:
